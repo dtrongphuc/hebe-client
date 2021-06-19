@@ -3,7 +3,7 @@ import ScrollToTop from './components/ScrollToTop';
 import HomePage from './pages/Home/HomePage';
 import ProductDetailPage from './pages/ProductDetail/ProductDetailPage';
 import CollectionPage from './pages/Collection/CollectionPage';
-// import Contact from './pages/Contact/Index';
+import ContactPage from './pages/Contact/ContactPage';
 // // import Admin from './pages/Admin/Index';
 // import Login from 'pages/Account/Login/Login';
 // import Register from 'pages/Account/Register/Register';
@@ -21,8 +21,8 @@ function App() {
 					component={ProductDetailPage}
 				/>
 				<Route path='/collections/:path' component={CollectionPage} />
-				{/* <Route path='/contact' component={Contact} />
-				<Route path='/account/login' component={Login} />
+				<Route path='/contact' component={ContactPage} />
+				{/* <Route path='/account/login' component={Login} />
 				<Route path='/account/register' component={Register} /> */}
 			</Switch>
 		</Router>

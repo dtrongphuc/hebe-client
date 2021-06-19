@@ -15,6 +15,7 @@ export default function CollectionPage() {
 	const [info, setInfo] = useState({});
 	const [products, setProducts] = useState([]);
 	const { path } = useParams();
+	let fromPage = path.replaceAll('-', ' ').toUpperCase();
 
 	useEffect(() => {
 		(async function () {
@@ -74,7 +75,7 @@ export default function CollectionPage() {
 					heroText={info?.description}
 				/>
 				<Sort onSortChange={onSortChange} />
-				<ProductList products={products} />
+				<ProductList products={products} fromPage={fromPage} />
 			</div>
 		</CustomerLayout>
 	);
