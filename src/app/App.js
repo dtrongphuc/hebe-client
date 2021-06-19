@@ -1,9 +1,9 @@
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import ScrollToTop from './components/ScrollToTop';
-import HomePage from './pages/Home/HomePage';
-import ProductDetailPage from './pages/ProductDetail/ProductDetailPage';
-import CollectionPage from './pages/Collection/CollectionPage';
-import ContactPage from './pages/Contact/ContactPage';
+import ScrollToTop from 'components/ScrollToTop';
+import HomePage from 'pages/Home/HomePage';
+import ProductDetailPage from 'pages/ProductDetail/ProductDetailPage';
+import CollectionPage from 'pages/Collection/CollectionPage';
+import ContactPage from 'pages/Contact/ContactPage';
 import LoginPage from 'pages/Account/LoginPage';
 import RegisterPage from 'pages/Account/RegisterPage';
 
