@@ -4,9 +4,8 @@ import HomePage from './pages/Home/HomePage';
 import ProductDetailPage from './pages/ProductDetail/ProductDetailPage';
 import CollectionPage from './pages/Collection/CollectionPage';
 import ContactPage from './pages/Contact/ContactPage';
-// // import Admin from './pages/Admin/Index';
-// import Login from 'pages/Account/Login/Login';
-// import Register from 'pages/Account/Register/Register';
+import LoginPage from 'pages/Account/LoginPage';
+import RegisterPage from 'pages/Account/RegisterPage';
 
 function App() {
 	return (
@@ -22,8 +21,8 @@ function App() {
 				/>
 				<Route path='/collections/:path' component={CollectionPage} />
 				<Route path='/contact' component={ContactPage} />
-				{/* <Route path='/account/login' component={Login} />
-				<Route path='/account/register' component={Register} /> */}
+				<Route path='/account/login' component={LoginPage} />
+				<Route path='/account/register' component={RegisterPage} />
 			</Switch>
 		</Router>
 	);
