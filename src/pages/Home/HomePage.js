@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import Hero from 'components/Header/Hero';
-import HeroSection from 'components/HeroSection';
+import HeroTop from './HeroTop';
+import HeroBottom from './HeroBottom';
 import ReviewList from 'components/Reviews/ReviewList';
 import ProductList from 'components/Products/ProductList';
 import CustomerLayout from 'layouts/CustomerLayout';
@@ -9,6 +9,14 @@ import { getFrontPageProducts } from 'services/ProductApi';
 import './styles.scss';
 
 export default function HomePage() {
+	const [pageState, setPageState] = useState({
+		isLoading: false,
+		error: {
+			content: '',
+			code: '',
+		},
+	});
+
 	const [products, setProducts] = useState([]);
 
 	useEffect(() => {
@@ -17,19 +25,27 @@ export default function HomePage() {
 				let productsData = await getFrontPageProducts();
 				setProducts(productsData);
 			} catch (error) {
-				console.log(error);
+				setPageState((prev) => {
+					return {
+						...prev,
+						error: {
+							content: error,
+							code: '400',
+						},
+					};
+				});
 			}
 		})();
 	}, []);
 
 	return (
 		<CustomerLayout>
-			<Hero />
+			<HeroTop />
 			<section className='home__products'>
 				<h2 className='home__products-title'>Featured Products</h2>
-				<ProductList products={products} />
+				{!pageState.isLoading && <ProductList products={products} />}
 			</section>
-			<HeroSection />
+			<HeroBottom />
 			<ReviewList />
 		</CustomerLayout>
 	);

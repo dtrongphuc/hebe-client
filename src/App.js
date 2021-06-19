@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import ScrollToTop from './components/ScrollToTop';
-import Home from './pages/Home/HomePage';
+import HomePage from './pages/Home/HomePage';
 // import Product from './pages/Product/Index';
 // import Collections from './pages/Collections/Collections';
 // import Contact from './pages/Contact/Index';
@@ -13,7 +13,7 @@ function App() {
 		<Router>
 			<ScrollToTop />
 			<Switch>
-				<Route exact path='/' component={Home} />
+				<Route exact path='/' component={HomePage} />
 				{/* <Route path='/admin' component={Admin} /> */}
 				{/* <Route exact path='/:path/products/:productPath' component={Product} />
 				<Route path='/collections/:path' component={Collections} />

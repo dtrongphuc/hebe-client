@@ -20,7 +20,7 @@ export default function HeroTop() {
 			<div className='hero__wrapper'>
 				<Container>
 					<div className='hero__content'>
-						<p>Summer Sale</p>
+						<p>SABEN: Tea Rose</p>
 						<Link to='/'>Shop now</Link>
 					</div>
 				</Container>
