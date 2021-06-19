@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import Hero from 'components/Collection/Hero';
-import Sort from 'components/Collection/Sort';
+import Hero from './Hero';
+import Sort from './Sort';
 import ProductList from 'components/Products/ProductList';
 import CustomerLayout from 'layouts/CustomerLayout';
-import { getBrandCollections } from 'services/BrandApi';
+import { getCollectionByPath } from 'services/CollectionAPI';
 import { useParams } from 'react-router';
+import './styles.scss';
 
 const BEST_SELLING = 'best-selling';
 const PRICE_LOW_TO_HIGH = 'price-low-to-high';
@@ -18,7 +19,7 @@ export default function CollectionPage() {
 	useEffect(() => {
 		(async function () {
 			try {
-				let response = await getBrandCollections(path);
+				let response = await getCollectionByPath(path);
 				if (response) {
 					setInfo(response.info);
 					setProducts(response.products);

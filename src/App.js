@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import ScrollToTop from './components/ScrollToTop';
 import HomePage from './pages/Home/HomePage';
 import ProductDetailPage from './pages/ProductDetail/ProductDetailPage';
-// import Collections from './pages/Collections/Collections';
+import CollectionPage from './pages/Collection/CollectionPage';
 // import Contact from './pages/Contact/Index';
 // // import Admin from './pages/Admin/Index';
 // import Login from 'pages/Account/Login/Login';
@@ -20,8 +20,8 @@ function App() {
 					path='/:path/products/:productPath'
 					component={ProductDetailPage}
 				/>
-				{/* <Route path='/collections/:path' component={Collections} />
-				<Route path='/contact' component={Contact} />
+				<Route path='/collections/:path' component={CollectionPage} />
+				{/* <Route path='/contact' component={Contact} />
 				<Route path='/account/login' component={Login} />
 				<Route path='/account/register' component={Register} /> */}
 			</Switch>
