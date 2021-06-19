@@ -43,7 +43,9 @@ export default function HomePage() {
 			<HeroTop />
 			<section className='home__products'>
 				<h2 className='home__products-title'>Featured Products</h2>
-				{!pageState.isLoading && <ProductList products={products} />}
+				{!pageState.isLoading && (
+					<ProductList products={products} fromPage='HOME PAGE' />
+				)}
 			</section>
 			<HeroBottom />
 			<ReviewList />

@@ -1,12 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { productPriceString } from 'utils/util';
 
-export default function ProductItem({ product }) {
+export default function ProductItem({ product, fromPage }) {
+	let history = useHistory();
+
+	const productClicked = () => {
+		history.push(`/frontpage/products/${product.path}`, {
+			from: fromPage,
+		});
+	};
+
 	return (
-		<div className='product-item'>
-			<Link to={`/frontpage/products/${product.path}`}>
+		<div className='product-item' onClick={productClicked}>
+			<Link
+				to={`/frontpage/products/${product.path}`}
+				onClick={(e) => e.preventDefault()}
+			>
 				<img
 					src={`${product.images[product.avatarIndex]?.link}`}
 					alt=''
@@ -29,4 +40,5 @@ export default function ProductItem({ product }) {
 
 ProductItem.propTypes = {
 	product: PropTypes.object,
+	wrappedBy: PropTypes.string,
 };
