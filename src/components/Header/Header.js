@@ -4,7 +4,7 @@ import MobileNav from './MobileNav';
 import Navbar from './Navbar';
 import './styles.scss';
 
-export default function index() {
+export default function Header() {
 	return (
 		<header className='header-fixed'>
 			<AuthHeader />
