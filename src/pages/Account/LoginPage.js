@@ -1,52 +1,75 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { Alert } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Input from 'components/AuthForm/Input';
 import Button from 'components/AuthForm/Button';
 import CustomerLayout from 'layouts/CustomerLayout';
-import './styles.scss';
-import { postLogin } from 'services/AccountApi';
 import { login } from 'features/user/userSlice';
 import { toast } from 'react-toastify';
-// import PropTypes from 'prop-types'
+import { parseErrors } from 'utils/util';
+import _ from 'lodash';
+import ModalLoading from 'components/ModalLoading/ModalLoading';
+import { unwrapResult } from '@reduxjs/toolkit';
 
-export default function LoginPage() {
-	const dispatch = useDispatch();
-	const [pageState, setPageState] = useState({
-		isLoading: false,
-		error: '',
-	});
-	const [formState, setFormState] = useState({
+import './styles.scss';
+
+const initFormState = {
+	email: '',
+	password: '',
+	errors: {
 		email: '',
 		password: '',
-	});
+	},
+};
+
+export default function LoginPage() {
+	const { isLoading, error } = useSelector((state) => state.user);
+	const dispatch = useDispatch();
+
+	const [formState, setFormState] = useState(initFormState);
 
 	const handleSubmit = async (e) => {
-		console.log('submit');
 		e.preventDefault();
 		try {
-			setPageState((prevState) => ({ ...prevState, isLoading: true }));
-			const response = await postLogin(formState);
-			if (response?.success) {
-				dispatch(login());
-			} else {
-			}
+			const response = await dispatch(
+				login({ email: formState.email, password: formState.password })
+			);
+			const data = unwrapResult(response);
+
+			handleSubmitResponse(data);
 		} catch (error) {
-			setPageState((prevState) => ({ ...prevState, error: 'login failed' }));
 			toast.error('login failed');
-		} finally {
-			setPageState((prevState) => ({ ...prevState, isLoading: false }));
 		}
 	};
 
-	const onInputChange = (e) => {
+	const handleSubmitResponse = (payload) => {
+		if (payload?.success) {
+			dispatch(login());
+		} else {
+			let { fieldsError, errors } = payload;
+			if (fieldsError === 'input') {
+				let inputError = parseErrors(errors);
+				setFormState((prevState) => ({
+					...prevState,
+					errors: inputError,
+				}));
+			}
+		}
+	};
+
+	const onInputChange = _.debounce((e) => {
 		setFormState((prevState) => {
 			return {
 				...prevState,
 				[e.target.name]: e.target.value,
+				errors: {
+					...prevState.errors,
+					[e.target.name]: '',
+				},
 			};
 		});
-	};
+	}, 300);
 
 	return (
 		<CustomerLayout>
@@ -56,20 +79,25 @@ export default function LoginPage() {
 					<div className='col-12 col-md-4'>
 						<section className='auth-container'>
 							<h3 className='auth-title'>Login</h3>
+							{error && (
+								<Alert variant='danger' className='w-100 text-center'>
+									{error}
+								</Alert>
+							)}
 							<form action='#' className='auth-form' onSubmit={handleSubmit}>
 								<Input
 									type='email'
 									placeholder='Email'
 									name='email'
-									value={formState.email}
 									onChange={onInputChange}
+									errorMessage={formState?.errors?.email}
 								/>
 								<Input
 									type='password'
 									placeholder='Password'
 									name='password'
-									value={formState.password}
 									onChange={onInputChange}
+									errorMessage={formState?.errors?.password}
 								/>
 								<Button type='submit'>Sign In</Button>
 							</form>
@@ -83,6 +111,7 @@ export default function LoginPage() {
 					<div className='col-0 col-md-4'></div>
 				</div>
 			</div>
+			<ModalLoading loading={isLoading} />
 		</CustomerLayout>
 	);
 }

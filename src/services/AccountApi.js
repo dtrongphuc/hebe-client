@@ -1,6 +1,6 @@
 import api from './api';
 
-export async function postLogin({ email, password }) {
+export async function postLogin(email, password) {
 	try {
 		const response = await api.post('/account/login', {
 			email,
@@ -14,6 +14,6 @@ export async function postLogin({ email, password }) {
 			return response.data;
 		}
 	} catch (error) {
-		return error;
+		return Promise.reject(error);
 	}
 }
