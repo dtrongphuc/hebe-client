@@ -20,6 +20,7 @@ function Input({ type, name, placeholder, value, onChange, errorMessage }) {
 				placeholder={placeholder}
 				name={name}
 				onChange={onChange}
+				autoComplete='new-password'
 			/>
 			{errorMessage && (
 				<small className='text-monospace text-danger'>{errorMessage}</small>

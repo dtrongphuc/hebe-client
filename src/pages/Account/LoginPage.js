@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Alert } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Input from 'components/AuthForm/Input';
 import Button from 'components/AuthForm/Button';
 import CustomerLayout from 'layouts/CustomerLayout';
-import { login } from 'features/user/userSlice';
+import { login, loginThunk } from 'features/user/userSlice';
 import { toast } from 'react-toastify';
 import { parseErrors } from 'utils/util';
 import _ from 'lodash';
@@ -25,15 +25,15 @@ const initFormState = {
 
 export default function LoginPage() {
 	const { isLoading, error } = useSelector((state) => state.user);
-	const dispatch = useDispatch();
-
 	const [formState, setFormState] = useState(initFormState);
+	const dispatch = useDispatch();
+	let history = useHistory();
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
 			const response = await dispatch(
-				login({ email: formState.email, password: formState.password })
+				loginThunk({ email: formState.email, password: formState.password })
 			);
 			const data = unwrapResult(response);
 
@@ -46,6 +46,7 @@ export default function LoginPage() {
 	const handleSubmitResponse = (payload) => {
 		if (payload?.success) {
 			dispatch(login());
+			history.push('/');
 		} else {
 			let { fieldsError, errors } = payload;
 			if (fieldsError === 'input') {
@@ -84,7 +85,12 @@ export default function LoginPage() {
 									{error}
 								</Alert>
 							)}
-							<form action='#' className='auth-form' onSubmit={handleSubmit}>
+							<form
+								action='#'
+								className='auth-form'
+								onSubmit={handleSubmit}
+								autoComplete='off'
+							>
 								<Input
 									type='email'
 									placeholder='Email'
