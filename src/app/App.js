@@ -6,6 +6,7 @@ import CollectionPage from 'pages/Collection/CollectionPage';
 import ContactPage from 'pages/Contact/ContactPage';
 import LoginPage from 'pages/Account/LoginPage';
 import RegisterPage from 'pages/Account/RegisterPage';
+// import PrivateRoute from 'components/PrivateRoute/PrivateRoute';
 
 function App() {
 	return (
