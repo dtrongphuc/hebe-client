@@ -4,9 +4,10 @@ import HomePage from 'pages/Home/HomePage';
 import ProductDetailPage from 'pages/ProductDetail/ProductDetailPage';
 import CollectionPage from 'pages/Collection/CollectionPage';
 import ContactPage from 'pages/Contact/ContactPage';
-import LoginPage from 'pages/Account/LoginPage';
-import RegisterPage from 'pages/Account/RegisterPage';
-// import PrivateRoute from 'components/PrivateRoute/PrivateRoute';
+import LoginPage from 'pages/Auth/LoginPage';
+import RegisterPage from 'pages/Auth/RegisterPage';
+import AccountPage from 'pages/Account/AccountPage';
+import PrivateRoute from 'components/PrivateRoute/PrivateRoute';
 
 function App() {
 	return (
@@ -22,8 +23,9 @@ function App() {
 				/>
 				<Route path='/collections/:path' component={CollectionPage} />
 				<Route path='/contact' component={ContactPage} />
-				<Route path='/account/login' component={LoginPage} />
-				<Route path='/account/register' component={RegisterPage} />
+				<PrivateRoute exact path='/account' component={AccountPage} />
+				<Route exact path='/account/login' component={LoginPage} />
+				<Route exact path='/account/register' component={RegisterPage} />
 			</Switch>
 		</Router>
 	);

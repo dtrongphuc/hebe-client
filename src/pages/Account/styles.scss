@@ -1,46 +1,36 @@
-.auth {
-	&-container {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-
-		flex-direction: column;
-
-		padding-top: 70px;
-		padding-bottom: 200px;
-		width: 100%;
-	}
-
+.account {
 	&-title {
-		font-size: 22px;
+		margin-top: 40px;
+		font-size: 2.4rem;
 		color: #000;
 		font-weight: 400;
-		margin-bottom: 8px;
+		padding-bottom: 16px;
+		border-bottom: 1px solid #000;
 	}
 
-	&-form {
-		width: 100%;
+	&__col-title {
+		font-size: 1.3rem;
+		font-weight: 400;
+		margin-bottom: 14px;
+		color: #000;
 	}
 
-	&__links {
-		display: flex;
-		align-items: center;
-		justify-content: center;
+	&-text {
+		color: #000;
+		font-size: 1rem;
 
-		& > a {
-			display: block;
-			position: relative;
-			color: #000;
-			text-decoration: underline;
-			font-size: 14px;
-			margin-left: 6px;
-			margin-right: 6px;
-			margin-top: 14px;
+		&--small {
+			font-size: 0.9rem;
 		}
+	}
 
-		& > span {
+	&-link {
+		display: block;
+		text-decoration: underline;
+		margin-top: 14px;
+
+		&:hover {
 			color: #000;
-			font-size: 1.6rem;
 		}
 	}
 }
