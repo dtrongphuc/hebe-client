@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import Input from 'components/AuthForm/Input';
-import Button from 'components/AuthForm/Button';
+import Input from 'components/FormControl/Input';
+import Button from 'components/FormControl/Button';
 import CustomerLayout from 'layouts/CustomerLayout';
 import './styles.scss';
 import _ from 'lodash';
@@ -75,10 +75,10 @@ function RegisterPage() {
 
 	return (
 		<CustomerLayout>
-			<div className='container'>
+			<div className='container-lg'>
 				<div className='row'>
-					<div className='col-0 col-md-4'></div>
-					<div className='col-12 col-md-4'>
+					<div className='col-0 col-lg-3'></div>
+					<div className='col-12 col-lg-6'>
 						<section className='auth-container'>
 							<h3 className='auth-title'>Create Account</h3>
 							{error && (
@@ -97,6 +97,7 @@ function RegisterPage() {
 									placeholder='First Name'
 									onChange={onInputChange}
 									errorMessage={formState?.errors?.firstname}
+									margin='14px 0'
 								/>
 								<Input
 									type='text'
@@ -104,6 +105,7 @@ function RegisterPage() {
 									placeholder='Last Name'
 									onChange={onInputChange}
 									errorMessage={formState?.errors?.lastname}
+									margin='14px 0'
 								/>
 								<Input
 									type='email'
@@ -111,6 +113,7 @@ function RegisterPage() {
 									placeholder='Email'
 									onChange={onInputChange}
 									errorMessage={formState?.errors?.email}
+									margin='14px 0'
 								/>
 								<Input
 									type='password'
@@ -118,6 +121,7 @@ function RegisterPage() {
 									placeholder='Password'
 									onChange={onInputChange}
 									errorMessage={formState?.errors?.password}
+									margin='14px 0'
 								/>
 								<Button type='submit'>Create</Button>
 							</form>
@@ -128,7 +132,7 @@ function RegisterPage() {
 							</div>
 						</section>
 					</div>
-					<div className='col-0 col-md-4'></div>
+					<div className='col-0 col-lg-3'></div>
 				</div>
 			</div>
 			<ModalLoading loading={isLoading} />

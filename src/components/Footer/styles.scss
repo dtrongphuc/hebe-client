@@ -1,5 +1,5 @@
 .main-footer {
-	padding: 40px 0 30px;
+	padding: 60px 0 30px;
 }
 
 %footer-secondary-shared {
@@ -78,16 +78,7 @@
 		}
 
 		& > button {
-			position: relative;
-			color: #fff;
 			font-size: 1rem;
-			background-color: #000;
-			line-height: 1;
-			padding: 12px 12px;
-			border: none;
-			box-shadow: none;
-			border-radius: 2px;
-
 			&:after {
 				content: '';
 				position: absolute;

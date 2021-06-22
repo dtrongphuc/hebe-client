@@ -8,6 +8,7 @@ import LoginPage from 'pages/Auth/LoginPage';
 import RegisterPage from 'pages/Auth/RegisterPage';
 import AccountPage from 'pages/Account/AccountPage';
 import PrivateRoute from 'components/PrivateRoute/PrivateRoute';
+import AddressesPage from 'pages/Addresses/AddressesPage';
 
 function App() {
 	return (
@@ -15,7 +16,6 @@ function App() {
 			<ScrollToTop />
 			<Switch>
 				<Route exact path='/' component={HomePage} />
-				{/* <Route path='/admin' component={Admin} /> */}
 				<Route
 					exact
 					path='/:path/products/:productPath'
@@ -24,6 +24,11 @@ function App() {
 				<Route path='/collections/:path' component={CollectionPage} />
 				<Route path='/contact' component={ContactPage} />
 				<PrivateRoute exact path='/account' component={AccountPage} />
+				<PrivateRoute
+					exact
+					path='/account/addresses'
+					component={AddressesPage}
+				/>
 				<Route exact path='/account/login' component={LoginPage} />
 				<Route exact path='/account/register' component={RegisterPage} />
 			</Switch>

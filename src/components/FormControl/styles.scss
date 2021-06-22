@@ -1,8 +1,7 @@
 // INPUT
-.auth-input__group {
-	margin: 14px 0;
-
-	& > input {
+.input-group {
+	& > input,
+	& > select {
 		border: 1px solid #000;
 		border-radius: 2px;
 		width: 100%;
@@ -22,7 +21,7 @@
 	}
 }
 
-.btn__auth-submit {
+.btn-submit {
 	margin: 0;
 	width: 100%;
 	color: #fff;

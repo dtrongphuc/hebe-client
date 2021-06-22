@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Alert } from 'react-bootstrap';
 import { Link, useHistory } from 'react-router-dom';
-import Input from 'components/AuthForm/Input';
-import Button from 'components/AuthForm/Button';
+import Input from 'components/FormControl/Input';
+import Button from 'components/FormControl/Button';
 import CustomerLayout from 'layouts/CustomerLayout';
 import { login, loginThunk } from 'features/user/userSlice';
 import { toast } from 'react-toastify';
@@ -74,10 +74,10 @@ export default function LoginPage() {
 
 	return (
 		<CustomerLayout>
-			<div className='container'>
+			<div className='container-lg'>
 				<div className='row'>
-					<div className='col-0 col-md-4'></div>
-					<div className='col-12 col-md-4'>
+					<div className='col-0 col-lg-3'></div>
+					<div className='col-12 col-lg-6'>
 						<section className='auth-container'>
 							<h3 className='auth-title'>Login</h3>
 							{error && (
@@ -97,6 +97,7 @@ export default function LoginPage() {
 									name='email'
 									onChange={onInputChange}
 									errorMessage={formState?.errors?.email}
+									margin='14px 0'
 								/>
 								<Input
 									type='password'
@@ -104,6 +105,7 @@ export default function LoginPage() {
 									name='password'
 									onChange={onInputChange}
 									errorMessage={formState?.errors?.password}
+									margin='14px 0'
 								/>
 								<Button type='submit'>Sign In</Button>
 							</form>
@@ -114,7 +116,7 @@ export default function LoginPage() {
 							</div>
 						</section>
 					</div>
-					<div className='col-0 col-md-4'></div>
+					<div className='col-0 col-lg-3'></div>
 				</div>
 			</div>
 			<ModalLoading loading={isLoading} />

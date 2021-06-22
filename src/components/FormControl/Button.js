@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 function Button({ type = 'button', children }) {
 	return (
-		<button type={type} className='btn__auth-submit'>
+		<button type={type} className='btn-submit'>
 			{children}
 		</button>
 	);

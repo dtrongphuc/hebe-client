@@ -12,7 +12,9 @@ export default function Newsletter() {
 					name='newsletter-email'
 					placeholder='your@email.com'
 				/>
-				<button type='submit'>Subscribe</button>
+				<button type='submit' className='btn-black'>
+					Subscribe
+				</button>
 			</form>
 		</div>
 	);

@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import './styles.scss';
 
-function Input({ type, name, placeholder, value, onChange, errorMessage }) {
+function Input({ type, name, placeholder, onChange, errorMessage, margin }) {
 	const inputRef = useRef(null);
 	useEffect(() => {
 		if (errorMessage && !inputRef.current.classList.contains('error')) {
@@ -13,7 +13,7 @@ function Input({ type, name, placeholder, value, onChange, errorMessage }) {
 	}, [errorMessage]);
 
 	return (
-		<div className='auth-input__group'>
+		<div className='input-group' style={{ margin: margin }}>
 			<input
 				ref={inputRef}
 				type={type}
@@ -21,6 +21,7 @@ function Input({ type, name, placeholder, value, onChange, errorMessage }) {
 				name={name}
 				onChange={onChange}
 				autoComplete='new-password'
+				id={name}
 			/>
 			{errorMessage && (
 				<small className='text-monospace text-danger'>{errorMessage}</small>

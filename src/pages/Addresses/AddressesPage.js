@@ -1,10 +1,10 @@
 import React from 'react';
 import CustomerLayout from 'layouts/CustomerLayout';
 import { Link } from 'react-router-dom';
+import NewAddress from 'components/NewAddress/NewAddress';
 import './styles.scss';
-// import PropTypes from 'prop-types'
 
-function AccountPage() {
+function AddressesPage() {
 	return (
 		<CustomerLayout>
 			<div className='container-lg'>
@@ -12,24 +12,25 @@ function AccountPage() {
 					<div className='col-12'>
 						<div className='account-header'>
 							<h2 className='account-title'>My Account</h2>
+							<button type='button' className='btn-black'>
+								Add a New Address
+							</button>
 						</div>
 						<hr className='hr--small' />
 					</div>
-					<div className='col-12 col-md-8 mt-2'>
-						<p className='account__col-title'>Order History</p>
-						<small className='account-text account-text--small'>
-							You haven't placed any orders yet.
-						</small>
-					</div>
-					<div className='col-12 col-md-4 mt-2'>
-						<p className='account__col-title'>Account Details</p>
-						<p className='account-text'>Dương Phúc</p>
+					<div className='col-12 mt-2'>
 						<Link
 							className='account-text account-text--small account-link'
-							to='/account/addresses'
+							to='/account'
 						>
-							View Addresses (0)
+							&#8592; Return to Account Details
 						</Link>
+					</div>
+					<div className='col-12 mt-4'>
+						<NewAddress />
+					</div>
+					<div className='col-12 mt-4'>
+						<p className='account__col-title'>Your Addresses</p>
 					</div>
 				</div>
 			</div>
@@ -37,8 +38,4 @@ function AccountPage() {
 	);
 }
 
-// AccountPage.propTypes = {
-
-// }
-
-export default AccountPage;
+export default AddressesPage;
