@@ -260,7 +260,7 @@ const countries = [
 	'Zambia',
 	'Zimbabwe',
 ];
-export default function CountrySelect() {
+export default function CountryOptions() {
 	return countries.map((country) => (
 		<option value={country} key={country}>
 			{country}
