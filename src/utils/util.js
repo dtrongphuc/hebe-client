@@ -4,9 +4,13 @@ export const productPriceString = (price) => {
 
 export const parseErrors = (errors) => {
 	let object = errors.reduce((errObj, curError) => {
-		return Object.assign(errObj, {
-			[curError.inputName]: curError.message,
-		});
+		if (errObj[curError.param] === undefined) {
+			return Object.assign(errObj, {
+				[curError.param]: curError.msg,
+			});
+		}
+
+		return errObj;
 	}, {});
 
 	return object;

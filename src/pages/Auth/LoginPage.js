@@ -35,26 +35,19 @@ export default function LoginPage() {
 			const response = await dispatch(
 				loginThunk({ email: formState.email, password: formState.password })
 			);
-			const data = unwrapResult(response);
-
-			handleSubmitResponse(data);
-		} catch (error) {
-			toast.error('login failed');
-		}
-	};
-
-	const handleSubmitResponse = (payload) => {
-		if (payload?.success) {
+			unwrapResult(response);
 			dispatch(login());
 			history.push('/account');
-		} else {
-			let { fieldsError, errors } = payload;
-			if (fieldsError === 'input') {
+		} catch (error) {
+			if (error.status === 422) {
+				let { errors } = error;
 				let inputError = parseErrors(errors);
 				setFormState((prevState) => ({
 					...prevState,
 					errors: inputError,
 				}));
+			} else {
+				toast.error('login failed');
 			}
 		}
 	};

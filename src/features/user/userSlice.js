@@ -11,7 +11,10 @@ export const loginThunk = createAsyncThunk(
 			if (!error.data) {
 				throw error;
 			}
-			return rejectWithValue(error.data.message);
+			return rejectWithValue({
+				status: error.status,
+				errors: error.data?.errors,
+			});
 		}
 	}
 );
@@ -26,7 +29,10 @@ export const registerThunk = createAsyncThunk(
 			if (!error.data) {
 				throw error;
 			}
-			return rejectWithValue(error.data.message);
+			return rejectWithValue({
+				status: error.status,
+				errors: error.data?.errors,
+			});
 		}
 	}
 );
@@ -36,11 +42,9 @@ export const userSlice = createSlice({
 	initialState: {
 		isLogged: false,
 		isLoading: false,
-		error: '',
-		validateErrors: [],
 	},
 	reducers: {
-		login: (state, action) => {
+		login: (state) => {
 			state.isLogged = true;
 		},
 		logout: (state) => {
@@ -52,35 +56,24 @@ export const userSlice = createSlice({
 			state.isLoading = true;
 		},
 
-		[loginThunk.fulfilled]: (state, action) => {
-			let { success, fieldsError, message } = action.payload;
-
-			if (success === false && fieldsError === 'page') {
-				state.error = message;
-			}
+		[loginThunk.fulfilled]: (state) => {
 			state.isLoading = false;
 		},
 
-		[loginThunk.rejected]: (state, action) => {
+		[loginThunk.rejected]: (state) => {
 			state.isLoading = false;
-			state.error = action.payload;
 		},
 
 		[registerThunk.pending]: (state) => {
 			state.isLoading = true;
 		},
 
-		[registerThunk.fulfilled]: (state, action) => {
-			let { success, fieldsError, message } = action.payload;
-			if (success === false && fieldsError === 'page') {
-				state.error = message;
-			}
+		[registerThunk.fulfilled]: (state) => {
 			state.isLoading = false;
 		},
 
-		[registerThunk.rejected]: (state, action) => {
+		[registerThunk.rejected]: (state) => {
 			state.isLoading = false;
-			state.error = action.payload;
 		},
 	},
 });

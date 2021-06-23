@@ -37,25 +37,19 @@ function RegisterPage() {
 		e.preventDefault();
 		try {
 			const response = await dispatch(registerThunk(formState));
-			const data = unwrapResult(response);
-			handleSubmitResponse(data);
-		} catch (error) {
-			toast.error('login failed');
-		}
-	};
-
-	const handleSubmitResponse = (payload) => {
-		if (payload?.success) {
+			unwrapResult(response);
 			dispatch(login());
 			history.push('/account');
-		} else {
-			let { fieldsError, errors } = payload;
-			if (fieldsError === 'input') {
+		} catch (error) {
+			if (error.status === 422) {
+				let { errors } = error;
 				let inputError = parseErrors(errors);
 				setFormState((prevState) => ({
 					...prevState,
 					errors: inputError,
 				}));
+			} else {
+				toast.error('register failed');
 			}
 		}
 	};
