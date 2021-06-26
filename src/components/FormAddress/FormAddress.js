@@ -30,7 +30,7 @@ const initialState = {
 	},
 };
 
-function NewAddress(props) {
+function FormAddress(props) {
 	const [formState, setFormState] = useState(initialState);
 
 	const onInputChange = _.debounce((e) => {
@@ -176,13 +176,13 @@ function NewAddress(props) {
 			<div className='form-group'>
 				<input
 					type='checkbox'
-					name='default'
-					id='default'
+					name='isDefault'
+					id='isDefault'
 					className='mr-1'
 					checked={formState.default}
 					onChange={onCheckedChange}
 				/>
-				<label htmlFor='default' className='address-checkbox-label'>
+				<label htmlFor='isDefault' className='address-checkbox-label'>
 					Set as default address
 				</label>
 			</div>
@@ -201,4 +201,4 @@ function NewAddress(props) {
 
 // }
 
-export default NewAddress;
+export default FormAddress;
