@@ -28,9 +28,10 @@ export async function postRegister({ email, password, firstname, lastname }) {
 			lastname,
 		});
 		if (response.status === 200) {
-			api.defaults.headers.common[
-				'Authorization'
-			] = `Bearer ${response.data?.token}`;
+			const token = response.data?.token;
+			window.localStorage.setItem('token', token);
+
+			api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
 			return response.data;
 		}

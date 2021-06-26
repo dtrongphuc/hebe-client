@@ -75,6 +75,29 @@ hr.hr--small {
 	margin-top: 15px;
 }
 
+.h5-text {
+	font-size: 1.4rem;
+	margin-bottom: 0.75rem;
+	text-transform: capitalize;
+	color: #000;
+}
+
+.h6-text {
+	font-size: 1rem;
+	color: #000;
+	margin-bottom: 0.3rem;
+}
+
+.h7-text {
+	font-size: 0.9rem;
+	color: #000;
+	margin-bottom: 0.2rem;
+}
+
+.text-decoration-underline {
+	text-decoration: underline;
+}
+
 #root {
 	position: relative;
 }

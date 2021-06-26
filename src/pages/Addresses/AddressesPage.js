@@ -1,11 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CustomerLayout from 'layouts/CustomerLayout';
 import { Link } from 'react-router-dom';
 import FormAddress from 'components/FormAddress/FormAddress';
 import './styles.scss';
+import { getAllAddresses } from 'services/AddressApi';
+import AddressList from 'components/AddressList/AddressList';
 
 function AddressesPage() {
+	const [pageState, setPageState] = useState({
+		loading: false,
+		error: '',
+	});
+	const [addresses, setAddresses] = useState(null);
 	const [showAddAddress, setShowAddAddress] = useState(false);
+
+	useEffect(() => {
+		const getAddresses = async () => {
+			setPageState((prevState) => ({ ...prevState, loading: true }));
+			try {
+				const response = await getAllAddresses();
+				if (response) {
+					console.log(response);
+					setAddresses(response?.addresses);
+				}
+			} catch (error) {
+				console.log(error);
+			} finally {
+				setPageState((prevState) => ({ ...prevState, loading: false }));
+			}
+		};
+
+		getAddresses();
+	}, []);
 
 	return (
 		<CustomerLayout>
@@ -39,6 +65,7 @@ function AddressesPage() {
 					)}
 					<div className='col-12 mt-4'>
 						<p className='account__col-title'>Your Addresses</p>
+						{addresses && <AddressList addresses={addresses} />}
 					</div>
 				</div>
 			</div>
