@@ -37,10 +37,12 @@ export const registerThunk = createAsyncThunk(
 	}
 );
 
+const logged = !!window.localStorage.getItem('token');
+
 export const userSlice = createSlice({
 	name: 'user',
 	initialState: {
-		isLogged: false,
+		isLogged: logged,
 		isLoading: false,
 	},
 	reducers: {

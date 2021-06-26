@@ -8,7 +8,6 @@ import CustomerLayout from 'layouts/CustomerLayout';
 import { login, loginThunk } from 'features/user/userSlice';
 import { toast } from 'react-toastify';
 import { parseErrors } from 'utils/util';
-import _ from 'lodash';
 import ModalLoading from 'components/ModalLoading/ModalLoading';
 import { unwrapResult } from '@reduxjs/toolkit';
 
@@ -52,7 +51,7 @@ export default function LoginPage() {
 		}
 	};
 
-	const onInputChange = _.debounce((e) => {
+	const onInputChange = (e) => {
 		setFormState((prevState) => {
 			return {
 				...prevState,
@@ -63,7 +62,7 @@ export default function LoginPage() {
 				},
 			};
 		});
-	}, 300);
+	};
 
 	return (
 		<CustomerLayout>
@@ -91,6 +90,7 @@ export default function LoginPage() {
 									onChange={onInputChange}
 									errorMessage={formState?.errors?.email}
 									margin='14px 0'
+									value={formState.email}
 								/>
 								<Input
 									type='password'
@@ -99,6 +99,7 @@ export default function LoginPage() {
 									onChange={onInputChange}
 									errorMessage={formState?.errors?.password}
 									margin='14px 0'
+									value={formState.password}
 								/>
 								<Button type='submit'>Sign In</Button>
 							</form>

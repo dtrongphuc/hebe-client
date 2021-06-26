@@ -1,11 +1,18 @@
 import Input from 'components/FormControl/Input';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import _ from 'lodash';
 import './styles.scss';
 import Select from 'components/FormControl/Select';
 import CountryOptions from './CountryOptions';
-// import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
+import {
+	addNewAddress,
+	editAddress,
+	getAddressById,
+} from 'services/AddressApi';
+import { parseErrors } from 'utils/util';
+import { toast } from 'react-toastify';
+import ModalLoading from 'components/ModalLoading/ModalLoading';
 
 const initialState = {
 	firstname: '',
@@ -13,11 +20,18 @@ const initialState = {
 	company: '',
 	address: '',
 	city: '',
-	country: '',
+	country: 'Afghanistan',
 	postal: '',
 	phone: '',
-	default: false,
-	errors: {
+	isDefault: false,
+};
+
+function FormAddress({ action, cancel, id, title }) {
+	const [pageState, setPageState] = useState({
+		loading: false,
+	});
+	const [formState, setFormState] = useState(initialState);
+	const [errors, setErrors] = useState({
 		firstname: '',
 		lastname: '',
 		company: '',
@@ -26,46 +40,89 @@ const initialState = {
 		country: '',
 		postal: '',
 		phone: '',
-		default: '',
-	},
-};
+		isDefault: '',
+	});
 
-function FormAddress(props) {
-	const [formState, setFormState] = useState(initialState);
+	useEffect(() => {
+		if (action === 'edit' && !!id) {
+			(async function () {
+				try {
+					const response = await getAddressById(id);
+					setFormState((prevState) => ({ ...prevState, ...response?.address }));
+				} catch (error) {
+					console.log(error);
+				}
+			})();
+		}
+	}, [action, id]);
 
-	const onInputChange = _.debounce((e) => {
+	const onInputChange = (e) => {
 		setFormState((prevState) => {
 			return {
 				...prevState,
 				[e.target.name]: e.target.value,
-				errors: {
-					...prevState.errors,
-					[e.target.name]: '',
-				},
 			};
 		});
-	}, 300);
 
-	const onSelectChange = (e) => {
-		console.log('select change');
-		console.log(e.target.value);
+		setErrors((prevState) => {
+			return {
+				...prevState,
+				[e.target.name]: '',
+			};
+		});
 	};
 
-	const onCheckedChange = (e) => {
-		console.log(e.target.checked);
+	const onSelectChange = (e) => {
 		setFormState((prevState) => {
 			return {
 				...prevState,
-				default: e.target.checked,
+				[e.target.name]: e.target.value,
 			};
 		});
 	};
 
+	const onCheckedChange = (e) => {
+		setFormState((prevState) => {
+			return {
+				...prevState,
+				isDefault: e.target.checked,
+			};
+		});
+	};
+
+	const onSubmit = async (e) => {
+		e.preventDefault();
+		setPageState((prevState) => ({ ...prevState, loading: true }));
+		try {
+			if (action === 'add') {
+				await addNewAddress(formState);
+			} else if (action === 'edit') {
+				let sendData = Object.assign({ _id: id }, formState);
+				await editAddress(sendData);
+			}
+			window.location.reload();
+		} catch (error) {
+			console.log(error);
+			if (error.status === 422) {
+				let { errors } = error.data;
+				let inputError = parseErrors(errors);
+				setErrors((prevState) => ({
+					...prevState,
+					...inputError,
+				}));
+			} else {
+				toast.error('failed');
+			}
+		} finally {
+			setPageState((prevState) => ({ ...prevState, loading: false }));
+		}
+	};
+
 	return (
-		<form action='' className='address-form'>
+		<form action='' className='address-form' onSubmit={onSubmit} method='POST'>
 			<div className='row'>
 				<div className='col-12'>
-					<p className='account__col-title'>Add a New Address</p>
+					<p className='account__col-title'>{title}</p>
 				</div>
 				<div className='col-12 col-sm-6'>
 					<div className='form-group'>
@@ -76,7 +133,8 @@ function FormAddress(props) {
 							type='text'
 							name='firstname'
 							onChange={onInputChange}
-							errorMessage={formState?.errors?.firstname}
+							errorMessage={errors?.firstname}
+							value={formState.firstname}
 						/>
 					</div>
 				</div>
@@ -89,7 +147,8 @@ function FormAddress(props) {
 							type='text'
 							name='lastname'
 							onChange={onInputChange}
-							errorMessage={formState?.errors?.lastname}
+							errorMessage={errors?.lastname}
+							value={formState.lastname}
 						/>
 					</div>
 				</div>
@@ -102,7 +161,8 @@ function FormAddress(props) {
 							type='text'
 							name='company'
 							onChange={onInputChange}
-							errorMessage={formState?.errors?.company}
+							errorMessage={errors?.company}
+							value={formState.company}
 						/>
 					</div>
 				</div>
@@ -115,7 +175,8 @@ function FormAddress(props) {
 							type='text'
 							name='address'
 							onChange={onInputChange}
-							errorMessage={formState?.errors?.address}
+							errorMessage={errors?.address}
+							value={formState.address}
 						/>
 					</div>
 				</div>
@@ -128,7 +189,8 @@ function FormAddress(props) {
 							type='text'
 							name='city'
 							onChange={onInputChange}
-							errorMessage={formState?.errors?.city}
+							errorMessage={errors?.city}
+							value={formState.city}
 						/>
 					</div>
 				</div>
@@ -140,7 +202,7 @@ function FormAddress(props) {
 						<Select
 							name='country'
 							onChange={onSelectChange}
-							defaultValue='Afghanistan'
+							value={formState.country}
 						>
 							<CountryOptions />
 						</Select>
@@ -155,7 +217,8 @@ function FormAddress(props) {
 							type='text'
 							name='postal'
 							onChange={onInputChange}
-							errorMessage={formState?.errors?.postal}
+							errorMessage={errors?.postal}
+							value={formState.postal}
 						/>
 					</div>
 				</div>
@@ -168,7 +231,8 @@ function FormAddress(props) {
 							type='text'
 							name='phone'
 							onChange={onInputChange}
-							errorMessage={formState?.errors?.phone}
+							errorMessage={errors?.phone}
+							value={formState.phone}
 						/>
 					</div>
 				</div>
@@ -179,7 +243,6 @@ function FormAddress(props) {
 					name='isDefault'
 					id='isDefault'
 					className='mr-1'
-					checked={formState.default}
 					onChange={onCheckedChange}
 				/>
 				<label htmlFor='isDefault' className='address-checkbox-label'>
@@ -187,18 +250,25 @@ function FormAddress(props) {
 				</label>
 			</div>
 			<button type='submit' className='btn-black'>
-				Add Address
+				{action === 'add' ? 'Add Address' : 'Edit Address'}
 			</button>
-			<Link className='account-text account-text--small account-link' to='#'>
+			<Link
+				className='account-text account-text--small account-link'
+				to='#'
+				onClick={cancel}
+			>
 				Cancel
 			</Link>
 			<hr />
+			<ModalLoading loading={pageState.loading} />
 		</form>
 	);
 }
 
-// NewAddress.propTypes = {
-
-// }
+FormAddress.propTypes = {
+	action: PropTypes.oneOf(['add', 'edit']),
+	cancel: PropTypes.func,
+	id: PropTypes.string,
+};
 
 export default FormAddress;

@@ -5,6 +5,7 @@ import FormAddress from 'components/FormAddress/FormAddress';
 import './styles.scss';
 import { getAllAddresses } from 'services/AddressApi';
 import AddressList from 'components/AddressList/AddressList';
+import ModalLoading from 'components/ModalLoading/ModalLoading';
 
 function AddressesPage() {
 	const [pageState, setPageState] = useState({
@@ -12,7 +13,10 @@ function AddressesPage() {
 		error: '',
 	});
 	const [addresses, setAddresses] = useState(null);
-	const [showAddAddress, setShowAddAddress] = useState(false);
+	const [addressForm, setAddressForm] = useState({
+		show: false,
+		action: 'add',
+	});
 
 	useEffect(() => {
 		const getAddresses = async () => {
@@ -20,7 +24,6 @@ function AddressesPage() {
 			try {
 				const response = await getAllAddresses();
 				if (response) {
-					console.log(response);
 					setAddresses(response?.addresses);
 				}
 			} catch (error) {
@@ -43,7 +46,12 @@ function AddressesPage() {
 							<button
 								type='button'
 								className='btn-black'
-								onClick={() => setShowAddAddress((prevState) => !prevState)}
+								onClick={() =>
+									setAddressForm((prevState) => ({
+										show: !prevState.show,
+										action: 'add',
+									}))
+								}
 							>
 								Add a New Address
 							</button>
@@ -58,9 +66,15 @@ function AddressesPage() {
 							&#8592; Return to Account Details
 						</Link>
 					</div>
-					{showAddAddress && (
+					{addressForm?.show && (
 						<div className='col-12 mt-4'>
-							<FormAddress />
+							<FormAddress
+								action={addressForm.action}
+								title='Add a New Address'
+								cancel={() =>
+									setAddressForm((prevState) => ({ ...prevState, show: false }))
+								}
+							/>
 						</div>
 					)}
 					<div className='col-12 mt-4'>
@@ -69,6 +83,7 @@ function AddressesPage() {
 					</div>
 				</div>
 			</div>
+			<ModalLoading loading={pageState.loading} />
 		</CustomerLayout>
 	);
 }

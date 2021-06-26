@@ -4,7 +4,6 @@ import Input from 'components/FormControl/Input';
 import Button from 'components/FormControl/Button';
 import CustomerLayout from 'layouts/CustomerLayout';
 import './styles.scss';
-import _ from 'lodash';
 import { useSelector, useDispatch } from 'react-redux';
 import ModalLoading from 'components/ModalLoading/ModalLoading';
 import { toast } from 'react-toastify';
@@ -54,7 +53,7 @@ function RegisterPage() {
 		}
 	};
 
-	const onInputChange = _.debounce((e) => {
+	const onInputChange = (e) => {
 		setFormState((prevState) => {
 			return {
 				...prevState,
@@ -65,7 +64,7 @@ function RegisterPage() {
 				},
 			};
 		});
-	}, 300);
+	};
 
 	return (
 		<CustomerLayout>
@@ -92,6 +91,7 @@ function RegisterPage() {
 									onChange={onInputChange}
 									errorMessage={formState?.errors?.firstname}
 									margin='14px 0'
+									value={formState.firstname}
 								/>
 								<Input
 									type='text'
@@ -100,6 +100,7 @@ function RegisterPage() {
 									onChange={onInputChange}
 									errorMessage={formState?.errors?.lastname}
 									margin='14px 0'
+									value={formState.lastname}
 								/>
 								<Input
 									type='email'
@@ -108,6 +109,7 @@ function RegisterPage() {
 									onChange={onInputChange}
 									errorMessage={formState?.errors?.email}
 									margin='14px 0'
+									value={formState.email}
 								/>
 								<Input
 									type='password'
@@ -116,6 +118,7 @@ function RegisterPage() {
 									onChange={onInputChange}
 									errorMessage={formState?.errors?.password}
 									margin='14px 0'
+									value={formState.password}
 								/>
 								<Button type='submit'>Create</Button>
 							</form>

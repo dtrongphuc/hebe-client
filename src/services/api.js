@@ -6,7 +6,7 @@ const api = axios.create({
 });
 
 // Add a request interceptor
-axios.interceptors.request.use(
+api.interceptors.request.use(
 	function (config) {
 		// Do something before request is sent
 		const token = window.localStorage.getItem('token');
