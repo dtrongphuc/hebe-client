@@ -2,12 +2,16 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import FormAddress from 'components/FormAddress/FormAddress';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+	getAllAddressThunk,
+	openEditForm,
+} from 'features/address/addressSlice';
+import { deleteAddressById } from 'services/AddressApi';
 function AddressItem({ address }) {
+	const dispatch = useDispatch();
+	const { addressForm } = useSelector((state) => state.address);
 	const [addressValue, setAddressValue] = useState(null);
-	const [addressForm, setAddressForm] = useState({
-		show: false,
-		action: 'edit',
-	});
 
 	useEffect(() => {
 		if (address) {
@@ -26,6 +30,23 @@ function AddressItem({ address }) {
 			setAddressValue(array);
 		}
 	}, [address]);
+
+	const handleDeleteClick = async () => {
+		let result = window.confirm(
+			'Are you sure you wish to delete this address?'
+		);
+		if (!result) {
+			return;
+		}
+
+		try {
+			await deleteAddressById(address._id);
+		} catch (error) {
+			console.log(error);
+		} finally {
+			dispatch(getAllAddressThunk());
+		}
+	};
 
 	return (
 		<div>
@@ -46,35 +67,26 @@ function AddressItem({ address }) {
 				<Link
 					to='#'
 					className='text-dark text-decoration-underline h6-text'
-					onClick={() =>
-						setAddressForm((prevState) => ({
-							...prevState,
-							show: !prevState.show,
-						}))
-					}
+					onClick={() => dispatch(openEditForm(address._id))}
 				>
 					Edit
 				</Link>
 				<Link
 					to='#'
 					className='ml-2 text-dark text-decoration-underline h6-text'
+					onClick={handleDeleteClick}
 				>
 					Delete
 				</Link>
 			</div>
 			<hr className='hr--small' />
-			{addressForm?.show && (
-				<div className='mt-4'>
-					<FormAddress
-						action={addressForm.action}
-						title='Edit address'
-						id={address._id}
-						cancel={() =>
-							setAddressForm((prevState) => ({ ...prevState, show: false }))
-						}
-					/>
-				</div>
-			)}
+			{addressForm?.open &&
+				addressForm.type === 'edit' &&
+				addressForm.editId === address._id && (
+					<div className='mt-4'>
+						<FormAddress title='Edit address' id={address._id} />
+					</div>
+				)}
 		</div>
 	);
 }

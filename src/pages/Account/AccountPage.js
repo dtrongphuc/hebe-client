@@ -3,7 +3,7 @@ import CustomerLayout from 'layouts/CustomerLayout';
 import { Link } from 'react-router-dom';
 import './styles.scss';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllAddressThunk } from 'features/address/addressSlice';
+import { countAddressesThunk } from 'features/address/addressSlice';
 // import PropTypes from 'prop-types'
 
 function AccountPage() {
@@ -11,15 +11,15 @@ function AccountPage() {
 	const count = useSelector((state) => state.address?.count);
 
 	useEffect(() => {
-		const getAddresses = async () => {
+		const countAddresses = () => {
 			try {
-				dispatch(getAllAddressThunk());
+				dispatch(countAddressesThunk());
 			} catch (error) {
 				console.log(error);
 			}
 		};
 
-		getAddresses();
+		countAddresses();
 	}, [dispatch]);
 
 	return (

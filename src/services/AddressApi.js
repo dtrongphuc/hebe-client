@@ -47,7 +47,20 @@ export const editAddress = async (data) => {
 
 export const deleteAddressById = async (id) => {
 	try {
-		const response = await api.put('/account/address/delete', { id });
+		console.log(id);
+		const response = await api.delete('/account/address/delete', {
+			data: { id },
+		});
+		return response.data;
+	} catch (error) {
+		console.log(error);
+		return Promise.reject(error);
+	}
+};
+
+export const countAddresses = async () => {
+	try {
+		const response = await api.get('/account/address/count');
 		return response.data;
 	} catch (error) {
 		console.log(error);

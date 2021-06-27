@@ -12,7 +12,8 @@ import {
 } from 'services/AddressApi';
 import { parseErrors } from 'utils/util';
 import { toast } from 'react-toastify';
-import ModalLoading from 'components/ModalLoading/ModalLoading';
+import { useDispatch, useSelector } from 'react-redux';
+import { closeForm, getAllAddressThunk } from 'features/address/addressSlice';
 
 const initialState = {
 	firstname: '',
@@ -26,10 +27,9 @@ const initialState = {
 	isDefault: false,
 };
 
-function FormAddress({ action, cancel, id, title }) {
-	const [pageState, setPageState] = useState({
-		loading: false,
-	});
+function FormAddress({ id, title }) {
+	const dispatch = useDispatch();
+	const formType = useSelector((state) => state.address?.addressForm.type);
 	const [formState, setFormState] = useState(initialState);
 	const [errors, setErrors] = useState({
 		firstname: '',
@@ -44,7 +44,7 @@ function FormAddress({ action, cancel, id, title }) {
 	});
 
 	useEffect(() => {
-		if (action === 'edit' && !!id) {
+		if (formType === 'edit' && !!id) {
 			(async function () {
 				try {
 					const response = await getAddressById(id);
@@ -54,7 +54,7 @@ function FormAddress({ action, cancel, id, title }) {
 				}
 			})();
 		}
-	}, [action, id]);
+	}, [formType, id]);
 
 	const onInputChange = (e) => {
 		setFormState((prevState) => {
@@ -92,15 +92,13 @@ function FormAddress({ action, cancel, id, title }) {
 
 	const onSubmit = async (e) => {
 		e.preventDefault();
-		setPageState((prevState) => ({ ...prevState, loading: true }));
 		try {
-			if (action === 'add') {
+			if (formType === 'add') {
 				await addNewAddress(formState);
-			} else if (action === 'edit') {
+			} else if (formType === 'edit') {
 				let sendData = Object.assign({ _id: id }, formState);
 				await editAddress(sendData);
 			}
-			window.location.reload();
 		} catch (error) {
 			console.log(error);
 			if (error.status === 422) {
@@ -114,7 +112,11 @@ function FormAddress({ action, cancel, id, title }) {
 				toast.error('failed');
 			}
 		} finally {
-			setPageState((prevState) => ({ ...prevState, loading: false }));
+			// close current form
+			dispatch(closeForm());
+
+			// dispatch refresh addresses
+			dispatch(getAllAddressThunk());
 		}
 	};
 
@@ -250,17 +252,18 @@ function FormAddress({ action, cancel, id, title }) {
 				</label>
 			</div>
 			<button type='submit' className='btn-black'>
-				{action === 'add' ? 'Add Address' : 'Edit Address'}
+				{formType === 'add' ? 'Add Address' : 'Edit Address'}
 			</button>
-			<Link
-				className='account-text account-text--small account-link'
-				to='#'
-				onClick={cancel}
-			>
-				Cancel
-			</Link>
+			<div>
+				<Link
+					className='account-text account-text--small account-link'
+					to='#'
+					onClick={() => dispatch(closeForm())}
+				>
+					Cancel
+				</Link>
+			</div>
 			<hr />
-			<ModalLoading loading={pageState.loading} />
 		</form>
 	);
 }

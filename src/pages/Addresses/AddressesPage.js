@@ -1,20 +1,31 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import CustomerLayout from 'layouts/CustomerLayout';
 import { Link } from 'react-router-dom';
 import FormAddress from 'components/FormAddress/FormAddress';
 import './styles.scss';
 import AddressList from 'components/AddressList/AddressList';
 import ModalLoading from 'components/ModalLoading/ModalLoading';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllAddressThunk, openAddForm } from 'features/address/addressSlice';
 
 function AddressesPage() {
+	const dispatch = useDispatch();
+
 	const addresses = useSelector((state) => state.address?.addresses);
 	const loading = useSelector((state) => state.address?.isLoading);
+	const addressForm = useSelector((state) => state.address?.addressForm);
 
-	const [addressForm, setAddressForm] = useState({
-		show: false,
-		action: 'add',
-	});
+	useEffect(() => {
+		const getAddresses = async () => {
+			try {
+				dispatch(getAllAddressThunk());
+			} catch (error) {
+				console.log(error);
+			}
+		};
+
+		getAddresses();
+	}, [dispatch]);
 
 	return (
 		<CustomerLayout>
@@ -26,12 +37,10 @@ function AddressesPage() {
 							<button
 								type='button'
 								className='btn-black'
-								onClick={() =>
-									setAddressForm((prevState) => ({
-										show: !prevState.show,
-										action: 'add',
-									}))
-								}
+								onClick={() => {
+									console.log('click');
+									dispatch(openAddForm());
+								}}
 							>
 								Add a New Address
 							</button>
@@ -46,15 +55,9 @@ function AddressesPage() {
 							&#8592; Return to Account Details
 						</Link>
 					</div>
-					{addressForm?.show && (
+					{addressForm?.open && addressForm?.type === 'add' && (
 						<div className='col-12 mt-4'>
-							<FormAddress
-								action={addressForm.action}
-								title='Add a New Address'
-								cancel={() =>
-									setAddressForm((prevState) => ({ ...prevState, show: false }))
-								}
-							/>
+							<FormAddress title='Add a New Address' />
 						</div>
 					)}
 					<div className='col-12 mt-4'>
