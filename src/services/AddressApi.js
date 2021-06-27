@@ -44,3 +44,13 @@ export const editAddress = async (data) => {
 		return Promise.reject(error);
 	}
 };
+
+export const deleteAddressById = async (id) => {
+	try {
+		const response = await api.put('/account/address/delete', { id });
+		return response.data;
+	} catch (error) {
+		console.log(error);
+		return Promise.reject(error);
+	}
+};
