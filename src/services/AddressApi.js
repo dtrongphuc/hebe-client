@@ -67,3 +67,13 @@ export const countAddresses = async () => {
 		return Promise.reject(error);
 	}
 };
+
+export const getDefaultAddress = async () => {
+	try {
+		const response = await api.get('/account/address/default');
+		return response.data;
+	} catch (error) {
+		console.log(error);
+		return Promise.reject(error);
+	}
+};

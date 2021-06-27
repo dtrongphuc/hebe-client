@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { countAddresses, getAllAddresses } from 'services/AddressApi';
+import { getAllAddresses } from 'services/AddressApi';
 
 export const getAllAddressThunk = createAsyncThunk(
 	'address/get-all',
@@ -9,17 +9,8 @@ export const getAllAddressThunk = createAsyncThunk(
 	}
 );
 
-export const countAddressesThunk = createAsyncThunk(
-	'address/count',
-	async () => {
-		const response = await countAddresses();
-		return response?.count;
-	}
-);
-
 const initialState = {
 	addresses: [],
-	count: 0,
 	isLoading: false,
 	addressForm: {
 		open: false,
@@ -64,17 +55,6 @@ export const addressSlice = createSlice({
 			state.addresses = action.payload;
 		},
 		[getAllAddressThunk.rejected]: (state) => {
-			state.isLoading = false;
-		},
-
-		[countAddressesThunk.pending]: (state) => {
-			state.isLoading = true;
-		},
-		[countAddressesThunk.fulfilled]: (state, action) => {
-			state.isLoading = false;
-			state.count = action.payload;
-		},
-		[countAddressesThunk.rejected]: (state) => {
 			state.isLoading = false;
 		},
 	},

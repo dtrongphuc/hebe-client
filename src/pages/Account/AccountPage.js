@@ -2,24 +2,38 @@ import React, { useEffect } from 'react';
 import CustomerLayout from 'layouts/CustomerLayout';
 import { Link } from 'react-router-dom';
 import './styles.scss';
-import { useDispatch, useSelector } from 'react-redux';
-import { countAddressesThunk } from 'features/address/addressSlice';
+import { useDispatch } from 'react-redux';
+import { useState } from 'react';
+import { countAddresses, getDefaultAddress } from 'services/AddressApi';
+import AddressItem from 'components/AddressList/AddressItem';
 // import PropTypes from 'prop-types'
 
 function AccountPage() {
 	const dispatch = useDispatch();
-	const count = useSelector((state) => state.address?.count);
+	const [defaultAddress, setDefaultAddress] = useState(null);
+	const [addressCount, setAddressCount] = useState(0);
 
 	useEffect(() => {
-		const countAddresses = () => {
+		const getCountAddresses = async () => {
 			try {
-				dispatch(countAddressesThunk());
+				const response = await countAddresses();
+				setAddressCount(response?.count);
 			} catch (error) {
 				console.log(error);
 			}
 		};
 
-		countAddresses();
+		const getAddress = async () => {
+			try {
+				const response = await getDefaultAddress();
+				setDefaultAddress(response?.address);
+			} catch (error) {
+				console.log(error);
+			}
+		};
+
+		getCountAddresses();
+		getAddress();
 	}, [dispatch]);
 
 	return (
@@ -40,12 +54,14 @@ function AccountPage() {
 					</div>
 					<div className='col-12 col-md-4 mt-2'>
 						<p className='account__col-title'>Account Details</p>
-						<p className='account-text'>Dương Phúc</p>
+						{defaultAddress && (
+							<AddressItem address={defaultAddress} showDefault={false} />
+						)}
 						<Link
 							className='account-text account-text--small account-link'
 							to='/account/addresses'
 						>
-							View Addresses ({count})
+							View Addresses ({addressCount})
 						</Link>
 					</div>
 				</div>
