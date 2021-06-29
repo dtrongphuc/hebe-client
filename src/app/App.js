@@ -9,6 +9,7 @@ import RegisterPage from 'pages/Auth/RegisterPage';
 import AccountPage from 'pages/Account/AccountPage';
 import PrivateRoute from 'components/PrivateRoute/PrivateRoute';
 import AddressesPage from 'pages/Addresses/AddressesPage';
+import CartPage from 'pages/Cart/CartPage';
 
 function App() {
 	return (
@@ -31,6 +32,7 @@ function App() {
 				/>
 				<Route exact path='/account/login' component={LoginPage} />
 				<Route exact path='/account/register' component={RegisterPage} />
+				<Route exact path='/cart' component={CartPage} />
 			</Switch>
 		</Router>
 	);
