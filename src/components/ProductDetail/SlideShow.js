@@ -20,13 +20,15 @@ function SlideShow({ images }) {
 		<Slider {...settings}>
 			{images &&
 				Array.isArray(images) &&
-				images.map((image) => (
-					<div key={image}>
-						<div className='product-slide__wrapper'>
-							<img src={image.link} alt='' className='product-slide__img' />
+				images
+					.sort((first, second) => first?.position - second?.position)
+					.map((image) => (
+						<div key={image.publicId}>
+							<div className='product-slide__wrapper'>
+								<img src={image.src} alt='' className='product-slide__img' />
+							</div>
 						</div>
-					</div>
-				))}
+					))}
 		</Slider>
 	);
 }

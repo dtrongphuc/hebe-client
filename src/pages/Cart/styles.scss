@@ -71,6 +71,18 @@
 		}
 	}
 
+	&-checkout {
+		text-align: right;
+
+		& > button {
+			max-width: 320px;
+
+			@media (max-width: 992px) {
+				max-width: 100%;
+			}
+		}
+	}
+
 	&-quantity-control {
 		padding-left: 12px;
 		padding-right: 12px;

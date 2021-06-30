@@ -1,10 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Link, useHistory } from 'react-router-dom';
 import { productPriceString } from 'utils/util';
+import { useState } from 'react';
 
 export default function ProductItem({ product, fromPage }) {
 	let history = useHistory();
+	const [avatar, setAvatar] = useState(null);
+
+	useEffect(() => {
+		console.log(product);
+		let avt = product?.images.find((image) => image.position === 1);
+		setAvatar(avt?.src);
+	}, [product]);
 
 	const productClicked = () => {
 		history.push(`/frontpage/products/${product.path}`, {
@@ -18,11 +26,7 @@ export default function ProductItem({ product, fromPage }) {
 				to={`/frontpage/products/${product.path}`}
 				onClick={(e) => e.preventDefault()}
 			>
-				<img
-					src={`${product.images[product.avatarIndex]?.link}`}
-					alt=''
-					className='product-item__image'
-				/>
+				<img src={`${avatar}`} alt='' className='product-item__image' />
 			</Link>
 			<div className='product-item__description'>
 				<Link to='#' className='product-item__category'>
