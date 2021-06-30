@@ -10,6 +10,7 @@ import AccountPage from 'pages/Account/AccountPage';
 import PrivateRoute from 'components/PrivateRoute/PrivateRoute';
 import AddressesPage from 'pages/Addresses/AddressesPage';
 import CartPage from 'pages/Cart/CartPage';
+import Admin from 'admin/Admin';
 
 function App() {
 	return (
@@ -17,6 +18,7 @@ function App() {
 			<ScrollToTop />
 			<Switch>
 				<Route exact path='/' component={HomePage} />
+				<Route path='/admin' component={Admin} />
 				<Route
 					exact
 					path='/:path/products/:productPath'
