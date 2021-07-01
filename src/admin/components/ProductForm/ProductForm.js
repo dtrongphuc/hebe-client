@@ -4,6 +4,7 @@ import { Form, Input, Button, Row, Col, Select, InputNumber } from 'antd';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import Variants from './Variants';
+import UploadImages from './UploadImage';
 
 const { Option } = Select;
 
@@ -116,6 +117,9 @@ function ProductForm(props) {
 			</Form.Item>
 			<Form.Item label='Variants'>
 				<Variants />
+			</Form.Item>
+			<Form.Item label='Images'>
+				<UploadImages />
 			</Form.Item>
 			<Form.Item>
 				<Button type='primary'>Submit</Button>

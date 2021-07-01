@@ -38,4 +38,13 @@ api.interceptors.response.use(
 	}
 );
 
+export async function getSignature(folder) {
+	try {
+		const response = await api.post(`/image/upload`, { folder });
+		return response.data;
+	} catch (error) {
+		return error;
+	}
+}
+
 export default api;
