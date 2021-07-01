@@ -1,12 +1,7 @@
 import React from 'react';
-import AdminLayout from 'admin/layouts/AdminLayout';
 
 function DashBoardPage() {
-	return (
-		<AdminLayout>
-			<p>Day la dashboard</p>
-		</AdminLayout>
-	);
+	return <p>Day la dashboard</p>;
 }
 
 export default DashBoardPage;

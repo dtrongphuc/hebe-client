@@ -3,25 +3,17 @@ import LeftMenu from 'admin/components/LeftMenu/LeftMenu';
 import { Layout } from 'antd';
 import PropTypes from 'prop-types';
 import './styles.scss';
-import { useHistory } from 'react-router-dom';
 
 const { Header, Content, Footer, Sider } = Layout;
 
 function AdminLayout({ children }) {
 	const [collapsed, setCollapsed] = useState(false);
-	const [selectedKeys, setSelectedKeys] = useState(['product/all']);
-	let history = useHistory();
 
 	const onCollapse = (collapsed) => {
 		console.log(collapsed);
 		setCollapsed(collapsed);
 	};
 
-	const onSelectedKeysChange = ({ key }) => {
-		console.log(key);
-		setSelectedKeys([key]);
-		history.push(`/admin/${key}`);
-	};
 	return (
 		<Layout style={{ minHeight: '100vh' }}>
 			<Sider
@@ -31,10 +23,7 @@ function AdminLayout({ children }) {
 				className='admin-sider'
 			>
 				<div className='logo' />
-				<LeftMenu
-					selectedKeys={selectedKeys}
-					onSelectedKeysChange={onSelectedKeysChange}
-				/>
+				<LeftMenu />
 			</Sider>
 			<Layout className='site-layout'>
 				<Header className='site-layout-background' style={{ padding: 0 }} />

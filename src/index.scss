@@ -64,6 +64,10 @@ label {
 	cursor: pointer;
 }
 
+svg {
+	vertical-align: unset;
+}
+
 hr {
 	border-top: solid #000;
 	border-width: 1px 0 0;
