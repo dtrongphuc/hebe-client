@@ -1,9 +1,15 @@
 import { Upload, Modal } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { useState, useEffect } from 'react';
-import { getSignature } from 'services/api';
-import { generatePresignedUrl } from 'utils/util';
+import {
+	generateUploadPresignedUrl,
+	generateDestroyPresignedUrl,
+} from 'utils/util';
 import axios from 'axios';
+import {
+	getDestroySignature,
+	getUploadSignature,
+} from 'services/CloudinaryApi';
 
 function getBase64(file) {
 	return new Promise((resolve, reject) => {
@@ -14,75 +20,42 @@ function getBase64(file) {
 	});
 }
 
-function UploadImages() {
-	const [state, setState] = useState({
-		previewVisible: false,
-		previewImage: '',
-		previewTitle: '',
-		fileList: [
-			{
-				uid: '-1',
-				name: 'image.png',
-				status: 'done',
-				url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-			},
-			{
-				uid: '-2',
-				name: 'image.png',
-				status: 'done',
-				url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-			},
-			{
-				uid: '-3',
-				name: 'image.png',
-				status: 'done',
-				url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-			},
-			{
-				uid: '-4',
-				name: 'image.png',
-				status: 'done',
-				url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-			},
-			{
-				uid: '-xxx',
-				percent: 50,
-				name: 'image.png',
-				status: 'uploading',
-				url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-			},
-			{
-				uid: '-5',
-				name: 'image.png',
-				status: 'error',
-			},
-		],
+function UploadImages({ files, setFiles }) {
+	const [cloud, setCloud] = useState({
+		folder: 'products',
+		uploadURL: '',
 	});
-	const [signedUrl, setSignedUrl] = useState(null);
 
 	useEffect(() => {
 		(async () => {
 			try {
-				const { timestamp, signature, folder } = await getSignature('products');
+				const { timestamp, signature } = await getUploadSignature(cloud.folder);
 				if (timestamp && signature) {
-					let url = generatePresignedUrl(folder, timestamp, signature);
-					setSignedUrl(url);
+					let uploadURL = generateUploadPresignedUrl(
+						cloud.folder,
+						timestamp,
+						signature
+					);
+					setCloud((prevState) => ({
+						...prevState,
+						uploadURL,
+					}));
 				}
 			} catch (error) {
 				console.log(error);
 			}
 		})();
-	}, []);
+	}, [cloud.folder]);
 
 	const handleCancel = () =>
-		setState((prevState) => ({ ...prevState, previewVisible: false }));
+		setFiles((prevState) => ({ ...prevState, previewVisible: false }));
 
 	const handlePreview = async (file) => {
 		if (!file.url && !file.preview) {
 			file.preview = await getBase64(file.originFileObj);
 		}
 
-		setState((prevState) => ({
+		setFiles((prevState) => ({
 			...prevState,
 			previewImage: file.url || file.preview,
 			previewVisible: true,
@@ -92,12 +65,11 @@ function UploadImages() {
 	};
 
 	const handleChange = ({ fileList }) => {
-		setState((prevState) => ({ ...prevState, fileList }));
+		setFiles((prevState) => ({ ...prevState, fileList }));
 	};
 
 	const uploadRequest = async (options) => {
 		const { onSuccess, onError, file, onProgress } = options;
-
 		const formData = new FormData();
 		formData.append('file', file);
 		const config = {
@@ -109,7 +81,7 @@ function UploadImages() {
 			},
 		};
 		try {
-			const { data } = await axios.post(signedUrl, formData, config);
+			const { data } = await axios.post(cloud.uploadURL, formData, config);
 			onSuccess({
 				url: data?.secure_url,
 				public_id: data?.public_id,
@@ -117,6 +89,27 @@ function UploadImages() {
 			return;
 		} catch (error) {
 			onError('Upload error');
+		}
+	};
+
+	const handleRemove = async (file) => {
+		const { public_id } = file.response;
+
+		try {
+			const { timestamp, signature } = await getDestroySignature(public_id);
+			let destroyURL = generateDestroyPresignedUrl(
+				public_id,
+				timestamp,
+				signature
+			);
+
+			const response = await axios.post(destroyURL);
+			if (response.status === 200) {
+				return true;
+			}
+		} catch (error) {
+			console.log(error);
+			return false;
 		}
 	};
 
@@ -129,22 +122,23 @@ function UploadImages() {
 	return (
 		<>
 			<Upload
-				action={signedUrl}
+				action={cloud.uploadURL}
 				customRequest={uploadRequest}
 				listType='picture-card'
-				fileList={state.fileList}
+				fileList={files.fileList}
 				onPreview={handlePreview}
 				onChange={handleChange}
+				onRemove={handleRemove}
 			>
-				{state.fileList.length >= 8 ? null : uploadButton}
+				{files.fileList.length >= 8 ? null : uploadButton}
 			</Upload>
 			<Modal
-				visible={state.previewVisible}
-				title={state.previewTitle}
+				visible={files.previewVisible}
+				title={files.previewTitle}
 				footer={null}
 				onCancel={handleCancel}
 			>
-				<img alt='example' style={{ width: '100%' }} src={state.previewImage} />
+				<img alt='preview' style={{ width: '100%' }} src={files.previewImage} />
 			</Modal>
 		</>
 	);

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 // import PropTypes from 'prop-types'
 import { Form, Input, Button, Row, Col, Select, InputNumber } from 'antd';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
@@ -10,6 +10,12 @@ const { Option } = Select;
 
 function ProductForm(props) {
 	const [form] = Form.useForm();
+	const [files, setFiles] = useState({
+		previewVisible: false,
+		previewImage: '',
+		previewTitle: '',
+		fileList: [],
+	});
 
 	// select
 	function onChange(value) {
@@ -119,7 +125,7 @@ function ProductForm(props) {
 				<Variants />
 			</Form.Item>
 			<Form.Item label='Images'>
-				<UploadImages />
+				<UploadImages files={files} setFiles={setFiles} />
 			</Form.Item>
 			<Form.Item>
 				<Button type='primary'>Submit</Button>

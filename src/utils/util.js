@@ -19,6 +19,10 @@ export const parseErrors = (errors) => {
 	return object;
 };
 
-export const generatePresignedUrl = (folder, timestamp, signature) => {
+export const generateUploadPresignedUrl = (folder, timestamp, signature) => {
 	return `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload?api_key=${API_KEY}&folder=${folder}&timestamp=${timestamp}&signature=${signature}`;
+};
+
+export const generateDestroyPresignedUrl = (publicId, timestamp, signature) => {
+	return `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/destroy?api_key=${API_KEY}&public_id=${publicId}&timestamp=${timestamp}&signature=${signature}`;
 };
