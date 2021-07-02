@@ -130,7 +130,7 @@ function UploadImages({ files, setFiles }) {
 				onChange={handleChange}
 				onRemove={handleRemove}
 			>
-				{files.fileList.length >= 8 ? null : uploadButton}
+				{files.fileList.length >= files?.limit ? null : uploadButton}
 			</Upload>
 			<Modal
 				visible={files.previewVisible}
