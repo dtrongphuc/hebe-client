@@ -37,13 +37,9 @@ export async function getAllProducts() {
 	}
 }
 
-export async function postNewProduct(formData) {
+export async function postNewProduct(products) {
 	try {
-		const response = await api.post(`/product/create`, formData, {
-			headers: {
-				'Content-Type': 'multipart/form-data',
-			},
-		});
+		const response = await api.post(`/product/create`, products);
 		return response.data;
 	} catch (error) {
 		return error;

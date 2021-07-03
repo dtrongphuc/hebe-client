@@ -1,15 +1,33 @@
 import React, { useState } from 'react';
 // import PropTypes from 'prop-types'
-import { Form, Input, Button, Row, Col, InputNumber, Select } from 'antd';
+import {
+	Form,
+	Input,
+	Button,
+	Row,
+	Col,
+	InputNumber,
+	Select,
+	message,
+} from 'antd';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import Variants from './Variants';
 import UploadImages from './UploadImage';
 import { useEffect } from 'react';
 import { getAllBrands } from 'services/BrandApi';
 import { getAllGroups } from 'services/GroupApi';
+import VariantList from './Variants/VariantList';
+import { postNewProduct } from 'services/ProductApi';
 
-const initialValues = { layout: 'vertical', name: '', price: 0, salePrice: 0 };
+const initialValues = {
+	layout: 'vertical',
+	name: '',
+	price: 0,
+	salePrice: 0,
+	images: [],
+	variants: [],
+	description: '',
+};
 
 function ProductForm(props) {
 	const [form] = Form.useForm();
@@ -57,16 +75,23 @@ function ProductForm(props) {
 		fetchCollectionList();
 	}, []);
 
-	function onChange(value) {
-		console.log(`selected ${value}`);
-	}
+	const setImages = (fileList) => {
+		let images = fileList?.map((file) => file.response);
+		form.setFieldsValue({ images });
+	};
 
-	function onSearch(val) {
-		console.log('search:', val);
-	}
-
-	const onFinish = (values) => {
-		console.log(values);
+	const onFinish = async (values) => {
+		const key = 'submit';
+		message.loading({ content: 'Loading...', key });
+		try {
+			const response = await postNewProduct({ ...values });
+			if (response) {
+				form.resetFields();
+				message.success({ content: 'Thành công!', key, duration: 3 });
+			}
+		} catch (error) {
+			message.error({ content: 'Có lỗi xảy ra!', key, duration: 3 });
+		}
 	};
 
 	return (
@@ -97,11 +122,9 @@ function ProductForm(props) {
 							showSearch
 							placeholder='Select a brand'
 							options={brandList}
-							optionFilterProp='children'
-							onChange={onChange}
-							onSearch={onSearch}
+							optionFilterProp='label'
 							filterOption={(input, option) =>
-								option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+								option.label?.toLowerCase().indexOf(input?.toLowerCase()) >= 0
 							}
 						/>
 					</Form.Item>
@@ -116,11 +139,9 @@ function ProductForm(props) {
 							showSearch
 							placeholder='Select a group'
 							options={groupList}
-							optionFilterProp='children'
-							onChange={onChange}
-							onSearch={onSearch}
+							optionFilterProp='label'
 							filterOption={(input, option) =>
-								option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+								option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
 							}
 						/>
 					</Form.Item>
@@ -179,14 +200,14 @@ function ProductForm(props) {
 				label='Variants'
 				name='variants'
 			>
-				<Variants form={form} />
+				<VariantList form={form} />
 			</Form.Item>
 			<Form.Item
 				name='images'
 				label='Images'
 				rules={[{ required: true, message: 'Images is required' }]}
 			>
-				<UploadImages files={files} setFiles={setFiles} />
+				<UploadImages files={files} setFiles={setFiles} setImages={setImages} />
 			</Form.Item>
 			<Form.Item>
 				<Button type='primary' htmlType='submit'>

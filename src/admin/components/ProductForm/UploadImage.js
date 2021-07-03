@@ -20,7 +20,7 @@ function getBase64(file) {
 	});
 }
 
-function UploadImages({ files, setFiles }) {
+function UploadImages({ files, setFiles, setImages }) {
 	const [cloud, setCloud] = useState({
 		folder: 'products',
 		uploadURL: '',
@@ -66,6 +66,7 @@ function UploadImages({ files, setFiles }) {
 
 	const handleChange = ({ fileList }) => {
 		setFiles((prevState) => ({ ...prevState, fileList }));
+		setImages(fileList);
 	};
 
 	const uploadRequest = async (options) => {

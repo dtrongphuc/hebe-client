@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import Admin from 'admin/Admin';
 import ScrollToTop from 'components/ScrollToTop';
 import HomePage from 'pages/Home/HomePage';
 import ProductDetailPage from 'pages/ProductDetail/ProductDetailPage';
@@ -10,7 +11,6 @@ import AccountPage from 'pages/Account/AccountPage';
 import PrivateRoute from 'components/PrivateRoute/PrivateRoute';
 import AddressesPage from 'pages/Addresses/AddressesPage';
 import CartPage from 'pages/Cart/CartPage';
-import Admin from 'admin/Admin';
 
 function App() {
 	return (
