@@ -75,6 +75,9 @@ function ProductForm(props) {
 			form={form}
 			initialValues={initialValues}
 			onFinish={onFinish}
+			onFinishFailed={({ values, errorFields, outOfDate }) =>
+				console.log(values)
+			}
 		>
 			<Form.Item
 				name='name'
@@ -159,15 +162,14 @@ function ProductForm(props) {
 			>
 				<div>
 					<CKEditor
+						style={{ height: 100 }}
 						editor={ClassicEditor}
 						data=''
-						onReady={(editor) => {
-							// You can store the "editor" and use when it is needed.
-							console.log('Editor is ready to use!', editor);
-						}}
 						onChange={(event, editor) => {
 							const data = editor.getData();
-							console.log({ event, editor, data });
+							form.setFieldsValue({
+								description: data,
+							});
 						}}
 					/>
 				</div>
@@ -177,7 +179,7 @@ function ProductForm(props) {
 				label='Variants'
 				name='variants'
 			>
-				<Variants />
+				<Variants form={form} />
 			</Form.Item>
 			<Form.Item
 				name='images'
@@ -187,7 +189,9 @@ function ProductForm(props) {
 				<UploadImages files={files} setFiles={setFiles} />
 			</Form.Item>
 			<Form.Item>
-				<Button type='primary'>Submit</Button>
+				<Button type='primary' htmlType='submit'>
+					Submit
+				</Button>
 			</Form.Item>
 		</Form>
 	);

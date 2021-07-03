@@ -1,10 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import Checkbox from 'antd/lib/checkbox/Checkbox';
 import { Form, Space, InputNumber, Input, Button } from 'antd';
 // import PropTypes from 'prop-types'
 
-function Variants() {
+function Variants({ form }) {
+	const [freeSize, setFreeSize] = useState(false);
+
+	const onCheckboxChange = (key) => (e) => {
+		let checked = e.target.checked;
+		if (checked) {
+			let { variants } = form.getFieldsValue();
+			Object.assign(variants[key], { details: [], stock: 0 });
+			form.setFieldsValue({ variants });
+		}
+		setFreeSize(checked);
+	};
+
+	const onQuantityChange = (colorKey, detailKey) => (number) => {
+		let { variants } = form.getFieldsValue();
+		let stock = variants[colorKey]?.details
+			?.map((detail) => detail.quantity)
+			.reduce((total, curr) => total + curr, 0);
+		variants[colorKey].stock = stock;
+		form.setFieldsValue({ variants });
+	};
+
 	return (
 		<Form.List name='variants'>
 			{(fields, { add, remove }) => (
@@ -24,7 +45,7 @@ function Variants() {
 									name={[name, 'color']}
 									label='Color'
 									fieldKey={[fieldKey, 'color']}
-									rules={[{ required: true, message: 'Missing first name' }]}
+									rules={[{ required: true, message: 'Color is required' }]}
 								>
 									<Input placeholder='Color' />
 								</Form.Item>
@@ -32,68 +53,90 @@ function Variants() {
 									{...restField}
 									name={[name, 'stock']}
 									label='Stock'
+									initialValue={0}
 									fieldKey={[fieldKey, 'stock']}
-									rules={[{ required: true, message: 'Missing last name' }]}
+									rules={[{ required: freeSize, message: 'Stock is required' }]}
 								>
-									<InputNumber placeholder='Stock' min={0} />
+									<InputNumber
+										placeholder='Stock'
+										min={0}
+										disabled={!freeSize}
+									/>
 								</Form.Item>
 								<Form.Item
 									{...restField}
 									name={[name, 'freeSize']}
 									label='Free size'
 									fieldKey={[fieldKey, 'freeSize']}
+									valuePropName='checked'
 								>
-									<Checkbox checked={false}>Free size</Checkbox>
+									<Checkbox onChange={onCheckboxChange(key)}>
+										Free size
+									</Checkbox>
 								</Form.Item>
 							</Space>
 							<Form.List name={[name, 'details']}>
 								{(details, { add, remove }) => (
 									<>
-										{details.map(({ key, name, fieldKey, ...restField }) => (
-											<Space
-												key={key}
-												style={{ display: 'flex', marginBottom: 8 }}
-												align='baseline'
-											>
-												<Form.Item style={{ marginLeft: 36, marginRight: 16 }}>
-													<MinusCircleOutlined onClick={() => remove(name)} />
-												</Form.Item>
+										{!freeSize &&
+											details.map((detail) => {
+												const { name, fieldKey, ...restField } = detail;
 
-												<Form.Item
-													{...restField}
-													name={[name, 'size']}
-													fieldKey={[fieldKey, 'size']}
-													rules={[
-														{
-															required: true,
-															message: 'Missing first name',
-														},
-													]}
-												>
-													<Input placeholder='Size' />
-												</Form.Item>
-												<Form.Item
-													{...restField}
-													name={[name, 'quantity']}
-													fieldKey={[fieldKey, 'quantity']}
-													rules={[
-														{
-															required: true,
-															message: 'Missing last name',
-														},
-													]}
-												>
-													<InputNumber placeholder='Quantity' min={0} />
-												</Form.Item>
-											</Space>
-										))}
+												return (
+													<Space
+														key={detail.key}
+														style={{ display: 'flex', marginBottom: 8 }}
+														align='baseline'
+													>
+														<Form.Item
+															style={{ marginLeft: 38, marginRight: 16 }}
+														>
+															<MinusCircleOutlined
+																onClick={() => remove(name)}
+															/>
+														</Form.Item>
+
+														<Form.Item
+															{...restField}
+															name={[name, 'size']}
+															fieldKey={[fieldKey, 'size']}
+															rules={[
+																{
+																	required: true,
+																	message: 'Size is required',
+																},
+															]}
+														>
+															<Input placeholder='Size' />
+														</Form.Item>
+														<Form.Item
+															{...restField}
+															name={[name, 'quantity']}
+															fieldKey={[fieldKey, 'quantity']}
+															rules={[
+																{
+																	required: true,
+																	message: 'Quantity is required',
+																},
+															]}
+														>
+															<InputNumber
+																placeholder='Quantity'
+																min={0}
+																onChange={onQuantityChange(key, detail.key)}
+															/>
+														</Form.Item>
+													</Space>
+												);
+											})}
 										<Form.Item>
 											<Button
 												type='dashed'
 												onClick={() => add()}
 												block
+												disabled={freeSize}
 												icon={<PlusOutlined />}
-												style={{ maxWidth: 200, marginLeft: 36 }}
+												style={{ maxWidth: 310, marginLeft: 38 }}
 											>
 												Add size
 											</Button>
