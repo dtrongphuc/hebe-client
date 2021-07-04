@@ -29,7 +29,7 @@ const initialValues = {
 	description: '',
 };
 
-function ProductForm(props) {
+function ProductForm() {
 	const [form] = Form.useForm();
 	const [files, setFiles] = useState({
 		previewVisible: false,
@@ -87,6 +87,13 @@ function ProductForm(props) {
 			const response = await postNewProduct({ ...values });
 			if (response) {
 				form.resetFields();
+				setFiles((prevState) => ({
+					...prevState,
+					previewVisible: false,
+					previewImage: '',
+					previewTitle: '',
+					fileList: [],
+				}));
 				message.success({ content: 'Thành công!', key, duration: 3 });
 			}
 		} catch (error) {

@@ -3,11 +3,15 @@ import PropTypes from 'prop-types';
 import Select from './Select';
 import InputQuantity from './InputQuantity';
 import ButtonAddToCart from './ButtonAddToCart';
+import { addToCart } from 'services/CartApi';
+import ModalLoading from 'components/ModalLoading/ModalLoading';
+import { message } from 'antd';
 
 function Form({ variants, price }) {
 	const [selected, setSelected] = useState(null);
 	const [currentInputQuantity, setCurrentInputQuantity] = useState(null);
 	const [cartPrice, setCartPrice] = useState(null);
+	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
 		// find first variant available (stock > 0)
@@ -96,6 +100,29 @@ function Form({ variants, price }) {
 		setCurrentInputQuantity(+value);
 	};
 
+	const handleAddToCart = async (e) => {
+		e.preventDefault();
+		setLoading(true);
+		try {
+			let cart = {
+				_id: selected.variant._id,
+				sku: selected.detailSelected.sku,
+				quantity: currentInputQuantity,
+			};
+			const response = await addToCart(cart);
+			if (response?.success) {
+				message.success({
+					content: 'Thêm vào giỏ hàng thành công!',
+					duration: 2,
+				});
+			}
+		} catch (error) {
+			console.log(error);
+		} finally {
+			setLoading(false);
+		}
+	};
+
 	// OPTIONS
 	const colorOptions = variants?.map((variant) => ({
 		label: variant.color,
@@ -108,35 +135,42 @@ function Form({ variants, price }) {
 	}));
 
 	return (
-		<form action='#' className='product-page__form'>
-			{selected?.details && (
-				<Select
-					name='size'
-					options={sizeOptions}
-					value={selected?.detailSelected.sku}
-					onChange={onSizeChange}
-				/>
-			)}
+		<>
+			<form
+				action='#'
+				className='product-page__form'
+				onSubmit={handleAddToCart}
+			>
+				{selected?.details && (
+					<Select
+						name='size'
+						options={sizeOptions}
+						value={selected?.detailSelected.sku}
+						onChange={onSizeChange}
+					/>
+				)}
 
-			<Select
-				name='color'
-				options={colorOptions}
-				value={selected?.variant.color}
-				onChange={onColorChange}
-			/>
-			<InputQuantity
-				increase={handleIncrease}
-				decrease={handleDecrease}
-				onChange={onQuantityChange}
-				value={currentInputQuantity || 0}
-				max={selected?.stock}
-			/>
-			<ButtonAddToCart
-				price={cartPrice}
-				quantity={currentInputQuantity}
-				isSoldOut={selected?.stock === 0}
-			/>
-		</form>
+				<Select
+					name='color'
+					options={colorOptions}
+					value={selected?.variant.color}
+					onChange={onColorChange}
+				/>
+				<InputQuantity
+					increase={handleIncrease}
+					decrease={handleDecrease}
+					onChange={onQuantityChange}
+					value={currentInputQuantity || 0}
+					max={selected?.stock}
+				/>
+				<ButtonAddToCart
+					price={cartPrice}
+					quantity={currentInputQuantity}
+					isSoldOut={selected?.stock === 0}
+				/>
+			</form>
+			<ModalLoading loading={loading} />
+		</>
 	);
 }
 
