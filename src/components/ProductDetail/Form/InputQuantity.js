@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 export default function InputQuantity({
 	increase,
 	decrease,
-	quantity,
+	value,
 	onChange,
 	max,
 }) {
@@ -26,7 +26,7 @@ export default function InputQuantity({
 					name='quantity'
 					id='quantity'
 					className='product-page__quantity-input'
-					value={quantity}
+					value={value}
 					onChange={onChange}
 					step='1'
 					max={max}
@@ -46,7 +46,7 @@ export default function InputQuantity({
 InputQuantity.propTypes = {
 	increase: PropTypes.func,
 	decrease: PropTypes.func,
-	quantity: PropTypes.number,
+	value: PropTypes.number,
 	onChange: PropTypes.func,
 	max: PropTypes.number,
 };

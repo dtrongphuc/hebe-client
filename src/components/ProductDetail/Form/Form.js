@@ -4,132 +4,138 @@ import Select from './Select';
 import InputQuantity from './InputQuantity';
 import ButtonAddToCart from './ButtonAddToCart';
 
-const findAvailableSize = (details) => {
-	const matched = details.find((detail) => +detail.quantity > 0);
-	return matched;
-};
-
 function Form({ variants, price }) {
-	const [currentVariant, setCurrentVariant] = useState(null);
-	const [display, setDisplay] = useState({
-		color: '',
-		size: '',
-		quantity: 0,
-		maxQuantity: 0,
-	});
+	const [selected, setSelected] = useState(null);
+	const [currentInputQuantity, setCurrentInputQuantity] = useState(null);
+	const [cartPrice, setCartPrice] = useState(null);
 
-	// first mount
 	useEffect(() => {
-		// find available variant to display
-		const availableVariant = variants?.find((variant) => {
-			let matched = findAvailableSize(variant.details);
-			return typeof matched !== 'undefined';
-		});
-		if (typeof availableVariant !== 'undefined') {
-			setCurrentVariant(availableVariant);
-			let availableSize = findAvailableSize(availableVariant.details);
-			setDisplay((state) => ({
-				...state,
-				color: availableVariant.color,
-				size: availableSize.size,
-				maxQuantity: availableSize.quantity,
-				quantity: 1,
-			}));
-		} else if (Array.isArray(variants) && variants.length > 0) {
-			// if not, set first variant
-			setCurrentVariant(variants[0]);
+		// find first variant available (stock > 0)
+		let variantAvailable = variants?.find((variant) => variant.stock > 0);
+
+		if (typeof variantAvailable !== 'undefined') {
+			// find first size available (quantity > 0)
+			let detailSelected = variantAvailable.details?.find(
+				(detail) => detail.quantity > 0
+			);
+
+			setSelected({
+				variant: {
+					_id: variantAvailable._id,
+					color: variantAvailable.color,
+				},
+				details: variantAvailable?.details || null,
+				detailSelected: detailSelected || null,
+				stock: variantAvailable.freeSize
+					? variantAvailable.stock
+					: detailSelected?.quantity,
+			});
+
+			setCurrentInputQuantity(1);
 		}
 	}, [variants]);
 
-	const sizeChange = (e) => {
-		let value = e.currentTarget.value;
+	useEffect(() => {
+		setCartPrice(price);
+	}, [price]);
 
-		if (!!value) {
-			const matched = currentVariant.details.find(
-				(detail) => detail.size === value
-			);
-			if (typeof matched !== 'undefined') {
-				setDisplay((state) => ({
-					...state,
-					size: value,
-					maxQuantity: +matched.quantity,
-					quantity: +matched.quantity > 0 ? 1 : 0,
-				}));
-			}
-		}
-	};
+	// quantity changed => change cart price
+	useEffect(() => {
+		setCartPrice(currentInputQuantity * price);
+	}, [currentInputQuantity, price]);
 
-	const colorChange = (e) => {
-		const value = e.currentTarget.value;
-		if (!value) return;
-		let matched = variants.find((variant) => variant.color === value);
-		if (typeof color !== 'undefined') {
-			setCurrentVariant((state) => ({
-				...state,
-				color: matched.color,
-				details: matched.details,
-			}));
-
-			let firstDetail = matched.details[0];
-
-			setDisplay((state) => ({
-				...state,
-				color: matched.color,
-				size: firstDetail.size,
-				maxQuantity: firstDetail.quantity,
-				quantity: +firstDetail.quantity > 0 ? 1 : 0,
-			}));
-		}
-	};
-
-	const increaseQuantity = () => {
-		setDisplay((state) => ({
-			...state,
-			quantity: state.quantity + 1,
-		}));
-	};
-
-	const decreaseQuantity = () => {
-		setDisplay((state) => ({
-			...state,
-			quantity: state.quantity > 1 ? state.quantity - 1 : 1,
-		}));
-	};
-
-	const quantityChanged = (e) => {
+	const onColorChange = (e) => {
 		let value = e.target.value;
-		if (+value >= 0 && +value <= display.maxQuantity) {
-			setDisplay((state) => ({
-				...state,
-				quantity: +value > 0 ? +value : '',
-			}));
+		if (!value) return;
+
+		let variant = variants.find((variant) => variant._id === value);
+		let detailSelected = variant.details?.find((detail) => detail.quantity > 0);
+
+		setSelected((prevState) => ({
+			...prevState,
+			variant: {
+				_id: variant._id,
+				color: variant.color,
+			},
+			details: variant?.details || null,
+			detailSelected: detailSelected || null,
+			stock: variant.freeSize ? variant.stock : detailSelected?.quantity,
+		}));
+	};
+
+	const onSizeChange = (e) => {
+		let value = e.target.value;
+		if (!value) return;
+		let detailSelected = selected.details.find(
+			(detail) => detail.sku === value
+		);
+		setSelected((prevState) => ({
+			...prevState,
+			detailSelected: detailSelected || null,
+			stock: detailSelected?.quantity || 0,
+		}));
+	};
+
+	const handleIncrease = () => {
+		if (currentInputQuantity < selected.stock) {
+			setCurrentInputQuantity((prevState) => prevState + 1);
 		}
 	};
+
+	const handleDecrease = () => {
+		if (currentInputQuantity > 1) {
+			setCurrentInputQuantity((prevState) => prevState - 1);
+		}
+	};
+
+	const onQuantityChange = (e) => {
+		let value = e.target.value;
+		if (!value) return;
+		if (+value > selected.stock || +value <= 0) return;
+
+		setCurrentInputQuantity(+value);
+	};
+
+	// OPTIONS
+	const colorOptions = variants?.map((variant) => ({
+		label: variant.color,
+		value: variant._id,
+	}));
+
+	const sizeOptions = selected?.details.map((detail) => ({
+		label: detail.size,
+		value: detail.sku,
+	}));
 
 	return (
 		<form action='#' className='product-page__form'>
-			{currentVariant?.details[0].size && (
+			{selected?.details && (
 				<Select
 					name='size'
-					sizes={currentVariant?.details?.map((current) => current.size)}
-					current={display?.size}
-					onChange={sizeChange}
+					options={sizeOptions}
+					value={selected?.detailSelected.sku}
+					onChange={onSizeChange}
 				/>
 			)}
 
 			<Select
 				name='color'
-				colors={variants?.map((variant) => variant.color)}
-				onChange={colorChange}
+				options={colorOptions}
+				value={selected?.variant.color}
+				onChange={onColorChange}
 			/>
 			<InputQuantity
-				increase={increaseQuantity}
-				decrease={decreaseQuantity}
-				quantity={display?.quantity}
-				onChange={quantityChanged}
-				max={display?.maxQuantity}
+				increase={handleIncrease}
+				decrease={handleDecrease}
+				onChange={onQuantityChange}
+				value={currentInputQuantity || 0}
+				max={selected?.stock}
 			/>
-			<ButtonAddToCart price={price} isSoldOut={display.maxQuantity === 0} />
+			<ButtonAddToCart
+				price={cartPrice}
+				quantity={currentInputQuantity}
+				isSoldOut={selected?.stock === 0}
+			/>
 		</form>
 	);
 }

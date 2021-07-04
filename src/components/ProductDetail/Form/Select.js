@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function Select({ name, onChange, current, ...rest }) {
-	const selectBy = Object.keys(rest)[0];
-
+export default function Select({ name, value, onChange, options }) {
 	return (
 		<div className='product-page__select-wrapper'>
 			<label htmlFor={name} className='product-page__select-label'>
@@ -14,15 +12,17 @@ export default function Select({ name, onChange, current, ...rest }) {
 				id={`product-${name}`}
 				className='product-page__select-input text-capitalize'
 				onChange={onChange}
-				value={current}
+				value={value}
 			>
-				{!!selectBy &&
-					Array.isArray(rest[`${selectBy}`]) &&
-					rest[`${selectBy}`].map((option) => (
-						<option value={option} key={option} className='text-capitalize'>
-							{option}
+				{options?.map((option) => {
+					let { label, value } = option;
+
+					return (
+						<option value={value} key={value} className='text-capitalize'>
+							{label}
 						</option>
-					))}
+					);
+				})}
 			</select>
 		</div>
 	);
@@ -30,6 +30,7 @@ export default function Select({ name, onChange, current, ...rest }) {
 
 Select.propTypes = {
 	name: PropTypes.string,
+	value: PropTypes.string,
 	onChange: PropTypes.func,
-	current: PropTypes.string,
+	options: PropTypes.array,
 };

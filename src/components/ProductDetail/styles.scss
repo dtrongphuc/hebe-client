@@ -45,9 +45,13 @@
 			color: #000;
 			font-size: 1rem;
 			line-height: 1.9;
+			text-align: center;
 
 			& > ul {
 				list-style: disc;
+				padding-left: 1rem;
+				text-align: center;
+
 				& > li {
 					margin-bottom: 12px;
 				}
@@ -292,7 +296,7 @@
 }
 
 .product-slide__img {
-	max-height: 720px;
+	max-height: 70vh;
 }
 
 // wallet

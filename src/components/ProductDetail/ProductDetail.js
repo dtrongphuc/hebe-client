@@ -32,6 +32,14 @@ export default function ProductDetail() {
 				<Row>
 					<Col md={7}>
 						<SlideShow images={product?.images} />
+						<div className='pt-5'>
+							<div
+								className='product-page__content__description'
+								dangerouslySetInnerHTML={{
+									__html: product?.description,
+								}}
+							/>
+						</div>
 					</Col>
 					<Col md={5}>
 						<div className='product-page__content__wrapper'>
@@ -41,30 +49,11 @@ export default function ProductDetail() {
 									{product?.brand?.name}
 								</p>
 								<h2 className='product-page__content__name'>{product?.name}</h2>
-								{product?.description?.length < 200 && (
-									<div
-										className='product-page__content__description'
-										dangerouslySetInnerHTML={{
-											__html: product?.description,
-										}}
-									/>
-								)}
 
 								<Form variants={product?.variants} price={product?.price} />
 							</div>
 						</div>
 					</Col>
-
-					{product?.description?.length >= 200 && (
-						<Col xs={12} className='mt-4'>
-							<div
-								className='product-page__content__description'
-								dangerouslySetInnerHTML={{
-									__html: product?.description,
-								}}
-							/>
-						</Col>
-					)}
 				</Row>
 			</Container>
 		</div>
