@@ -117,7 +117,10 @@ function Form({ variants, price }) {
 				});
 			}
 		} catch (error) {
-			console.log(error);
+			message.error({
+				content: 'Có lỗi xảy ra, vui lòng thử lại!',
+				duration: 2,
+			});
 		} finally {
 			setLoading(false);
 		}
