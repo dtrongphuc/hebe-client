@@ -7,11 +7,6 @@ export async function postLogin(email, password) {
 			password,
 		});
 		if (response.status === 200) {
-			const token = response.data?.token;
-			window.localStorage.setItem('token', token);
-
-			api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-
 			return response.data;
 		}
 	} catch (error) {
@@ -37,5 +32,18 @@ export async function postRegister({ email, password, firstname, lastname }) {
 		}
 	} catch (error) {
 		return Promise.reject(error);
+	}
+}
+
+export async function isAuth() {
+	try {
+		const response = await api.get('/account/auth');
+		if (response.status === 200) {
+			return true;
+		} else {
+			return false;
+		}
+	} catch (error) {
+		return false;
 	}
 }

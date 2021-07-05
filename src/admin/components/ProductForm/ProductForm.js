@@ -85,7 +85,7 @@ function ProductForm() {
 		message.loading({ content: 'Loading...', key });
 		try {
 			const response = await postNewProduct({ ...values });
-			if (response) {
+			if (response?.success) {
 				form.resetFields();
 				setFiles((prevState) => ({
 					...prevState,

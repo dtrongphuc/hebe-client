@@ -9,10 +9,6 @@ const api = axios.create({
 api.interceptors.request.use(
 	function (config) {
 		// Do something before request is sent
-		const token = window.localStorage.getItem('token');
-		if (token) {
-			config.headers.common['Authorization'] = `Bearer ${token}`;
-		}
 		return config;
 	},
 	function (error) {
@@ -31,7 +27,6 @@ api.interceptors.response.use(
 		// Any status codes that falls outside the range of 2xx cause this function to trigger
 		// Do something with response error
 		if (error?.response?.status === 401) {
-			window.localStorage.removeItem('token');
 			window.location.href = '/account/login';
 		}
 		return Promise.reject(error?.response);

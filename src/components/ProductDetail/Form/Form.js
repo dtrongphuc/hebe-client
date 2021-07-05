@@ -71,7 +71,7 @@ function Form({ variants, price }) {
 		let value = e.target.value;
 		if (!value) return;
 		let detailSelected = selected.details.find(
-			(detail) => detail.sku === value
+			(detail) => detail._id === value
 		);
 		setSelected((prevState) => ({
 			...prevState,
@@ -106,7 +106,7 @@ function Form({ variants, price }) {
 		try {
 			let cart = {
 				_id: selected.variant._id,
-				sku: selected.detailSelected.sku,
+				sku: selected.detailSelected._id,
 				quantity: currentInputQuantity,
 			};
 			const response = await addToCart(cart);
@@ -134,7 +134,7 @@ function Form({ variants, price }) {
 
 	const sizeOptions = selected?.details.map((detail) => ({
 		label: detail.size,
-		value: detail.sku,
+		value: detail._id,
 	}));
 
 	return (
@@ -148,7 +148,7 @@ function Form({ variants, price }) {
 					<Select
 						name='size'
 						options={sizeOptions}
-						value={selected?.detailSelected.sku}
+						value={selected?.detailSelected._id}
 						onChange={onSizeChange}
 					/>
 				)}

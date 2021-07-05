@@ -8,3 +8,12 @@ export const addToCart = async (cart) => {
 		return Promise.reject(error);
 	}
 };
+
+export const fetchCart = async () => {
+	try {
+		const response = await api.get(`/cart`);
+		return response.data;
+	} catch (error) {
+		return Promise.reject(error);
+	}
+};
