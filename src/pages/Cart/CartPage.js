@@ -5,8 +5,11 @@ import CartItem from './CartItem';
 import Button from 'components/FormControl/Button';
 
 import './styles.scss';
+import { useSelector } from 'react-redux';
 
 function CartPage() {
+	const shoppingCart = useSelector((state) => state.cart.shoppingCart);
+
 	return (
 		<CustomerLayout>
 			<div className='cart-wrapper'>
@@ -14,7 +17,11 @@ function CartPage() {
 					<div className='cart-main'>
 						<h2 className='cart-h2'>Shopping Cart</h2>
 						<div className='cart-list'>
-							<CartItem />
+							{shoppingCart?.products?.map((item) => (
+								<div key={item._id}>
+									<CartItem item={item} />
+								</div>
+							))}
 						</div>
 						<div className='mt-5 cart-checkout'>
 							<Button>Check Out</Button>

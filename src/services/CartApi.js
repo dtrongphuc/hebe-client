@@ -17,3 +17,16 @@ export const fetchCart = async () => {
 		return Promise.reject(error);
 	}
 };
+
+export const updateStock = async (action_type, info, update) => {
+	try {
+		const response = await api.post(`/cart/update`, {
+			action_type,
+			info,
+			update,
+		});
+		return response.data;
+	} catch (error) {
+		return Promise.reject(error);
+	}
+};

@@ -8,6 +8,8 @@ import { useEffect } from 'react';
 import { isAuth } from 'services/AccountApi';
 import { useDispatch } from 'react-redux';
 import { login, logout } from 'features/user/userSlice';
+import { fetchCartThunk } from 'features/cart/cartSlice';
+import { unwrapResult } from '@reduxjs/toolkit';
 
 export default function CustomerLayout({ children }) {
 	const dispatch = useDispatch();
@@ -18,11 +20,13 @@ export default function CustomerLayout({ children }) {
 				const isLoggedIn = await isAuth();
 				if (isLoggedIn) {
 					dispatch(login());
+					const cartResponse = await dispatch(fetchCartThunk());
+					unwrapResult(cartResponse);
 				} else {
 					dispatch(logout());
 				}
 			} catch (error) {
-				dispatch(logout());
+				console.log(error);
 			}
 		})();
 	}, [dispatch]);
