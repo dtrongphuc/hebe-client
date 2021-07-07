@@ -2,7 +2,10 @@ const CLOUD_NAME = process.env.REACT_APP_CLOUD_NAME;
 const API_KEY = process.env.REACT_APP_API_CLOUD_API_KEY;
 
 export const productPriceString = (price) => {
-	return `$${price % 1 === 0 ? price + '.00' : price}`;
+	return new Intl.NumberFormat('en-US', {
+		style: 'currency',
+		currency: 'USD',
+	}).format(price);
 };
 
 export const parseErrors = (errors) => {

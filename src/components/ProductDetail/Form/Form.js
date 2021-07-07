@@ -6,12 +6,15 @@ import ButtonAddToCart from './ButtonAddToCart';
 import { addToCart } from 'services/CartApi';
 import ModalLoading from 'components/ModalLoading/ModalLoading';
 import { message } from 'antd';
+import { useDispatch } from 'react-redux';
+import { fetchCartThunk } from 'features/cart/cartSlice';
 
 function Form({ variants, price }) {
 	const [selected, setSelected] = useState(null);
 	const [currentInputQuantity, setCurrentInputQuantity] = useState(null);
 	const [cartPrice, setCartPrice] = useState(null);
 	const [loading, setLoading] = useState(false);
+	const dispatch = useDispatch();
 
 	useEffect(() => {
 		// find first variant available (stock > 0)
@@ -34,14 +37,22 @@ function Form({ variants, price }) {
 					? variantAvailable.stock
 					: detailSelected?.quantity,
 			});
-
-			setCurrentInputQuantity(1);
+		} else {
+			let firstVariant = variants[0];
+			let firstDetail = !firstVariant.freeSize ? firstVariant.details[0] : null;
+			setSelected({
+				variant: {
+					_id: firstVariant._id,
+					color: firstVariant.color,
+				},
+				details: firstVariant?.details || null,
+				detailSelected: firstDetail,
+				stock: 0,
+			});
 		}
-	}, [variants]);
 
-	useEffect(() => {
-		setCartPrice(price);
-	}, [price]);
+		setCurrentInputQuantity(1);
+	}, [variants]);
 
 	// quantity changed => change cart price
 	useEffect(() => {
@@ -106,17 +117,19 @@ function Form({ variants, price }) {
 		try {
 			let cart = {
 				_id: selected.variant._id,
-				sku: selected.detailSelected._id,
+				sku: selected.detailSelected?._id,
 				quantity: currentInputQuantity,
 			};
 			const response = await addToCart(cart);
 			if (response?.success) {
+				await dispatch(fetchCartThunk());
 				message.success({
 					content: 'Thêm vào giỏ hàng thành công!',
 					duration: 2,
 				});
 			}
 		} catch (error) {
+			console.log(error);
 			message.error({
 				content: 'Có lỗi xảy ra, vui lòng thử lại!',
 				duration: 2,
@@ -132,10 +145,11 @@ function Form({ variants, price }) {
 		value: variant._id,
 	}));
 
-	const sizeOptions = selected?.details.map((detail) => ({
-		label: detail.size,
-		value: detail._id,
-	}));
+	const sizeOptions =
+		selected?.details?.map((detail) => ({
+			label: detail.size,
+			value: detail._id,
+		})) || [];
 
 	return (
 		<>

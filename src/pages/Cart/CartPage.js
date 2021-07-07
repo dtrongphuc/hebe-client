@@ -6,9 +6,12 @@ import Button from 'components/FormControl/Button';
 
 import './styles.scss';
 import { useSelector } from 'react-redux';
+import { productPriceString } from 'utils/util';
 
 function CartPage() {
-	const { shoppingCart, numberCart } = useSelector((state) => state.cart);
+	const { shoppingCart, numberCart, total } = useSelector(
+		(state) => state.cart
+	);
 
 	return (
 		<CustomerLayout>
@@ -25,6 +28,12 @@ function CartPage() {
 						</div>
 						{numberCart > 0 ? (
 							<div className='mt-5 cart-checkout'>
+								<div className='d-flex align-items-center justify-content-between mb-4 ml-auto'>
+									<span>Subtotal:</span>
+									<span style={{ fontSize: '1.4rem' }}>
+										{productPriceString(total)}
+									</span>
+								</div>
 								<Button>Check Out</Button>
 							</div>
 						) : (

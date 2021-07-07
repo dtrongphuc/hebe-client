@@ -11,7 +11,7 @@ const floor = (price) => {
 	return Math.floor(price * 100) / 100;
 };
 
-function Wallet({ price }) {
+function Wallet({ price, salePrice }) {
 	const [walletType, setWalletType] = useState({
 		afterpay: 0,
 		laybuy: 0,
@@ -29,7 +29,7 @@ function Wallet({ price }) {
 
 	return (
 		<div className='product-detail__wallet'>
-			<p className='higher-text'>{productPriceString(price)}</p>
+			<p className='higher-text'>{productPriceString(salePrice)}</p>
 			<div className='higher-text'>
 				<span>or make 4 interest-free payments of </span>
 				<strong>{productPriceString(walletType?.afterpay)} NZD</strong>
@@ -40,6 +40,11 @@ function Wallet({ price }) {
 						More info
 					</Link>
 				</div>
+				{salePrice && (
+					<p className='higher-text font-weight-light font-italic font-stroke mt-3'>
+						{productPriceString(price)}
+					</p>
+				)}
 			</div>
 			<div className='mt-5 small-text'>
 				Or 6 weekly interest-free payments of{' '}
@@ -76,6 +81,7 @@ function Wallet({ price }) {
 
 Wallet.propTypes = {
 	price: PropTypes.number,
+	salePrice: PropTypes.number,
 };
 
 export default Wallet;

@@ -20,9 +20,16 @@
 
 .product-page {
 	width: 100%;
-	background-color: #f7f7f7;
-	padding: 40px 0 60px;
 	overflow: hidden;
+
+	& > .background-gray {
+		background-color: #f7f7f7;
+		padding: 40px 0 60px;
+	}
+
+	& > .background-white {
+		background-color: #fff;
+	}
 
 	&__content {
 		margin-top: 50px;
@@ -45,12 +52,12 @@
 			color: #000;
 			font-size: 1rem;
 			line-height: 1.9;
-			text-align: center;
+			text-align: left;
 
 			& > ul {
 				list-style: disc;
 				padding-left: 1rem;
-				text-align: center;
+				text-align: left;
 
 				& > li {
 					margin-bottom: 12px;
@@ -194,12 +201,12 @@
 .product-outstanding__slider {
 	margin-top: 50px;
 	& > .slick-next {
-		right: -4px;
+		right: 0;
 		z-index: 10;
 	}
 
 	& > .slick-prev {
-		left: -4px;
+		left: 0;
 		z-index: 10;
 	}
 
@@ -296,7 +303,8 @@
 }
 
 .product-slide__img {
-	max-height: 70vh;
+	// max-height: 90vh;
+	max-height: 100%;
 }
 
 // wallet

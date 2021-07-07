@@ -9,7 +9,6 @@ export default function ProductItem({ product, fromPage }) {
 	const [avatar, setAvatar] = useState(null);
 
 	useEffect(() => {
-		console.log(product);
 		let avt = product?.images.find((image) => image.position === 1);
 		setAvatar(avt?.src);
 	}, [product]);
