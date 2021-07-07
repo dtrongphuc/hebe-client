@@ -1,21 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { IoAddSharp, IoRemoveSharp, IoClose } from 'react-icons/io5';
 import { useDispatch, useSelector } from 'react-redux';
 import { quantityChange, updateThunk } from 'features/cart/cartSlice';
 import { unwrapResult } from '@reduxjs/toolkit';
 import { useEffect } from 'react';
+import { message } from 'antd';
 function CartItem({ item }) {
 	const cartId = useSelector((state) => state.cart.shoppingCart?._id);
 	const warning = useSelector((state) => state.cart.warning);
 	const { product, variant, sku, quantity, total } = item;
 
+	// quantity before input lose focus
+	const [oldQuantity, setOldQuantity] = useState(quantity);
+
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		console.log('effect');
 		if (warning) {
-			console.log(warning);
+			message.warning({ content: warning, duration: 3 });
 		}
 	}, [warning]);
 
@@ -59,14 +62,61 @@ function CartItem({ item }) {
 		}
 	};
 
-	const handleQuantityChange = (e) => {
+	const onQuantityChange = (e) => {
 		const { value } = e.target;
-		dispatch(
-			quantityChange({
-				itemId: item._id,
+		const regex = /^[1-9][0-9]*$/;
+		if (value.match(regex) !== null) {
+			dispatch(
+				quantityChange({
+					itemId: item._id,
+					quantity: value,
+				})
+			);
+		}
+	};
+
+	const onQuantityBlur = async (e) => {
+		const { value } = e.target;
+		if (oldQuantity === value) return;
+
+		let state = {
+			action_type: 1,
+			info: {
+				cart_id: cartId,
+				item_id: item._id,
+			},
+			update: {
+				old_quantity: oldQuantity,
 				quantity: value,
-			})
-		);
+			},
+		};
+		try {
+			const response = await dispatch(updateThunk(state));
+			unwrapResult(response);
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
+	const handleRemove = async () => {
+		console.log('remove');
+		let state = {
+			action_type: 2,
+			info: {
+				cart_id: cartId,
+				item_id: item._id,
+			},
+			update: {
+				old_quantity: oldQuantity,
+				quantity: quantity,
+			},
+		};
+		try {
+			const response = await dispatch(updateThunk(state));
+			unwrapResult(response);
+		} catch (error) {
+			console.log(error);
+		}
 	};
 
 	return (
@@ -122,7 +172,9 @@ function CartItem({ item }) {
 									type='text'
 									className='cart-quantity'
 									value={quantity}
-									onChange={handleQuantityChange}
+									onChange={onQuantityChange}
+									onFocus={(e) => setOldQuantity(e.target.value)}
+									onBlur={onQuantityBlur}
 								/>
 								<div className='cart-quantity-control' onClick={handleIncrease}>
 									<IoAddSharp size='1.2rem' color='#000' />
@@ -136,7 +188,10 @@ function CartItem({ item }) {
 					</div>
 				</div>
 			</div>
-			<button className='border-0 bg-transparent btn-cart-remove'>
+			<button
+				className='border-0 bg-transparent btn-cart-remove'
+				onClick={handleRemove}
+			>
 				<IoClose size='1.6rem' color='#666666' />
 			</button>
 		</div>

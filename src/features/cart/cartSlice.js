@@ -50,12 +50,12 @@ const cartSlice = createSlice({
 		[updateThunk.fulfilled]: (state, action) => {
 			const { cart, updated, msg } = action.payload;
 			state.loading = true;
+			state.warning = msg;
+
 			if (updated) {
 				state.shoppingCart = cart;
 				state.total = cart?.totalPrice;
 				state.numberCart = cart?.products?.length;
-			} else {
-				state.warning = msg;
 			}
 		},
 		[updateThunk.rejected]: (state, action) => {

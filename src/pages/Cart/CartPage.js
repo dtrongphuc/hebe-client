@@ -8,7 +8,7 @@ import './styles.scss';
 import { useSelector } from 'react-redux';
 
 function CartPage() {
-	const shoppingCart = useSelector((state) => state.cart.shoppingCart);
+	const { shoppingCart, numberCart } = useSelector((state) => state.cart);
 
 	return (
 		<CustomerLayout>
@@ -23,9 +23,13 @@ function CartPage() {
 								</div>
 							))}
 						</div>
-						<div className='mt-5 cart-checkout'>
-							<Button>Check Out</Button>
-						</div>
+						{numberCart > 0 ? (
+							<div className='mt-5 cart-checkout'>
+								<Button>Check Out</Button>
+							</div>
+						) : (
+							<div className='text-center display-4'>Your cart is empty</div>
+						)}
 					</div>
 				</Container>
 			</div>
