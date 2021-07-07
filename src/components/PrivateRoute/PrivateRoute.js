@@ -1,17 +1,18 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
+import ModalLoading from 'components/ModalLoading/ModalLoading';
 
 function PrivateRoute({ component: Component, ...rest }) {
-	const { isLogged } = useSelector((state) => state.user);
+	const { isLogged, isLoading } = useSelector((state) => state.user);
 
 	return (
 		<Route
 			{...rest}
 			render={(props) =>
-				isLogged ? (
+				isLogged === true && isLoading === false ? (
 					<Component {...props} />
-				) : (
+				) : isLogged === false && isLoading === false ? (
 					<Redirect
 						to={{
 							pathname: '/account/login',
@@ -20,6 +21,8 @@ function PrivateRoute({ component: Component, ...rest }) {
 							},
 						}}
 					/>
+				) : (
+					<ModalLoading loading={isLoading} />
 				)
 			}
 		/>

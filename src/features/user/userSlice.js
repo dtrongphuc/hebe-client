@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { postLogin, postRegister } from 'services/AccountApi';
+import { isAuth, postLogin, postRegister } from 'services/AccountApi';
 
 export const loginThunk = createAsyncThunk(
 	'user/login',
@@ -37,11 +37,16 @@ export const registerThunk = createAsyncThunk(
 	}
 );
 
+export const checkAuthThunk = createAsyncThunk('user/check', async () => {
+	const result = await isAuth();
+	return result;
+});
+
 export const userSlice = createSlice({
 	name: 'user',
 	initialState: {
-		isLogged: false,
-		isLoading: false,
+		isLogged: null,
+		isLoading: null,
 	},
 	reducers: {
 		login: (state) => {
@@ -74,6 +79,19 @@ export const userSlice = createSlice({
 
 		[registerThunk.rejected]: (state) => {
 			state.isLoading = false;
+		},
+
+		[checkAuthThunk.pending]: (state) => {
+			state.isLoading = true;
+			state.isLogged = false;
+		},
+		[checkAuthThunk.fulfilled]: (state, action) => {
+			state.isLoading = false;
+			state.isLogged = action.payload;
+		},
+		[checkAuthThunk.pending]: (state, action) => {
+			state.isLoading = false;
+			state.isLogged = action.payload;
 		},
 	},
 });

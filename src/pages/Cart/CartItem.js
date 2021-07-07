@@ -4,11 +4,20 @@ import { IoAddSharp, IoRemoveSharp, IoClose } from 'react-icons/io5';
 import { useDispatch, useSelector } from 'react-redux';
 import { quantityChange, updateThunk } from 'features/cart/cartSlice';
 import { unwrapResult } from '@reduxjs/toolkit';
+import { useEffect } from 'react';
 function CartItem({ item }) {
 	const cartId = useSelector((state) => state.cart.shoppingCart?._id);
+	const warning = useSelector((state) => state.cart.warning);
 	const { product, variant, sku, quantity, total } = item;
 
 	const dispatch = useDispatch();
+
+	useEffect(() => {
+		console.log('effect');
+		if (warning) {
+			console.log(warning);
+		}
+	}, [warning]);
 
 	const handleIncrease = async () => {
 		let state = {
