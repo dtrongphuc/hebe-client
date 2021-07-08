@@ -134,7 +134,10 @@ function CartItem({ item }) {
 						</a>
 						<div className='mr-lg-4'>
 							<div>
-								<a href='/product' className='cart-text cart-text--bold'>
+								<a
+									href={`/products/${product.path}`}
+									className='cart-text cart-text--bold'
+								>
 									{product.name}
 								</a>
 							</div>
@@ -146,7 +149,7 @@ function CartItem({ item }) {
 
 							<div className='mt-3'>
 								<a
-									href='/brand'
+									href={`/collections/${product?.brand?.path}`}
 									className='cart-text cart-text--sm cart-text--blur'
 								>
 									{product?.brand.name}

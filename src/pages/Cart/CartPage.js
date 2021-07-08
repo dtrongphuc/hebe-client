@@ -7,11 +7,13 @@ import Button from 'components/FormControl/Button';
 import './styles.scss';
 import { useSelector } from 'react-redux';
 import { productPriceString } from 'utils/util';
+import { useHistory } from 'react-router-dom';
 
 function CartPage() {
 	const { shoppingCart, numberCart, total } = useSelector(
 		(state) => state.cart
 	);
+	let history = useHistory();
 
 	return (
 		<CustomerLayout>
@@ -34,7 +36,9 @@ function CartPage() {
 										{productPriceString(total)}
 									</span>
 								</div>
-								<Button>Check Out</Button>
+								<Button onClick={() => history.push('/checkout')}>
+									Check Out
+								</Button>
 							</div>
 						) : (
 							<div className='text-center display-4'>Your cart is empty</div>

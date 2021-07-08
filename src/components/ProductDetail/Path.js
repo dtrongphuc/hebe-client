@@ -12,15 +12,15 @@ function Path({ productName }) {
 					HOME
 				</Link>
 			</li>
+			{location?.state?.from && (
+				<li>
+					<Link to='#' className='site-path__link'>
+						{location.state.from}
+					</Link>
+				</li>
+			)}
 			<li>
-				<Link to='#' className='site-path__link'>
-					{location.state.from}
-				</Link>
-			</li>
-			<li>
-				<Link to='#' className='site-path__link'>
-					{productName}
-				</Link>
+				<span className='site-path__link'>{productName}</span>
 			</li>
 		</ul>
 	);
