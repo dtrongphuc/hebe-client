@@ -8,6 +8,8 @@ import Divider from 'components/Checkout/Divider/Divider';
 import Contact from 'components/Checkout/Information/Contact';
 import Delivery from 'components/Checkout/Information/Delivery';
 import AsideOrder from 'components/Checkout/Order/AsideOrder';
+import Address from 'components/Checkout/Information/Address';
+import NavButtons from 'components/Checkout/NavButtons/NavButtons';
 
 function CheckoutInfoPage() {
 	return (
@@ -26,31 +28,17 @@ function CheckoutInfoPage() {
 							<form action=''>
 								<Contact />
 								<Delivery />
-								<section className='section-info'>
-									<h2 className='section-info__heading'>Shipping address</h2>
-									<div className='row'>
-										<div className='col-12 col-md-6'>
-											<div className='checkout-field my-2'>
-												<label>Gift card or discount code</label>
-												<input
-													type='text'
-													placeholder='Gift card or discount code'
-													className='input__checkout'
-												/>
-											</div>
-										</div>
-										<div className='col-12 col-md-6'>
-											<div className='checkout-field my-2'>
-												<label>Gift card or discount code</label>
-												<input
-													type='text'
-													placeholder='Gift card or discount code'
-													className='input__checkout'
-												/>
-											</div>
-										</div>
-									</div>
-								</section>
+								<Address />
+								<NavButtons
+									next={{
+										content: 'Continue to shipping',
+										link: '/',
+									}}
+									prev={{
+										content: 'Return to cart',
+										link: '/',
+									}}
+								/>
 							</form>
 						</div>
 					</div>
