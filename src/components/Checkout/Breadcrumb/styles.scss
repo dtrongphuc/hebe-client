@@ -1,0 +1,31 @@
+@import '../main';
+
+.checkout-breadcrumb {
+	display: flex;
+	list-style: none;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: flex-start;
+	margin: 0;
+	padding-left: 0;
+
+	&__item {
+		display: flex;
+		align-items: center;
+
+		& > svg {
+			margin: 0 0.5em;
+		}
+
+		& .checkout-breadcrumb__link {
+			font-size: 0.9em;
+			color: #6b6060;
+			text-decoration: none;
+
+			&--active {
+				color: #303b2b;
+				font-weight: 600;
+			}
+		}
+	}
+}

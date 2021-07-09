@@ -1,0 +1,28 @@
+@import '../main';
+
+// -----------------HEADER
+.checkout__header {
+	background: #333 url('../../../assets/img/sophie_store.jpg') center center;
+	background-size: cover;
+	padding: 1.5rem 0;
+	width: 100%;
+	display: block;
+
+	@media (min-width: 1000px) {
+		padding-top: 6rem;
+		padding-bottom: 2rem;
+	}
+
+	&-link {
+		display: block;
+		max-width: 40rem;
+
+		& > img {
+			max-height: 40px;
+
+			@media (min-width: 1000px) {
+				max-height: 60px;
+			}
+		}
+	}
+}

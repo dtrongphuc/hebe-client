@@ -1,0 +1,54 @@
+@import '../main';
+
+//TOGGLE BUTTON
+.order-toggle {
+	width: 100%;
+	background: $checkout-primary;
+	outline: none;
+	box-shadow: none;
+	border-left: none;
+	border-right: none;
+	border-top: 1px solid $border-color;
+	border-bottom: 1px solid $border-color;
+	padding: 1.2rem 0;
+	text-align: left;
+
+	&__inner {
+		display: flex;
+		width: 100%;
+		font-size: 14px;
+		align-items: center;
+	}
+
+	&__icon-wrapper,
+	&__heading,
+	&__right {
+		vertical-align: middle;
+		white-space: nowrap;
+	}
+
+	&__icon-wrapper {
+		text-align: left;
+		padding-right: 0.75em;
+	}
+
+	&__heading {
+		text-align: left;
+		& > span {
+			font-size: 1em;
+			color: #000;
+			padding-right: 0.4em;
+		}
+
+		&--hide {
+			display: none;
+		}
+	}
+
+	&__right {
+		text-align: right;
+		font-size: 1.3em;
+		margin-left: auto;
+		font-weight: 700;
+	}
+}

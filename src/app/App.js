@@ -16,7 +16,7 @@ import AccountPage from 'pages/Account/AccountPage';
 import PrivateRoute from 'components/PrivateRoute/PrivateRoute';
 import AddressesPage from 'pages/Addresses/AddressesPage';
 import CartPage from 'pages/Cart/CartPage';
-import CheckoutPage from 'pages/Checkout/CheckoutPage';
+import CheckoutInfoPage from 'pages/Checkout/CheckoutInfoPage';
 
 function App() {
 	const dispatch = useDispatch();
@@ -72,7 +72,7 @@ function App() {
 				<Route exact path='/account/login' component={LoginPage} />
 				<Route exact path='/account/register' component={RegisterPage} />
 				<PrivateRoute exact path='/cart' component={CartPage} />
-				<PrivateRoute exact path='/checkout' component={CheckoutPage} />
+				<PrivateRoute exact path='/checkout' component={CheckoutInfoPage} />
 			</Switch>
 		</Router>
 	);

@@ -1,0 +1,64 @@
+@import '../main';
+
+.radio-content {
+	border-radius: 8px;
+	overflow: hidden;
+}
+
+.radio-wrapper {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	background-color: #fff;
+	padding: 1em 0.9em;
+
+	&:first-child {
+		border-bottom: 1px solid #d8d8d8;
+	}
+
+	& > label {
+		margin-bottom: 0;
+		margin-left: 1em;
+		color: #545454;
+
+		& > span {
+			vertical-align: top;
+			margin-left: 0.5em;
+			font-size: 1em;
+		}
+	}
+
+	& > input[type='radio'] {
+		appearance: none;
+		display: inline-block;
+		width: 18px;
+		height: 18px;
+		padding: 2px;
+		/* background-color only for content */
+		background-clip: content-box;
+		border: 1px solid #bbbbbb;
+		background-color: transparent;
+		border-radius: 50%;
+		transition: all 0.2s ease-out;
+
+		&:active,
+		&:focus {
+			outline: none;
+		}
+
+		&:checked {
+			color: #000;
+			border: 6px solid #000;
+
+			& ~ label {
+				color: #000;
+			}
+		}
+	}
+
+	&:hover {
+		& > input[type='radio']:not(:checked) {
+			border-color: #dadada;
+		}
+	}
+}

@@ -1,0 +1,49 @@
+.checkout__order {
+	padding-top: 2em;
+	padding-bottom: 2em;
+	color: #525252;
+	position: relative;
+
+	&::after {
+		content: '';
+		display: block;
+		background-color: #f7f7f7;
+		position: absolute;
+		left: 0;
+		top: 0;
+		bottom: 0;
+		width: 300%;
+	}
+}
+
+.order__list,
+.order__discount,
+.checkout-section {
+	z-index: 1;
+	position: relative;
+}
+
+.order__text {
+	line-height: normal;
+	font-size: 1em;
+	color: #313131;
+	line-height: 1.3em;
+	text-decoration: none;
+
+	&--bold {
+		font-weight: 700;
+	}
+
+	&--light {
+		font-weight: 400;
+		color: #6f6f6f;
+	}
+
+	&--sm {
+		font-size: 0.8em;
+	}
+
+	&--lg {
+		font-size: 1.6em;
+	}
+}

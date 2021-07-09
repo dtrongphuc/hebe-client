@@ -1,0 +1,45 @@
+@import '../main';
+
+.checkout-divider {
+	display: flex;
+	font-size: 1em;
+	color: #303b2b;
+	font-weight: 700;
+	text-align: center;
+	position: relative;
+	align-items: flex-end;
+	justify-content: center;
+
+	&::before,
+	&::after {
+		content: '';
+		height: 0.5em;
+		border: 1px solid $border-color;
+		border-bottom: 0;
+		flex: 1 0 2em;
+	}
+
+	&.checkout-divider--radius::before {
+		margin-right: 1em;
+		border-right: 0;
+		border-top-left-radius: 5px;
+	}
+
+	&.checkout-divider--radius::after {
+		margin-left: 1em;
+		border-left: 0;
+		border-top-right-radius: 5px;
+	}
+
+	&.checkout-divider--separate::before {
+		margin-right: 1em;
+		border-right: 0;
+		border-left: 0;
+	}
+
+	&.checkout-divider--separate::after {
+		margin-left: 1em;
+		border-right: 0;
+		border-left: 0;
+	}
+}

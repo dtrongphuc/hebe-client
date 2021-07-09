@@ -1,0 +1,25 @@
+@import '../main';
+
+.order__discount {
+	display: flex;
+	justify-content: space-between;
+	z-index: 1;
+	padding-top: 1.6em;
+	border-top: 1px solid #d8d8d8;
+
+	&-input {
+		width: 100%;
+	}
+
+	&-submit {
+		@include button;
+
+		background: #000;
+		padding-top: 0;
+		padding-bottom: 0;
+
+		&--disabled {
+			background: #c6c6c6;
+		}
+	}
+}
