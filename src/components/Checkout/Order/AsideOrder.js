@@ -3,9 +3,12 @@ import OrderItem from './OrderItem';
 import DiscountField from './DiscountField';
 import './AsideOrderStyles.scss';
 import { useSelector } from 'react-redux';
+import { productPriceString } from 'utils/util';
 
 function AsideOrder() {
-	const { products } = useSelector((state) => state.cart.shoppingCart);
+	const { products, totalPrice } = useSelector(
+		(state) => state.cart.shoppingCart
+	);
 
 	return (
 		<aside className='checkout__order'>
@@ -22,7 +25,9 @@ function AsideOrder() {
 					<div className='checkout-section'>
 						<div className='d-flex align-items-center justify-content-between'>
 							<span className='order__text order__text--light'>Subtotal</span>
-							<span className='order__text order__text--bold'>$228.00</span>
+							<span className='order__text order__text--bold'>
+								{productPriceString(totalPrice)}
+							</span>
 						</div>
 						<div className='d-flex align-items-center justify-content-between mt-2'>
 							<span className='order__text order__text--light'>Shipping</span>
@@ -34,10 +39,12 @@ function AsideOrder() {
 					<div className='checkout-section'>
 						<div className='d-flex align-items-center justify-content-between'>
 							<span className='order__text order__text--light'>Total</span>
-							<span>
-								<span className='order__text order__text--light'>NZD</span>
+							<span className='d-flex align-items-center'>
+								<span className='order__text order__text--sm order__text--light'>
+									NZD
+								</span>
 								<span className='order__text order__text--bold order__text--lg ml-2'>
-									$228.00
+									{productPriceString(totalPrice)}
 								</span>
 							</span>
 						</div>

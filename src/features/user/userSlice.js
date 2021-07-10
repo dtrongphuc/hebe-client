@@ -47,6 +47,9 @@ export const userSlice = createSlice({
 	initialState: {
 		isLogged: null,
 		isLoading: null,
+		email: '',
+		firstName: '',
+		lastName: '',
 	},
 	reducers: {
 		login: (state) => {
@@ -86,12 +89,19 @@ export const userSlice = createSlice({
 			state.isLogged = false;
 		},
 		[checkAuthThunk.fulfilled]: (state, action) => {
+			const { loggedIn, email, firstName, lastName } = action.payload;
 			state.isLoading = false;
-			state.isLogged = action.payload;
+			state.isLogged = loggedIn;
+			state.email = email;
+			state.firstName = firstName;
+			state.lastName = lastName;
 		},
-		[checkAuthThunk.pending]: (state, action) => {
+		[checkAuthThunk.rejected]: (state, action) => {
 			state.isLoading = false;
 			state.isLogged = action.payload;
+			state.email = '';
+			state.firstName = '';
+			state.lastName = '';
 		},
 	},
 });

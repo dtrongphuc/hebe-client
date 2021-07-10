@@ -39,11 +39,17 @@ export async function isAuth() {
 	try {
 		const response = await api.get('/account/auth');
 		if (response.status === 200) {
-			return true;
+			const { email, firstName, lastName } = response.data;
+			return {
+				loggedIn: true,
+				email,
+				firstName,
+				lastName,
+			};
 		} else {
-			return false;
+			return { loggedIn: false };
 		}
 	} catch (error) {
-		return false;
+		return { loggedIn: false };
 	}
 }
