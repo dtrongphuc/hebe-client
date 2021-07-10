@@ -8,11 +8,15 @@ function TextField({ type = 'text', placeholder, name }) {
 	return (
 		<div className='checkout-field'>
 			<input
-				type='text'
+				type={type}
+				id={name}
+				name={name}
 				value={value}
 				onChange={(e) => setValue(e.target.value)}
 			/>
-			<label className={value && 'floating'}>{placeholder}</label>
+			<label htmlFor={name} className={value && 'floating'}>
+				{placeholder}
+			</label>
 		</div>
 	);
 }

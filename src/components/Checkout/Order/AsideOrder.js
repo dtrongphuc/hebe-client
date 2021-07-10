@@ -2,14 +2,21 @@ import React from 'react';
 import OrderItem from './OrderItem';
 import DiscountField from './DiscountField';
 import './AsideOrderStyles.scss';
+import { useSelector } from 'react-redux';
 
 function AsideOrder() {
+	const { products } = useSelector((state) => state.cart.shoppingCart);
+
 	return (
 		<aside className='checkout__order'>
 			<div className='padding'>
 				<div className='wrap'>
 					<div className='order__list'>
-						<OrderItem />
+						{products?.map((item) => (
+							<div key={item._id}>
+								<OrderItem item={item} />
+							</div>
+						))}
 					</div>
 					<DiscountField />
 					<div className='checkout-section'>
