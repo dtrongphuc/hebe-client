@@ -10,12 +10,14 @@ import Delivery from 'components/Checkout/Information/Delivery';
 import AsideOrder from 'components/Checkout/Order/AsideOrder';
 import Address from 'components/Checkout/Information/Address';
 import NavButtons from 'components/Checkout/NavButtons/NavButtons';
+import Pickup from 'components/Checkout/Information/Pickup';
+import { useSelector } from 'react-redux';
 
 function CheckoutInfoPage() {
 	const asideOrderRef = useRef(null);
 	const [showOrder, setShowOrder] = useState(false);
 	const [width, setWidth] = React.useState(window.innerWidth);
-	const [delivery, setDelivery] = useState('ship');
+	const { delivery } = useSelector((state) => state.checkout);
 
 	const handleResize = () => {
 		setWidth(window.innerWidth);
@@ -68,10 +70,6 @@ function CheckoutInfoPage() {
 		setShowOrder((prevState) => !prevState);
 	};
 
-	const onDeliveryChange = (e) => {
-		setDelivery(e.target.id);
-	};
-
 	return (
 		<div className='checkout'>
 			<Header />
@@ -87,12 +85,17 @@ function CheckoutInfoPage() {
 							<Divider content='OR' />
 						</div>
 						<Contact />
+						<Delivery />
 						<form action=''>
-							<Delivery checked={delivery} onChange={onDeliveryChange} />
-							<Address />
+							{delivery === 'pick-up' && <Pickup />}
+							{delivery === 'ship' && <Address />}
+
 							<NavButtons
 								next={{
-									content: 'Continue to shipping',
+									content:
+										delivery === 'ship'
+											? 'Continue to shipping'
+											: 'Continue to payment',
 									link: '/',
 								}}
 								prev={{

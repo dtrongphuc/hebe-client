@@ -1,0 +1,14 @@
+.pickup-label__text {
+	color: #545454;
+	font-size: 1em;
+
+	&--bold {
+		color: #333333;
+		font-weight: 700;
+	}
+
+	&--sm {
+		color: #737373;
+		font-size: 0.8571428571em;
+	}
+}

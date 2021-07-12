@@ -1,10 +1,23 @@
+import { onChange } from 'features/checkout/checkoutSlice';
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { IoStorefront } from 'react-icons/io5';
 import { MdLocalShipping } from 'react-icons/md';
+import { useDispatch, useSelector } from 'react-redux';
 import './DeliveryStyles.scss';
 
-function Delivery({ checked, onChange }) {
+function Delivery() {
+	const dispatch = useDispatch();
+	const { delivery } = useSelector((state) => state.checkout);
+
+	const handleChange = (e) => {
+		const field = {
+			delivery: e.target.id,
+		};
+
+		dispatch(onChange(field));
+	};
+
 	return (
 		<section className='section-info'>
 			<h2 className='section-info__heading'>Delivery method</h2>
@@ -15,8 +28,8 @@ function Delivery({ checked, onChange }) {
 						name='delivery'
 						id='ship'
 						className='checkout-radio'
-						checked={checked === 'ship'}
-						onChange={onChange}
+						checked={delivery === 'ship'}
+						onChange={handleChange}
 					/>
 					<label htmlFor='ship'>
 						<MdLocalShipping size='1.6em' />
@@ -29,8 +42,8 @@ function Delivery({ checked, onChange }) {
 						name='delivery'
 						id='pick-up'
 						className='checkout-radio'
-						checked={checked === 'pick-up'}
-						onChange={onChange}
+						checked={delivery === 'pick-up'}
+						onChange={handleChange}
 					/>
 					<label htmlFor='pick-up'>
 						<IoStorefront size='1.6em' />
@@ -42,9 +55,8 @@ function Delivery({ checked, onChange }) {
 	);
 }
 
-Delivery.propTypes = {
-	checked: PropTypes.oneOf(['ship', 'pick-up']),
-	onChange: PropTypes.func,
-};
+// Delivery.propTypes = {
+
+// };
 
 export default Delivery;

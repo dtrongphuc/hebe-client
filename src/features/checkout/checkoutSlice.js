@@ -12,7 +12,7 @@ const initialState = {
 		postal: '',
 		phone: '',
 	},
-	delivery: '',
+	delivery: 'ship',
 	shipping: '',
 };
 
@@ -51,10 +51,22 @@ const checkoutSlice = createSlice({
 				},
 			};
 		},
+		onChange: (state, action) => {
+			const field = action.payload;
+
+			return {
+				...state,
+				...field,
+			};
+		},
 	},
 });
 
-export const { selectedAddressChange, resetAddress, addressFieldChange } =
-	checkoutSlice.actions;
+export const {
+	selectedAddressChange,
+	resetAddress,
+	addressFieldChange,
+	onChange,
+} = checkoutSlice.actions;
 
 export default checkoutSlice.reducer;
