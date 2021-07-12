@@ -19,7 +19,7 @@
 		"axios": "^0.21.1",
 		"bootstrap": "^4.6.0",
 		"firebase": "^8.2.9",
-		"lodash": "^4.17.21",
+		"lodash.debounce": "^4.0.8",
 		"node-sass": "^5.0.0",
 		"prop-types": "^15.7.2",
 		"react": "^17.0.1",

@@ -29,3 +29,11 @@ export const generateUploadPresignedUrl = (folder, timestamp, signature) => {
 export const generateDestroyPresignedUrl = (publicId, timestamp, signature) => {
 	return `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/destroy?api_key=${API_KEY}&public_id=${publicId}&timestamp=${timestamp}&signature=${signature}`;
 };
+
+export const capitalize = (string) => {
+	return string
+		.toLowerCase()
+		.split(' ')
+		.map((word) => word.charAt(0).toUpperCase() + word.substring(1))
+		.join(' ');
+};

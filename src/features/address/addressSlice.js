@@ -1,4 +1,8 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import {
+	createAsyncThunk,
+	createSelector,
+	createSlice,
+} from '@reduxjs/toolkit';
 import { getAllAddresses } from 'services/AddressApi';
 
 export const getAllAddressThunk = createAsyncThunk(
@@ -59,6 +63,11 @@ export const addressSlice = createSlice({
 		},
 	},
 });
+
+export const selectDefaultAddress = createSelector(
+	(state) => state.address,
+	({ addresses }) => addresses?.find((ar) => ar.isDefault)
+);
 
 export const { openAddForm, openEditForm, closeForm } = addressSlice.actions;
 

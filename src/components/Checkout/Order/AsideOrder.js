@@ -24,13 +24,13 @@ function AsideOrder() {
 					<DiscountField />
 					<div className='checkout-section'>
 						<div className='d-flex align-items-center justify-content-between'>
-							<span className='order__text order__text--light'>Subtotal</span>
+							<span className='order__text'>Subtotal</span>
 							<span className='order__text order__text--bold'>
 								{productPriceString(totalPrice)}
 							</span>
 						</div>
 						<div className='d-flex align-items-center justify-content-between mt-2'>
-							<span className='order__text order__text--light'>Shipping</span>
+							<span className='order__text'>Shipping</span>
 							<span className='order__text order__text--light order__text--sm'>
 								Calculated at next step
 							</span>
@@ -38,7 +38,7 @@ function AsideOrder() {
 					</div>
 					<div className='checkout-section'>
 						<div className='d-flex align-items-center justify-content-between'>
-							<span className='order__text order__text--light'>Total</span>
+							<span className='order__text'>Total</span>
 							<span className='d-flex align-items-center'>
 								<span className='order__text order__text--sm order__text--light'>
 									NZD

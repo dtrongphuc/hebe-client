@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import './styles.scss';
 
-function TextField({ type = 'text', placeholder, name }) {
-	const [value, setValue] = useState('');
-
+function TextField({ type = 'text', placeholder, name, value, onChange }) {
 	return (
 		<div className='checkout-field'>
 			<input
@@ -12,7 +10,7 @@ function TextField({ type = 'text', placeholder, name }) {
 				id={name}
 				name={name}
 				value={value}
-				onChange={(e) => setValue(e.target.value)}
+				onChange={onChange}
 			/>
 			<label htmlFor={name} className={value && 'floating'}>
 				{placeholder}

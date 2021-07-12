@@ -28,10 +28,11 @@
 
 .order__text {
 	line-height: normal;
-	font-size: 1em;
-	color: #313131;
+	font-size: 1.14em;
+	color: #525252;
 	line-height: 1.3em;
 	text-decoration: none;
+	font-weight: 400;
 
 	&--bold {
 		font-weight: 700;
@@ -50,25 +51,3 @@
 		font-size: 1.6em;
 	}
 }
-
-// .checkout__order-transition {
-// 	&-enter {
-// 		max-height: 0;
-// 		overflow: hidden;
-// 		transition: max-height 1000ms linear;
-
-// 		&-active {
-// 			max-height: 10000px;
-// 		}
-// 	}
-
-// 	&-exit {
-// 		max-height: 10000px;
-// 		transition: max-height 1000ms linear;
-
-// 		&-active {
-// 			max-height: 0;
-// 			overflow: hidden;
-// 		}
-// 	}
-// }

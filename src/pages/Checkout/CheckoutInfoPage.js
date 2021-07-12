@@ -15,6 +15,7 @@ function CheckoutInfoPage() {
 	const asideOrderRef = useRef(null);
 	const [showOrder, setShowOrder] = useState(false);
 	const [width, setWidth] = React.useState(window.innerWidth);
+	const [delivery, setDelivery] = useState('ship');
 
 	const handleResize = () => {
 		setWidth(window.innerWidth);
@@ -67,6 +68,10 @@ function CheckoutInfoPage() {
 		setShowOrder((prevState) => !prevState);
 	};
 
+	const onDeliveryChange = (e) => {
+		setDelivery(e.target.id);
+	};
+
 	return (
 		<div className='checkout'>
 			<Header />
@@ -81,9 +86,9 @@ function CheckoutInfoPage() {
 						<div className='mt-4'>
 							<Divider content='OR' />
 						</div>
+						<Contact />
 						<form action=''>
-							<Contact />
-							<Delivery />
+							<Delivery checked={delivery} onChange={onDeliveryChange} />
 							<Address />
 							<NavButtons
 								next={{

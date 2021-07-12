@@ -1,7 +1,18 @@
 $checkout-primary: #e9d2d2;
+@font-face {
+	font-family: 'Lato';
+	src: url('../../assets/fonts/lato_n4.woff2') format('woff2');
+	font-weight: 400;
+}
+
+@font-face {
+	font-family: 'Lato';
+	src: url('../../assets/fonts/lato_n7.woff2') format('woff2');
+	font-weight: 700;
+}
 
 .checkout {
-	font-family: Lato, sans-serif;
+	font-family: 'Lato', sans-serif;
 	font-size: 14px;
 	background-color: $checkout-primary;
 	overflow: hidden;
@@ -41,4 +52,77 @@ $checkout-primary: #e9d2d2;
 	overflow: hidden;
 	height: auto;
 	transition: height 0.2s ease-out;
+}
+
+.wrap {
+	display: block;
+	width: 100%;
+	padding: 0 1rem;
+	margin: 0 auto;
+	max-width: 40em;
+
+	@media (min-width: 992px) {
+		max-width: 1100px;
+		width: 100%;
+	}
+}
+
+.checkout-section {
+	margin-top: 1.6em;
+	padding-top: 1.6em;
+	border-top: 1px solid #d8d8d8;
+}
+
+.section-info {
+	margin-top: 2.4em;
+
+	&__heading {
+		color: #303b2b;
+		font-size: 1.2857142857em;
+		line-height: 1.3em;
+		margin-bottom: 1em;
+		font-weight: 400;
+	}
+
+	&__text {
+		color: #303b2b;
+		font-size: 1em;
+		text-decoration: none;
+
+		&:hover {
+			color: #303b2b;
+			text-decoration: none;
+		}
+
+		&--bold {
+			font-weight: 600;
+		}
+	}
+}
+
+.checkout-field {
+	position: relative;
+	width: 100%;
+
+	& > label {
+		position: absolute;
+		padding-left: 0.74em;
+		left: 5px;
+		right: 0;
+		margin: 0;
+		transition: all 0.2s ease-out;
+		font-size: 1em;
+		cursor: default;
+		pointer-events: none;
+		z-index: 1;
+		opacity: 1;
+		transform: translate(0, 1em) scale(1);
+		transform-origin: top left;
+		transition: 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+		color: #737373;
+
+		&.floating {
+			transform: translate(0, 0.4em) scale(0.8);
+		}
+	}
 }

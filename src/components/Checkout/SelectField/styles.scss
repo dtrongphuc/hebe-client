@@ -1,0 +1,25 @@
+@import '../main';
+
+.checkout-field {
+	@include checkoutField('.checkout-select-field');
+
+	& > .checkout-select-field {
+		padding-bottom: 0.4em;
+		padding-right: 40px;
+		position: relative;
+		appearance: none;
+	}
+
+	& > .field__caret {
+		display: block;
+		position: absolute;
+		top: 50%;
+		right: 0;
+		width: 30px;
+		height: 50%;
+		text-align: center;
+		border-left: 1px solid rgba(179, 179, 179, 0.5);
+		transform: translateY(-50%);
+		pointer-events: none;
+	}
+}

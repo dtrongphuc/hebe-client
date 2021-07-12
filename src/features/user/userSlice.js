@@ -42,6 +42,14 @@ export const checkAuthThunk = createAsyncThunk('user/check', async () => {
 	return result;
 });
 
+const authFulfilled = (state, action) => {
+	const { email, firstName, lastName } = action.payload;
+	state.isLoading = false;
+	state.email = email;
+	state.firstName = firstName;
+	state.lastName = lastName;
+};
+
 export const userSlice = createSlice({
 	name: 'user',
 	initialState: {
@@ -64,9 +72,7 @@ export const userSlice = createSlice({
 			state.isLoading = true;
 		},
 
-		[loginThunk.fulfilled]: (state) => {
-			state.isLoading = false;
-		},
+		[loginThunk.fulfilled]: authFulfilled,
 
 		[loginThunk.rejected]: (state) => {
 			state.isLoading = false;
@@ -76,9 +82,7 @@ export const userSlice = createSlice({
 			state.isLoading = true;
 		},
 
-		[registerThunk.fulfilled]: (state) => {
-			state.isLoading = false;
-		},
+		[registerThunk.fulfilled]: authFulfilled,
 
 		[registerThunk.rejected]: (state) => {
 			state.isLoading = false;
