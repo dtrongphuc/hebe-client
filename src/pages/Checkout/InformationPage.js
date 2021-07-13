@@ -10,7 +10,7 @@ import NavButtons from 'components/Checkout/NavButtons/NavButtons';
 import Pickup from 'components/Checkout/Information/Pickup';
 import { useSelector } from 'react-redux';
 
-function CheckoutInfoPage() {
+function InformationPage() {
 	const { delivery } = useSelector((state) => state.checkout);
 
 	return (
@@ -43,4 +43,4 @@ function CheckoutInfoPage() {
 		</>
 	);
 }
-export default CheckoutInfoPage;
+export default InformationPage;

@@ -34,7 +34,7 @@ function CartPage() {
 									{productPriceString(total)}
 								</span>
 							</div>
-							<Button onClick={() => history.push('/checkout')}>
+							<Button onClick={() => history.push('/checkout/information')}>
 								Check Out
 							</Button>
 						</div>

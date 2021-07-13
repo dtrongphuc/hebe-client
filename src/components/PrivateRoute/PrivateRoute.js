@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
 import ModalLoading from 'components/ModalLoading/ModalLoading';
 
-function PrivateRoute({ component: Component, ...rest }) {
+function PrivateRoute({ component: Component, children, ...rest }) {
 	const { isLogged, isLoading } = useSelector((state) => state.user);
 
 	return (
@@ -11,7 +11,11 @@ function PrivateRoute({ component: Component, ...rest }) {
 			{...rest}
 			render={(props) =>
 				isLogged === true && isLoading === false ? (
-					<Component {...props} />
+					Component ? (
+						<Component {...props} />
+					) : (
+						children
+					)
 				) : isLogged === false && isLoading === false ? (
 					<Redirect
 						to={{

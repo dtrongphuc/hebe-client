@@ -16,9 +16,10 @@ import AccountPage from 'pages/Account/AccountPage';
 import PrivateRoute from 'components/PrivateRoute/PrivateRoute';
 import AddressesPage from 'pages/Addresses/AddressesPage';
 import CartPage from 'pages/Cart/CartPage';
-import CheckoutInfoPage from 'pages/Checkout/CheckoutInfoPage';
+import InformationPage from 'pages/Checkout/InformationPage';
 import CustomerLayout from 'layouts/CustomerLayout';
 import CheckoutLayout from 'layouts/CheckoutLayout';
+import ShippingPage from 'pages/Checkout/ShippingPage';
 
 function Routes() {
 	const dispatch = useDispatch();
@@ -51,17 +52,22 @@ function Routes() {
 		<Router>
 			<ScrollToTop />
 			<Switch>
-				<Route path='/checkout/:path?' exact>
+				<PrivateRoute exact path='/checkout/:path?'>
 					<CheckoutLayout>
 						<Switch>
 							<PrivateRoute
 								exact
-								path='/checkout'
-								component={CheckoutInfoPage}
+								path='/checkout/information'
+								component={InformationPage}
+							/>
+							<PrivateRoute
+								exact
+								path='/checkout/shipping'
+								component={ShippingPage}
 							/>
 						</Switch>
 					</CheckoutLayout>
-				</Route>
+				</PrivateRoute>
 
 				<Route path='/admin/:path?' exact>
 					<Switch>
