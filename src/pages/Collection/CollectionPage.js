@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import Hero from './Hero';
 import Sort from './Sort';
 import ProductList from 'components/Products/ProductList';
-import CustomerLayout from 'layouts/CustomerLayout';
 import { getCollectionByPath } from 'services/CollectionAPI';
 import { useParams } from 'react-router';
 import './styles.scss';
@@ -67,16 +66,14 @@ export default function CollectionPage() {
 	};
 
 	return (
-		<CustomerLayout>
-			<div className='collection-page'>
-				<Hero
-					title={info?.name}
-					background={info?.image}
-					heroText={info?.description}
-				/>
-				<Sort onSortChange={onSortChange} />
-				<ProductList products={products} fromPage={fromPage} />
-			</div>
-		</CustomerLayout>
+		<div className='collection-page'>
+			<Hero
+				title={info?.name}
+				background={info?.image}
+				heroText={info?.description}
+			/>
+			<Sort onSortChange={onSortChange} />
+			<ProductList products={products} fromPage={fromPage} />
+		</div>
 	);
 }

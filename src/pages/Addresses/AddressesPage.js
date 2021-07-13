@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import CustomerLayout from 'layouts/CustomerLayout';
 import { Link } from 'react-router-dom';
 import FormAddress from 'components/FormAddress/FormAddress';
 import './styles.scss';
@@ -28,46 +27,44 @@ function AddressesPage() {
 	}, [dispatch]);
 
 	return (
-		<CustomerLayout>
-			<div className='container-lg'>
-				<div className='row'>
-					<div className='col-12'>
-						<div className='account-header'>
-							<h2 className='account-title'>My Account</h2>
-							<button
-								type='button'
-								className='btn-black'
-								onClick={() => {
-									console.log('click');
-									dispatch(openAddForm());
-								}}
-							>
-								Add a New Address
-							</button>
-						</div>
-						<hr className='hr--small' />
-					</div>
-					<div className='col-12 mt-2'>
-						<Link
-							className='account-text account-text--small account-link'
-							to='/account'
+		<div className='container-lg'>
+			<div className='row'>
+				<div className='col-12'>
+					<div className='account-header'>
+						<h2 className='account-title'>My Account</h2>
+						<button
+							type='button'
+							className='btn-black'
+							onClick={() => {
+								console.log('click');
+								dispatch(openAddForm());
+							}}
 						>
-							&#8592; Return to Account Details
-						</Link>
+							Add a New Address
+						</button>
 					</div>
-					{addressForm?.open && addressForm?.type === 'add' && (
-						<div className='col-12 mt-4'>
-							<FormAddress title='Add a New Address' />
-						</div>
-					)}
+					<hr className='hr--small' />
+				</div>
+				<div className='col-12 mt-2'>
+					<Link
+						className='account-text account-text--small account-link'
+						to='/account'
+					>
+						&#8592; Return to Account Details
+					</Link>
+				</div>
+				{addressForm?.open && addressForm?.type === 'add' && (
 					<div className='col-12 mt-4'>
-						<p className='account__col-title'>Your Addresses</p>
-						{addresses && <AddressList addresses={addresses} />}
+						<FormAddress title='Add a New Address' />
 					</div>
+				)}
+				<div className='col-12 mt-4'>
+					<p className='account__col-title'>Your Addresses</p>
+					{addresses && <AddressList addresses={addresses} />}
 				</div>
 			</div>
 			<ModalLoading loading={loading} />
-		</CustomerLayout>
+		</div>
 	);
 }
 

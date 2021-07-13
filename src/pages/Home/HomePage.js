@@ -3,7 +3,6 @@ import HeroTop from './HeroTop';
 import HeroBottom from './HeroBottom';
 import ReviewList from 'components/Reviews/ReviewList';
 import ProductList from 'components/Products/ProductList';
-import CustomerLayout from 'layouts/CustomerLayout';
 
 import { getFrontPageProducts } from 'services/ProductApi';
 import './styles.scss';
@@ -39,7 +38,7 @@ export default function HomePage() {
 	}, []);
 
 	return (
-		<CustomerLayout>
+		<>
 			<HeroTop />
 			<section className='home__products'>
 				<h2 className='home__products-title'>Featured Products</h2>
@@ -49,6 +48,6 @@ export default function HomePage() {
 			</section>
 			<HeroBottom />
 			<ReviewList />
-		</CustomerLayout>
+		</>
 	);
 }
