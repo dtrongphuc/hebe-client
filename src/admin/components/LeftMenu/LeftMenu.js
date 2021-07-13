@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Menu } from 'antd';
-import { DashboardOutlined, SkinOutlined } from '@ant-design/icons';
+import {
+	DashboardOutlined,
+	SkinOutlined,
+	SettingOutlined,
+} from '@ant-design/icons';
 import { useHistory, useLocation } from 'react-router-dom';
 
 const { SubMenu } = Menu;
@@ -48,6 +52,9 @@ function LeftMenu() {
 				<Menu.Item key='/admin/product/all'>All products</Menu.Item>
 				<Menu.Item key='/admin/product/add'>Add product</Menu.Item>
 			</SubMenu>
+			<Menu.Item key='/admin/settings' icon={<SettingOutlined />}>
+				Settings
+			</Menu.Item>
 		</Menu>
 	);
 }
