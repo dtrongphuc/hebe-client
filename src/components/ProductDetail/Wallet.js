@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { productPriceString } from 'utils/util';
+import { priceString } from 'utils/util';
 
 import afterpay from 'assets/img/DetailProduct/afterpay.png';
 import laybuy from 'assets/img/DetailProduct/ico-laybuy.png';
@@ -29,10 +29,10 @@ function Wallet({ price, salePrice }) {
 
 	return (
 		<div className='product-detail__wallet'>
-			<p className='higher-text'>{productPriceString(salePrice)}</p>
+			<p className='higher-text'>{priceString(salePrice)}</p>
 			<div className='higher-text'>
 				<span>or make 4 interest-free payments of </span>
-				<strong>{productPriceString(walletType?.afterpay)} NZD</strong>
+				<strong>{priceString(walletType?.afterpay)} NZD</strong>
 				<span> fortnightly with</span>
 				<div className='wallet-info'>
 					<img src={afterpay} alt='afterpay' className='mr-2' />
@@ -42,13 +42,13 @@ function Wallet({ price, salePrice }) {
 				</div>
 				{salePrice && (
 					<p className='higher-text font-weight-light font-italic font-stroke mt-3'>
-						{productPriceString(price)}
+						{priceString(price)}
 					</p>
 				)}
 			</div>
 			<div className='mt-5 small-text'>
 				Or 6 weekly interest-free payments of{' '}
-				<strong>{productPriceString(walletType?.laybuy)}</strong>
+				<strong>{priceString(walletType?.laybuy)}</strong>
 				<span> with</span>
 				<div className='wallet-info'>
 					<img src={laybuy} alt='laybuy' className='mr-2' />
@@ -63,7 +63,7 @@ function Wallet({ price, salePrice }) {
 					<span>or 4 interest free payments </span>
 					<br />
 					<span>of </span>
-					<strong>{productPriceString(walletType?.zip)} </strong>
+					<strong>{priceString(walletType?.zip)} </strong>
 					<Link to='#' className='wallet-more__link'>
 						Learn more
 					</Link>

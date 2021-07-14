@@ -16,7 +16,6 @@ function SelectField({ placeholder, name, options, defaultValue, onChange }) {
 				className='checkout-select-field'
 				name={name}
 				id={name}
-				defaultValue={defaultValue}
 				value={value || options[0].value}
 				onChange={(e) => {
 					setValue(e.target.value);

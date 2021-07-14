@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './OrderItemStyles.scss';
-import { productPriceString } from 'utils/util';
+import { priceString } from 'utils/util';
 
 function OrderItem({ item }) {
 	const { product, variant, quantity, sku, total } = item;
@@ -25,7 +25,7 @@ function OrderItem({ item }) {
 			</div>
 			<div className='order__right'>
 				<span className='order__text order__text--bold'>
-					{productPriceString(total)}
+					{priceString(total)}
 				</span>
 			</div>
 		</div>

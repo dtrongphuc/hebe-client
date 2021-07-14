@@ -1,7 +1,7 @@
 const CLOUD_NAME = process.env.REACT_APP_CLOUD_NAME;
 const API_KEY = process.env.REACT_APP_API_CLOUD_API_KEY;
 
-export const productPriceString = (price) => {
+export const priceString = (price) => {
 	return new Intl.NumberFormat('en-US', {
 		style: 'currency',
 		currency: 'USD',

@@ -3,7 +3,7 @@ import OrderItem from './OrderItem';
 import DiscountField from './DiscountField';
 import './AsideOrderStyles.scss';
 import { useSelector } from 'react-redux';
-import { productPriceString } from 'utils/util';
+import { priceString } from 'utils/util';
 
 function AsideOrder() {
 	const { products, totalPrice } = useSelector(
@@ -26,7 +26,7 @@ function AsideOrder() {
 						<div className='d-flex align-items-center justify-content-between'>
 							<span className='order__text'>Subtotal</span>
 							<span className='order__text order__text--bold'>
-								{productPriceString(totalPrice)}
+								{priceString(totalPrice)}
 							</span>
 						</div>
 						<div className='d-flex align-items-center justify-content-between mt-2'>
@@ -44,7 +44,7 @@ function AsideOrder() {
 									NZD
 								</span>
 								<span className='order__text order__text--bold order__text--lg ml-2'>
-									{productPriceString(totalPrice)}
+									{priceString(totalPrice)}
 								</span>
 							</span>
 						</div>

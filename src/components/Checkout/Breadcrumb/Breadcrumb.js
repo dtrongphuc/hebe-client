@@ -1,45 +1,78 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useState } from 'react';
 import { IoChevronForwardOutline } from 'react-icons/io5';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import './styles.scss';
 
-function Breadcrumb(props) {
+const links = [
+	{
+		name: 'cart',
+		link: '/checkout/cart',
+		active: false,
+		disabled: false,
+	},
+	{
+		name: 'information',
+		link: '/checkout/information',
+		active: false,
+		disabled: false,
+	},
+	{
+		name: 'shipping',
+		link: '/checkout/shipping',
+		active: false,
+		disabled: false,
+	},
+	{
+		name: 'payment',
+		link: '/checkout/payment',
+		active: false,
+		disabled: false,
+	},
+];
+
+function Breadcrumb() {
+	const [breadcrumbList, setBreadcrumbList] = useState([]);
+	let location = useLocation();
+	React.useEffect(() => {
+		const { pathname } = location;
+		const currentPathName = pathname.replace('/checkout/', '');
+
+		let flag = false;
+		let linksMap = links.map((link) => {
+			if (flag === true) {
+				link.disabled = true;
+				link.active = false;
+			} else if (link.name === currentPathName) {
+				flag = true;
+				link.active = true;
+			} else {
+				link.active = false;
+				link.disabled = false;
+			}
+
+			return link;
+		});
+
+		setBreadcrumbList([...linksMap]);
+	}, [location]);
+
 	return (
 		<ol className='checkout-breadcrumb'>
-			<li className='checkout-breadcrumb__item'>
-				<Link
-					to='/'
-					className='checkout-breadcrumb__link checkout-breadcrumb__link--active'
-				>
-					Cart
-				</Link>
-				<IoChevronForwardOutline />
-			</li>
-			<li className='checkout-breadcrumb__item'>
-				<Link
-					to='/'
-					className='checkout-breadcrumb__link checkout-breadcrumb__link--active'
-				>
-					Information
-				</Link>
-				<IoChevronForwardOutline />
-			</li>
-			<li className='checkout-breadcrumb__item'>
-				<Link to='/' className='checkout-breadcrumb__link'>
-					Shipping
-				</Link>
-				<IoChevronForwardOutline />
-			</li>
-			<li className='checkout-breadcrumb__item'>
-				<Link to='/' className='checkout-breadcrumb__link'>
-					Payment
-				</Link>
-			</li>
+			{breadcrumbList?.map(({ name, link, active, disabled }, index) => (
+				<li key={link} className='checkout-breadcrumb__item'>
+					<Link
+						to={link}
+						className={`checkout-breadcrumb__link ${
+							active ? 'active' : disabled ? 'disabled' : ''
+						}`}
+					>
+						{name}
+					</Link>
+					{index < breadcrumbList.length - 1 && <IoChevronForwardOutline />}
+				</li>
+			))}
 		</ol>
 	);
 }
-
-Breadcrumb.propTypes = {};
 
 export default Breadcrumb;

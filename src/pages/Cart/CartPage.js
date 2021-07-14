@@ -5,7 +5,7 @@ import Button from 'components/FormControl/Button';
 
 import './styles.scss';
 import { useSelector } from 'react-redux';
-import { productPriceString } from 'utils/util';
+import { priceString } from 'utils/util';
 import { useHistory } from 'react-router-dom';
 
 function CartPage() {
@@ -30,9 +30,7 @@ function CartPage() {
 						<div className='mt-5 cart-checkout'>
 							<div className='d-flex align-items-center justify-content-between mb-4 ml-auto'>
 								<span>Subtotal:</span>
-								<span style={{ fontSize: '1.4rem' }}>
-									{productPriceString(total)}
-								</span>
+								<span style={{ fontSize: '1.4rem' }}>{priceString(total)}</span>
 							</div>
 							<Button onClick={() => history.push('/checkout/information')}>
 								Check Out

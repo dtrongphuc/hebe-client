@@ -2,6 +2,10 @@
 	color: #525252;
 	position: relative;
 
+	@media (min-width: 992px) {
+		min-height: 70vh;
+	}
+
 	&::after {
 		content: '';
 		display: block;

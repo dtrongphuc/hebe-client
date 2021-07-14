@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Link, useHistory } from 'react-router-dom';
-import { productPriceString } from 'utils/util';
+import { priceString } from 'utils/util';
 import { useState } from 'react';
 
 export default function ProductItem({ product, fromPage }) {
@@ -33,7 +33,7 @@ export default function ProductItem({ product, fromPage }) {
 				</Link>
 				<p className='product-item__name'>{product.name}</p>
 				<p className='price product-item__price'>
-					{productPriceString(product?.price)}
+					{priceString(product?.price)}
 				</p>
 				{product.quantity === 0 && <i className='sold-out'>Sold Out</i>}
 			</div>

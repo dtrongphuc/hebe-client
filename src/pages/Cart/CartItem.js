@@ -6,7 +6,7 @@ import { quantityChange, updateThunk } from 'features/cart/cartSlice';
 import { unwrapResult } from '@reduxjs/toolkit';
 import { message } from 'antd';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
-import { productPriceString } from 'utils/util';
+import { priceString } from 'utils/util';
 function CartItem({ item }) {
 	const cartId = useSelector((state) => state.cart.shoppingCart?._id);
 	const warning = useSelector((state) => state.cart.warning);
@@ -165,8 +165,8 @@ function CartItem({ item }) {
 							<div className='text-center'>
 								<span className='cart-price'>
 									{product.salePrice > 0
-										? productPriceString(product.salePrice)
-										: productPriceString(product.price)}
+										? priceString(product.salePrice)
+										: priceString(product.price)}
 								</span>
 							</div>
 						</div>
@@ -193,7 +193,7 @@ function CartItem({ item }) {
 						</div>
 						<div className='d-flex flex-column'>
 							<p className='cart-text cart-text--sm text-center mb-2'>Total</p>
-							<p className='cart-price'>{productPriceString(total)}</p>
+							<p className='cart-price'>{priceString(total)}</p>
 						</div>
 					</div>
 				</div>
