@@ -1,6 +1,7 @@
 import AddProductPage from 'admin/pages/Product/AddProductPage';
 import DashBoardPage from 'admin/pages/Dashboard/DashBoardPage';
-import SettingsPage from 'admin/pages/Settings/SettingsPage';
+import SettingBannerPage from 'admin/pages/Settings/SettingBannerPage';
+import SettingShippingPage from 'admin/pages/Settings/SettingShippingPage';
 
 const routes = [
 	{
@@ -19,8 +20,13 @@ const routes = [
 		exact: false,
 	},
 	{
-		path: '/admin/settings',
-		component: SettingsPage,
+		path: '/admin/settings/banner',
+		component: SettingBannerPage,
+		exact: true,
+	},
+	{
+		path: '/admin/settings/shipping',
+		component: SettingShippingPage,
 		exact: true,
 	},
 ];

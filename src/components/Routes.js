@@ -69,7 +69,7 @@ function Routes() {
 					</CheckoutLayout>
 				</PrivateRoute>
 
-				<Route path='/admin/:path?' exact>
+				<Route path='/admin/:path?'>
 					<Switch>
 						<Route path='/admin' component={Admin} />
 					</Switch>

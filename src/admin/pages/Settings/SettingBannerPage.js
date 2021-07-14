@@ -1,12 +1,12 @@
 import React from 'react';
 
-import { Form, Input, Button, Upload } from 'antd';
+import { Form, Input, Button, Upload, Divider } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import { Typography } from 'antd';
 
 const { Title } = Typography;
 
-const SettingsPage = () => {
+const SettingBannerPage = () => {
 	const onFinish = (values) => {
 		console.log('Success:', values);
 	};
@@ -32,7 +32,34 @@ const SettingsPage = () => {
 
 	return (
 		<Form layout='vertical' onFinish={onFinish} onFinishFailed={onFinishFailed}>
-			<Title level={2}>Banner</Title>
+			<Title level={3}>Banner</Title>
+			<Divider />
+			<Form.Item
+				label='Title'
+				name='banner-title'
+				rules={[
+					{
+						required: true,
+						message: 'Please input banner title!',
+					},
+				]}
+			>
+				<Input />
+			</Form.Item>
+
+			<Form.Item
+				label='Tittle path'
+				name='banner-path'
+				rules={[
+					{
+						required: true,
+						message: 'Please input path!',
+					},
+				]}
+			>
+				<Input />
+			</Form.Item>
+
 			<Form.Item
 				label='Banner image'
 				name='banner-image'
@@ -47,20 +74,16 @@ const SettingsPage = () => {
 					<Button icon={<UploadOutlined />}>Upload</Button>
 				</Upload>
 			</Form.Item>
-			<Form.Item
-				label='Title'
-				name='banner-title'
-				rules={[
-					{
-						required: true,
-						message: 'Please input banner title!',
-					},
-				]}
-			>
-				<Input />
-			</Form.Item>
 
 			<Form.Item>
+				<Button
+					type='primary'
+					danger
+					htmlType='button'
+					style={{ marginRight: 16 }}
+				>
+					Cancel
+				</Button>
 				<Button type='primary' htmlType='submit'>
 					Submit
 				</Button>
@@ -69,4 +92,4 @@ const SettingsPage = () => {
 	);
 };
 
-export default SettingsPage;
+export default SettingBannerPage;

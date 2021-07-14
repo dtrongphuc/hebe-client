@@ -52,9 +52,14 @@ function LeftMenu() {
 				<Menu.Item key='/admin/product/all'>All products</Menu.Item>
 				<Menu.Item key='/admin/product/add'>Add product</Menu.Item>
 			</SubMenu>
-			<Menu.Item key='/admin/settings' icon={<SettingOutlined />}>
-				Settings
-			</Menu.Item>
+			<SubMenu
+				key='/admin/settings'
+				icon={<SettingOutlined />}
+				title='Settings'
+			>
+				<Menu.Item key='/admin/settings/banner'>Banner</Menu.Item>
+				<Menu.Item key='/admin/settings/shipping'>Shipping</Menu.Item>
+			</SubMenu>
 		</Menu>
 	);
 }
