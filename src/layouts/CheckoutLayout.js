@@ -3,6 +3,7 @@ import Header from 'components/Checkout/Header/Header';
 import ButtonToggle from 'components/Checkout/Order/ButtonToggle';
 import AsideOrder from 'components/Checkout/Order/AsideOrder';
 import PropTypes from 'prop-types';
+import './CheckoutLayoutStyles.scss';
 
 function CheckoutLayout({ children }) {
 	const asideOrderRef = useRef(null);

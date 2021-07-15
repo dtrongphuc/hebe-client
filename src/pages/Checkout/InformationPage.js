@@ -1,5 +1,4 @@
 import React from 'react';
-import './styles.scss';
 import Breadcrumb from 'components/Checkout/Breadcrumb/Breadcrumb';
 import ExpressCheckout from 'components/Checkout/ExpressCheckout/ExpressCheckout';
 import Divider from 'components/Checkout/Divider/Divider';

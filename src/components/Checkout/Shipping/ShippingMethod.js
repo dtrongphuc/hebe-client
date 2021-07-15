@@ -1,6 +1,7 @@
 import React from 'react';
 import { priceString } from 'utils/util';
 // import PropTypes from 'prop-types';
+import './ShippingMethodStyles.scss';
 
 function ShippingMethod(props) {
 	return (
@@ -16,7 +17,7 @@ function ShippingMethod(props) {
 						checked={true}
 						onChange={() => {}}
 					/>
-					<label htmlFor='ship-address-1'>
+					<label htmlFor='ship-address-1' className='between'>
 						<span className='light'>Shipping Australia Untraced</span>
 						<span className='ship-price'>{priceString(10)}</span>
 					</label>
@@ -30,7 +31,7 @@ function ShippingMethod(props) {
 						checked={false}
 						onChange={() => {}}
 					/>
-					<label htmlFor='ship-address-2'>
+					<label htmlFor='ship-address-2' className='between'>
 						<span className='light'>Shipping International Untraced</span>
 						<span className='ship-price'>{priceString(20)}</span>
 					</label>
