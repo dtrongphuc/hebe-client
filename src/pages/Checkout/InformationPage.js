@@ -22,13 +22,13 @@ function InformationPage() {
 			<Contact />
 			<Delivery />
 			<form action=''>
-				{delivery === 'pick-up' && <Pickup />}
-				{delivery === 'ship' && <Address />}
+				{delivery === 'pickup' && <Pickup />}
+				{delivery === 'shipping' && <Address />}
 
 				<NavButtons
 					next={{
 						content:
-							delivery === 'ship'
+							delivery === 'shipping'
 								? 'Continue to shipping'
 								: 'Continue to payment',
 						link: '/',

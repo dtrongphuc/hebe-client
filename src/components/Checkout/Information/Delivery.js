@@ -1,4 +1,4 @@
-import { onChange } from 'features/checkout/checkoutSlice';
+import { deliveryChange } from 'features/checkout/checkoutSlice';
 import React from 'react';
 // import PropTypes from 'prop-types';
 import { IoStorefront } from 'react-icons/io5';
@@ -11,11 +11,7 @@ function Delivery() {
 	const { delivery } = useSelector((state) => state.checkout);
 
 	const handleChange = (e) => {
-		const field = {
-			delivery: e.target.id,
-		};
-
-		dispatch(onChange(field));
+		dispatch(deliveryChange(e.target.id));
 	};
 
 	return (
@@ -26,12 +22,12 @@ function Delivery() {
 					<input
 						type='radio'
 						name='delivery'
-						id='ship'
+						id='shipping'
 						className='checkout-radio'
-						checked={delivery === 'ship'}
+						checked={delivery === 'shipping'}
 						onChange={handleChange}
 					/>
-					<label htmlFor='ship'>
+					<label htmlFor='shipping'>
 						<MdLocalShipping size='1.6em' />
 						<span>Ship</span>
 					</label>
@@ -40,12 +36,12 @@ function Delivery() {
 					<input
 						type='radio'
 						name='delivery'
-						id='pick-up'
+						id='pickup'
 						className='checkout-radio'
-						checked={delivery === 'pick-up'}
+						checked={delivery === 'pickup'}
 						onChange={handleChange}
 					/>
-					<label htmlFor='pick-up'>
+					<label htmlFor='pickup'>
 						<IoStorefront size='1.6em' />
 						<span>Pick up</span>
 					</label>

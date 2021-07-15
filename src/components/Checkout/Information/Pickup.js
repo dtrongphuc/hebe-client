@@ -41,7 +41,7 @@ function Pickup() {
 			}
 		};
 
-		if (delivery === 'pick-up') {
+		if (delivery === 'pickup') {
 			getLocations();
 		}
 	}, [delivery, dispatch]);

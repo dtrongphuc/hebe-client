@@ -6,6 +6,8 @@ import { useSelector } from 'react-redux';
 import { priceString } from 'utils/util';
 
 function AsideOrder() {
+	const { delivery, shippingPrice } = useSelector((state) => state.checkout);
+
 	const { products, totalPrice } = useSelector(
 		(state) => state.cart.shoppingCart
 	);
@@ -30,9 +32,9 @@ function AsideOrder() {
 							</span>
 						</div>
 						<div className='d-flex align-items-center justify-content-between mt-2'>
-							<span className='order__text'>Shipping</span>
+							<span className='order__text text-capitalize'>{delivery}</span>
 							<span className='order__text order__text--light order__text--sm'>
-								Calculated at next step
+								{shippingPrice.display}
 							</span>
 						</div>
 					</div>
