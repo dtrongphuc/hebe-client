@@ -17,3 +17,12 @@ export async function getShippingSettings() {
 		return error;
 	}
 }
+
+export async function getPickupLocations() {
+	try {
+		const response = await api.get('/config/pickup-locations');
+		return response.data;
+	} catch (error) {
+		return error;
+	}
+}

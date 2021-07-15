@@ -14,6 +14,8 @@ const initialState = {
 	},
 	delivery: 'ship',
 	shipping: '',
+	pickupLocations: [],
+	pickupLocationSelected: '',
 };
 
 const checkoutSlice = createSlice({
@@ -59,6 +61,12 @@ const checkoutSlice = createSlice({
 				...field,
 			};
 		},
+		setPickupLocation: (state, action) => {
+			state.pickupLocations = action.payload;
+		},
+		pickupLocationSelectedChange: (state, action) => {
+			state.pickupLocationSelected = action.payload;
+		},
 	},
 });
 
@@ -67,6 +75,8 @@ export const {
 	resetAddress,
 	addressFieldChange,
 	onChange,
+	setPickupLocation,
+	pickupLocationSelectedChange,
 } = checkoutSlice.actions;
 
 export default checkoutSlice.reducer;

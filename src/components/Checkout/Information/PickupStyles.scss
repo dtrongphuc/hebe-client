@@ -1,3 +1,5 @@
+@import '../variables';
+
 .pickup-label__text {
 	color: #545454;
 	font-size: 1em;
@@ -10,5 +12,20 @@
 	&--sm {
 		color: #737373;
 		font-size: 0.8571428571em;
+	}
+}
+
+.pickup__loading-wrapper {
+	background-color: #fff;
+	border-radius: 6px;
+	border: 1px solid $border-color;
+	padding: 20px 14px 14px;
+	color: #545454;
+	text-align: center;
+
+	& > span {
+		margin: 0 auto;
+		display: block;
+		margin-bottom: 16px;
 	}
 }
