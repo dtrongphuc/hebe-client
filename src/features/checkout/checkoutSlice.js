@@ -19,6 +19,8 @@ const initialState = {
 	},
 	pickupLocations: [],
 	pickupLocationSelected: '',
+	shippingMethod: [],
+	shippingMethodSelected: ''
 };
 
 const checkoutSlice = createSlice({

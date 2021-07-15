@@ -21,24 +21,22 @@ function InformationPage() {
 			</div>
 			<Contact />
 			<Delivery />
-			<form action=''>
-				{delivery === 'pickup' && <Pickup />}
-				{delivery === 'shipping' && <Address />}
+			{delivery === 'pickup' && <Pickup />}
+			{delivery === 'shipping' && <Address />}
 
-				<NavButtons
-					next={{
-						content:
-							delivery === 'shipping'
-								? 'Continue to shipping'
-								: 'Continue to payment',
-						link: '/',
-					}}
-					prev={{
-						content: 'Return to cart',
-						link: '/',
-					}}
-				/>
-			</form>
+			<NavButtons
+				next={{
+					content:
+						delivery === 'shipping'
+							? 'Continue to shipping'
+							: 'Continue to payment',
+					link: `/checkout/${delivery === 'shipping' ? 'shipping' : 'payment'}`,
+				}}
+				prev={{
+					content: 'Return to cart',
+					link: '/cart',
+				}}
+			/>
 		</>
 	);
 }
