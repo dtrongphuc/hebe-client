@@ -1,3 +1,5 @@
+@import '../variables';
+
 .radio-wrapper .between {
 	display: flex;
 	align-items: center;
@@ -11,5 +13,20 @@
 	.ship-price {
 		color: #333;
 		font-weight: 700;
+	}
+}
+
+.shipping__loading-wrapper {
+	background-color: #fff;
+	border-radius: 6px;
+	border: 1px solid $border-color;
+	padding: 20px 14px 14px;
+	color: #545454;
+	text-align: center;
+
+	& > span {
+		margin: 0 auto;
+		display: block;
+		margin-bottom: 16px;
 	}
 }

@@ -26,3 +26,12 @@ export async function getPickupLocations() {
 		return error;
 	}
 }
+
+export async function getShippingMethods() {
+	try {
+		const response = await api.get('/config/shipping-methods');
+		return response.data;
+	} catch (error) {
+		return error;
+	}
+}

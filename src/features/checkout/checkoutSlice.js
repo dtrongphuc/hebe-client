@@ -1,4 +1,22 @@
-const { createSlice } = require('@reduxjs/toolkit');
+import { getPickupLocations, getShippingMethods } from 'services/SettingApi';
+
+const { createSlice, createAsyncThunk } = require('@reduxjs/toolkit');
+
+export const getPickupLocationsThunk = createAsyncThunk(
+	'checkout/get-pickup-locations',
+	async () => {
+		const response = await getPickupLocations();
+		return response?.locations;
+	}
+);
+
+export const getShippingMethodsThunk = createAsyncThunk(
+	'checkout/get-shipping-method',
+	async () => {
+		const response = await getShippingMethods();
+		return response.shippingMethods;
+	}
+);
 
 const initialState = {
 	address: {
@@ -15,12 +33,12 @@ const initialState = {
 	delivery: 'shipping',
 	shippingPrice: {
 		display: 'Calculated at next step',
-		price: '0',
+		price: null,
 	},
 	pickupLocations: [],
 	pickupLocationSelected: '',
-	shippingMethod: [],
-	shippingMethodSelected: ''
+	shippingMethods: [],
+	shippingMethodSelected: '',
 };
 
 const checkoutSlice = createSlice({
@@ -66,21 +84,77 @@ const checkoutSlice = createSlice({
 			}
 			state.delivery = delivery;
 		},
-		setPickupLocation: (state, action) => {
-			state.pickupLocations = action.payload;
-		},
 		pickupLocationSelectedChange: (state, action) => {
 			let location = state.pickupLocations.find(
 				({ _id }) => _id === action.payload
 			);
-
+			if (location) {
+				return {
+					...state,
+					pickupLocationSelected: action.payload,
+					shippingPrice: {
+						...state.shippingPrice,
+						display: location.displayPrice,
+						price: location.price,
+					},
+				};
+			}
+		},
+		shippingMethodSelectedChange: (state, action) => {
+			let method = state.shippingMethods.find(
+				(method) => method._id === action.payload
+			);
+			if (method) {
+				return {
+					...state,
+					shippingMethodSelected: action.payload,
+					shippingPrice: {
+						...state.shippingPrice,
+						display: method.displayPrice,
+						price: method.price,
+					},
+				};
+			}
+		},
+	},
+	extraReducers: {
+		[getPickupLocationsThunk.fulfilled]: (state, action) => {
+			let locations = action.payload;
+			state.pickupLocations = locations;
+			if (locations.length > 0) {
+				state.pickupLocationSelected = locations[0]._id;
+				state.shippingPrice.display = locations[0].displayPrice;
+				state.shippingPrice.price = locations[0].price;
+			}
+		},
+		[getPickupLocationsThunk.rejected]: (state) => {
 			return {
 				...state,
-				pickupLocationSelected: action.payload,
+				pickupLocations: initialState.pickupLocations,
+				pickupLocationSelected: initialState.pickupLocationSelected,
 				shippingPrice: {
-					...state.shippingPrice,
-					display: location.displayPrice,
-					price: location.price,
+					display: initialState.shippingPrice.display,
+					price: initialState.shippingPrice.price,
+				},
+			};
+		},
+		[getShippingMethodsThunk.fulfilled]: (state, action) => {
+			let methods = action.payload;
+			state.shippingMethods = methods;
+			if (methods.length > 0) {
+				state.shippingMethodSelected = methods[0]._id;
+				state.shippingPrice.display = methods[0].displayPrice;
+				state.shippingPrice.price = methods[0].price;
+			}
+		},
+		[getShippingMethodsThunk.rejected]: (state) => {
+			return {
+				...state,
+				shippingMethods: initialState.shippingMethods,
+				shippingMethodSelected: initialState.shippingMethodSelected,
+				shippingPrice: {
+					display: initialState.shippingPrice.display,
+					price: initialState.shippingPrice.price,
 				},
 			};
 		},
@@ -92,8 +166,8 @@ export const {
 	resetAddress,
 	addressFieldChange,
 	deliveryChange,
-	setPickupLocation,
 	pickupLocationSelectedChange,
+	shippingMethodSelectedChange,
 } = checkoutSlice.actions;
 
 export default checkoutSlice.reducer;

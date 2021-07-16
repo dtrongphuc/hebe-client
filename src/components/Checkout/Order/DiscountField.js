@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import TextField from '../TextField/TextField';
 import { IoArrowForwardOutline } from 'react-icons/io5';
 import './DiscountFieldStyles.scss';
@@ -15,6 +15,6 @@ function DiscountField(props) {
 	);
 }
 
-DiscountField.propTypes = {};
+// DiscountField.propTypes = {};
 
 export default DiscountField;

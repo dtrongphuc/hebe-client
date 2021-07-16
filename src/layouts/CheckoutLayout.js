@@ -4,6 +4,7 @@ import ButtonToggle from 'components/Checkout/Order/ButtonToggle';
 import AsideOrder from 'components/Checkout/Order/AsideOrder';
 import PropTypes from 'prop-types';
 import './CheckoutLayoutStyles.scss';
+import Breadcrumb from 'components/Checkout/Breadcrumb/Breadcrumb';
 
 function CheckoutLayout({ children }) {
 	const asideOrderRef = useRef(null);
@@ -69,7 +70,10 @@ function CheckoutLayout({ children }) {
 			</div>
 			<div className='checkout__content'>
 				<div className='checkout__main'>
-					<div className='wrap'>{children}</div>
+					<div className='wrap'>
+						<Breadcrumb />
+						{children}
+					</div>
 				</div>
 				{width <= 992 && (
 					<div

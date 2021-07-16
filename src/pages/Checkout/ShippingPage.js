@@ -1,4 +1,3 @@
-import Breadcrumb from 'components/Checkout/Breadcrumb/Breadcrumb';
 import NavButtons from 'components/Checkout/NavButtons/NavButtons';
 import ShippingInfo from 'components/Checkout/Shipping/ShippingInfo';
 import ShippingMethod from 'components/Checkout/Shipping/ShippingMethod';
@@ -8,7 +7,6 @@ import './ShippingPageStyles.scss';
 function ShippingPage() {
 	return (
 		<>
-			<Breadcrumb />
 			<ShippingInfo />
 			<ShippingMethod />
 			<NavButtons

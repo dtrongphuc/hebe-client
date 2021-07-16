@@ -1,5 +1,4 @@
 import React from 'react';
-import Breadcrumb from 'components/Checkout/Breadcrumb/Breadcrumb';
 import ExpressCheckout from 'components/Checkout/ExpressCheckout/ExpressCheckout';
 import Divider from 'components/Checkout/Divider/Divider';
 import Contact from 'components/Checkout/Information/Contact';
@@ -14,7 +13,6 @@ function InformationPage() {
 
 	return (
 		<>
-			<Breadcrumb />
 			<ExpressCheckout />
 			<div className='mt-4'>
 				<Divider content='OR' />

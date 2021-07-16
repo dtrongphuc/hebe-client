@@ -33,7 +33,13 @@ function AsideOrder() {
 						</div>
 						<div className='d-flex align-items-center justify-content-between mt-2'>
 							<span className='order__text text-capitalize'>{delivery}</span>
-							<span className='order__text order__text--light order__text--sm'>
+							<span
+								className={`order__text ${
+									shippingPrice.price !== null
+										? 'order__text--bold'
+										: 'order__text--sm order__text--light'
+								}`}
+							>
 								{shippingPrice.display}
 							</span>
 						</div>

@@ -1,10 +1,9 @@
 import {
+	getPickupLocationsThunk,
 	pickupLocationSelectedChange,
-	setPickupLocation,
 } from 'features/checkout/checkoutSlice';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getPickupLocations } from 'services/SettingApi';
 import { PuffLoader } from 'react-spinners';
 import './PickupStyles.scss';
 
@@ -29,11 +28,7 @@ function Pickup() {
 		const getLocations = async () => {
 			setLoading(true);
 			try {
-				const response = await getPickupLocations();
-				dispatch(setPickupLocation(response.locations));
-				if (response.locations.length > 0) {
-					dispatch(pickupLocationSelectedChange(response.locations[0]._id));
-				}
+				await dispatch(getPickupLocationsThunk());
 			} catch (error) {
 				console.log(error);
 			} finally {
