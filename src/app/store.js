@@ -4,6 +4,7 @@ import userReducer from 'features/user/userSlice';
 import addressReducer from 'features/address/addressSlice';
 import cartReducer from 'features/cart/cartSlice';
 import checkoutReducer from 'features/checkout/checkoutSlice';
+import creditCardReducer from 'features/checkout/creditCardSlice';
 import persistReducer from 'redux-persist/es/persistReducer';
 import { FLUSH } from 'redux-persist/es/constants';
 import { REHYDRATE } from 'redux-persist/es/constants';
@@ -17,12 +18,13 @@ const reducer = combineReducers({
 	address: addressReducer,
 	cart: cartReducer,
 	checkout: checkoutReducer,
+	creditCard: creditCardReducer,
 });
 
 const persistConfig = {
 	key: 'root',
 	storage,
-	blacklist: ['address', 'user'],
+	blacklist: ['address', 'user', 'creditCard'],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducer);
