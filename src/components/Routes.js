@@ -20,6 +20,7 @@ import InformationPage from 'pages/Checkout/InformationPage';
 import CustomerLayout from 'layouts/CustomerLayout';
 import CheckoutLayout from 'layouts/CheckoutLayout';
 import ShippingPage from 'pages/Checkout/ShippingPage';
+import PaymentPage from 'pages/Checkout/PaymentPage';
 
 function Routes() {
 	const dispatch = useDispatch();
@@ -64,6 +65,11 @@ function Routes() {
 								exact
 								path='/checkout/shipping'
 								component={ShippingPage}
+							/>
+							<PrivateRoute
+								exact
+								path='/checkout/payment'
+								component={PaymentPage}
 							/>
 						</Switch>
 					</CheckoutLayout>

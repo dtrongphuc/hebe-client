@@ -10,7 +10,7 @@ function NavButtons({ next, prev }) {
 	return (
 		<div className='checkout-nav__section'>
 			<div className='row'>
-				<div className='col-12 col-md-5'>
+				<div className='col-12 col-md-auto'>
 					<button
 						className='checkout__nav-btn'
 						onClick={() => history.push(next.link)}
@@ -18,7 +18,7 @@ function NavButtons({ next, prev }) {
 						{next.content}
 					</button>
 				</div>
-				<div className='col-12 col-md-7 my-auto'>
+				<div className='col-12 col-md my-auto'>
 					<div className='mt-4 mt-md-0 text-center text-md-left'>
 						<Link to={prev.link} className='checkout__nav-link'>
 							<span className='mr-2 d-inline d-md-none'>

@@ -10,11 +10,14 @@
 		@include button;
 		background-color: #000;
 		color: #fff;
-		padding-top: 1.4em;
-		padding-bottom: 1.4em;
+		padding-top: 1.3em;
+		padding-bottom: 1.3em;
 		margin-left: 0;
 		font-weight: 600;
-		width: 100%;
+
+		@media (max-width: 767.9px) {
+			width: 100%;
+		}
 	}
 
 	&-link {

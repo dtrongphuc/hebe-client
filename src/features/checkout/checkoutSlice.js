@@ -39,6 +39,7 @@ const initialState = {
 	pickupLocationSelected: '',
 	shippingMethods: [],
 	shippingMethodSelected: '',
+	paymentMethodSelected: 'credit-card',
 };
 
 const checkoutSlice = createSlice({
@@ -116,6 +117,9 @@ const checkoutSlice = createSlice({
 				};
 			}
 		},
+		paymentMethodChange: (state, action) => {
+			state.paymentMethodSelected = action.payload;
+		},
 	},
 	extraReducers: {
 		[getPickupLocationsThunk.fulfilled]: (state, action) => {
@@ -168,6 +172,7 @@ export const {
 	deliveryChange,
 	pickupLocationSelectedChange,
 	shippingMethodSelectedChange,
+	paymentMethodChange,
 } = checkoutSlice.actions;
 
 export default checkoutSlice.reducer;

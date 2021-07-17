@@ -9,7 +9,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import ModalLoading from 'components/ModalLoading/ModalLoading';
 
 let persistor = persistStore(store);
-
+document.title = 'Hebe Boutique - Hebe designer boutique';
 ReactDOM.render(
 	<Provider store={store}>
 		<PersistGate loading={<ModalLoading />} persistor={persistor}>

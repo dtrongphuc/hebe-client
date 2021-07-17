@@ -1,0 +1,128 @@
+@import '../variables';
+
+.payment-wrapper {
+	background-color: #fff;
+	border: 1px solid $border-color;
+	border-radius: 6px;
+	overflow: hidden;
+	margin-top: 1em;
+}
+
+.payment-item {
+	background-color: #fff;
+	border-bottom: 1px solid #d9d9d9;
+	padding: 14px 16px;
+	display: flex;
+	align-items: center;
+
+	&__label {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+
+		& > .text {
+			color: #333;
+			font-weight: 700;
+			font-size: 1em;
+		}
+
+		& > .image {
+			height: 24px;
+			margin-left: 0.5em;
+		}
+
+		& > .icons {
+			display: flex;
+			align-items: center;
+			justify-content: flex-end;
+		}
+	}
+}
+
+.payment-icon {
+	display: inline-block;
+	margin: 0 2px;
+	background-position: center center;
+	background-size: cover;
+	background-repeat: no-repeat;
+	width: 38px;
+	height: 24px;
+}
+
+// TOGGLE CONTENT
+.payment-item__content-wrapper {
+	background-color: #fafafa;
+	padding: 4px 12px 24px;
+	border-bottom: 1px solid #d9d9d9;
+
+	& > .text {
+		text-align: center;
+		color: #545454;
+		font-size: 1em;
+		padding: 0 1.4em;
+
+		@media (min-width: 750px) {
+			padding: 0 3.6em;
+		}
+	}
+}
+
+.payment__input-wrapper {
+	background: #fff;
+	border-radius: 6px;
+	overflow: hidden;
+	border: 1px solid #d9d9d9;
+	display: flex;
+	align-items: center;
+	margin-top: 1em;
+
+	transition: all 0.2s ease-out;
+	&.active {
+		border-color: #000;
+		box-shadow: 0 0 0 1px #000;
+	}
+}
+
+.payment__credit-card__input {
+	position: relative;
+	display: inline-block;
+	flex: 1;
+	color: rgb(51, 51, 51);
+	padding: 0.9em 0.8em;
+	font-size: 1em;
+	outline: none;
+	border: none;
+	background: transparent;
+	border-radius: 4px;
+	box-sizing: border-box;
+}
+
+.payment__input-tooltip {
+	display: inline-block;
+	min-width: 40px;
+	min-height: 100%;
+	text-align: right;
+
+	&-btn {
+		background: transparent;
+		border: none;
+		outline: none;
+		width: 45px;
+		height: 100%;
+	}
+}
+
+.payment-content__icon {
+	display: block;
+	margin: 2em auto;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center center;
+	width: 102px;
+	height: 52px;
+
+	@media (min-width: 750px) {
+		width: 163px;
+		height: 81px;
+	}
+}

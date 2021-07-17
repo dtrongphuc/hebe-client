@@ -1,12 +1,11 @@
 import { createSelector } from '@reduxjs/toolkit';
 import NavButtons from 'components/Checkout/NavButtons/NavButtons';
+import Payment from 'components/Checkout/Payment/Payment';
 import ShippingInfo from 'components/Checkout/Shipping/ShippingInfo';
-import ShippingMethod from 'components/Checkout/Shipping/ShippingMethod';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import './ShippingPageStyles.scss';
 
-function ShippingPage() {
+function PaymentPage(props) {
 	const { email } = useSelector((state) => state.user);
 	const selectAddressString = createSelector(
 		(state) => state.checkout,
@@ -35,19 +34,25 @@ function ShippingPage() {
 	return (
 		<>
 			<ShippingInfo items={shippingInfoItems} />
-			<ShippingMethod />
+			<section className='section-info'>
+				<h2 className='section-info__heading mb-1'>Payment</h2>
+				<p className='section-info__text'>
+					All transactions are secure and encrypted
+				</p>
+			</section>
+			<Payment />
 			<NavButtons
 				next={{
-					content: 'Continue to payment',
-					link: '/checkout/payment',
+					content: 'Pay now',
+					link: '/',
 				}}
 				prev={{
-					content: 'Return to information',
-					link: '/checkout/information',
+					content: 'Return to shipping',
+					link: '/',
 				}}
 			/>
 		</>
 	);
 }
 
-export default ShippingPage;
+export default PaymentPage;
