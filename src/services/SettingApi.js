@@ -47,7 +47,7 @@ export async function getShippingMethods() {
 
 export async function putShippingMethods(data) {
 	try {
-		const response = await api.get('/shipping-methods', data);
+		const response = await api.put('/shipping-methods', data);
 		return response.data;
 	} catch (error) {
 		return error;

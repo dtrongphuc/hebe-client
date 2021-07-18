@@ -59,6 +59,9 @@ function ShippingMethodsPage() {
 			onFinish={onFinish}
 			onFinishFailed={onFinishFailed}
 			form={form}
+			initialValues={{
+				shipping_methods: [],
+			}}
 		>
 			<Title level={3}>Shipping methods</Title>
 			<Divider />

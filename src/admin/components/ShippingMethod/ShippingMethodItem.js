@@ -41,7 +41,7 @@ function ShippingMethodItem({ remove, field }) {
 									}
 									parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
 									style={{ width: '100%' }}
-									defaultValue={0}
+									min={0}
 								/>
 							</Form.Item>
 						</Col>
