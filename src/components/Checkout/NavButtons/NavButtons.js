@@ -12,8 +12,9 @@ function NavButtons({ next, prev }) {
 			<div className='row'>
 				<div className='col-12 col-md-auto'>
 					<button
+						type={next?.type || 'button'}
 						className='checkout__nav-btn'
-						onClick={() => history.push(next.link)}
+						onClick={() => next?.link && history.push(next.link)}
 					>
 						{next.content}
 					</button>

@@ -1,13 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button, Divider, Form } from 'antd';
 import { Typography } from 'antd';
 import PickupLocationList from 'admin/components/PickupLocation/PickupLocationList';
-import ShippingMethodList from 'admin/components/ShippingMethod/ShippingMethodList';
-import { getShippingSettings, putShippingSettings } from 'services/SettingApi';
-import { useEffect } from 'react';
+import { getPickupLocations, putPickupLocations } from 'services/SettingApi';
 
 const { Title } = Typography;
-// import PropTypes from 'prop-types'
 
 const mapLocationsToFields = (locations) => {
 	let result = locations?.map((location) => {
@@ -24,31 +21,16 @@ const mapLocationsToFields = (locations) => {
 	return result;
 };
 
-const mapShippingMethodsToFields = (methods) => {
-	let result = methods?.map((method) => {
-		const { name, price } = method;
-
-		return {
-			shipping_name: name,
-			shipping_price: price,
-		};
-	});
-
-	return result;
-};
-
-function SettingShippingPage() {
+function PickupLocationsPage(props) {
 	const [form] = Form.useForm();
 
 	useEffect(() => {
 		(async () => {
 			try {
-				const response = await getShippingSettings();
-				if (response.info) {
-					const { locations, shippingMethods } = response.info;
+				const { locations } = await getPickupLocations();
+				if (locations) {
 					form.setFieldsValue({
 						pickup_locations: mapLocationsToFields(locations),
-						shipping_methods: mapShippingMethodsToFields(shippingMethods),
 					});
 				}
 			} catch (error) {
@@ -60,7 +42,7 @@ function SettingShippingPage() {
 	const onFinish = async (values) => {
 		console.log(values);
 		try {
-			const response = await putShippingSettings(values);
+			const response = await putPickupLocations(values);
 			console.log(response);
 		} catch (error) {
 			console.log(error);
@@ -71,14 +53,19 @@ function SettingShippingPage() {
 		console.log('Failed:', errorInfo);
 	};
 
+	const initialValues = {
+		pickup_locations: [],
+	};
+
 	return (
 		<Form
 			layout='vertical'
 			onFinish={onFinish}
 			onFinishFailed={onFinishFailed}
 			form={form}
+			initialValues={initialValues}
 		>
-			<Title level={3}>Shipping</Title>
+			<Title level={3}>Pickup locations</Title>
 			<Divider />
 			<Form.Item
 				rules={[{ required: true, message: 'Missing pickup locations' }]}
@@ -86,14 +73,6 @@ function SettingShippingPage() {
 				name='pickup_locations'
 			>
 				<PickupLocationList form={form} />
-			</Form.Item>
-
-			<Form.Item
-				rules={[{ required: true, message: 'Missing shipping methods' }]}
-				label='Shipping methods'
-				name='shipping_methods'
-			>
-				<ShippingMethodList form={form} />
 			</Form.Item>
 
 			<Form.Item>
@@ -113,8 +92,6 @@ function SettingShippingPage() {
 	);
 }
 
-// SettingShippingPage.propTypes = {
+PickupLocationsPage.propTypes = {};
 
-// }
-
-export default SettingShippingPage;
+export default PickupLocationsPage;

@@ -1,7 +1,8 @@
 import AddProductPage from 'admin/pages/Product/AddProductPage';
 import DashBoardPage from 'admin/pages/Dashboard/DashBoardPage';
-import SettingBannerPage from 'admin/pages/Settings/SettingBannerPage';
-import SettingShippingPage from 'admin/pages/Settings/SettingShippingPage';
+import BannerPage from 'admin/pages/Settings/BannerPage';
+import PickupLocationsPage from 'admin/pages/Settings/PickupLocationsPage';
+import ShippingMethodsPage from 'admin/pages/Settings/ShippingMethodsPage';
 
 const routes = [
 	{
@@ -21,12 +22,17 @@ const routes = [
 	},
 	{
 		path: '/admin/settings/banner',
-		component: SettingBannerPage,
+		component: BannerPage,
 		exact: true,
 	},
 	{
-		path: '/admin/settings/shipping',
-		component: SettingShippingPage,
+		path: '/admin/settings/pickup-locations',
+		component: PickupLocationsPage,
+		exact: true,
+	},
+	{
+		path: '/admin/settings/shipping-methods',
+		component: ShippingMethodsPage,
 		exact: true,
 	},
 ];

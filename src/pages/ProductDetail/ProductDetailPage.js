@@ -12,7 +12,7 @@ export default function ProductDetailPage() {
 			try {
 				const response = await getProductByPathName(productPath);
 				if (response) {
-					setProduct(response);
+					setProduct(response?.product);
 				}
 			} catch (error) {
 				console.log(error.data);

@@ -58,7 +58,8 @@ function LeftMenu() {
 				title='Settings'
 			>
 				<Menu.Item key='/admin/settings/banner'>Banner</Menu.Item>
-				<Menu.Item key='/admin/settings/shipping'>Shipping</Menu.Item>
+				<Menu.Item key='/admin/settings/pickup-locations'>Locations</Menu.Item>
+				<Menu.Item key='/admin/settings/shipping-methods'>Shipping</Menu.Item>
 			</SubMenu>
 		</Menu>
 	);

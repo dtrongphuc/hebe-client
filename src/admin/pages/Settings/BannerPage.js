@@ -6,7 +6,7 @@ import { Typography } from 'antd';
 
 const { Title } = Typography;
 
-const SettingBannerPage = () => {
+const BannerPage = () => {
 	const onFinish = (values) => {
 		console.log('Success:', values);
 	};
@@ -92,4 +92,4 @@ const SettingBannerPage = () => {
 	);
 };
 
-export default SettingBannerPage;
+export default BannerPage;

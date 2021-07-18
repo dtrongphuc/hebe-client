@@ -15,7 +15,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import UploadImages from './UploadImage';
 import { useEffect } from 'react';
 import { getAllBrands } from 'services/BrandApi';
-import { getAllGroups } from 'services/GroupApi';
+import { getAllCategories } from 'services/CategoryApi';
 import VariantList from './Variants/VariantList';
 import { postNewProduct } from 'services/ProductApi';
 
@@ -39,7 +39,7 @@ function ProductForm() {
 		limit: 8,
 	});
 	const [brandList, setBrandList] = useState([]);
-	const [groupList, setGroupList] = useState([]);
+	const [categories, setCategories] = useState([]);
 
 	// fetch brand list
 	useEffect(() => {
@@ -62,12 +62,12 @@ function ProductForm() {
 	useEffect(() => {
 		const fetchCollectionList = async () => {
 			try {
-				const { groups } = await getAllGroups();
-				let options = groups.map(({ _id, name }) => ({
+				const { categories } = await getAllCategories();
+				let options = categories.map(({ _id, name }) => ({
 					label: name,
 					value: _id,
 				}));
-				setGroupList(options);
+				setCategories(options);
 			} catch (error) {
 				console.log(error);
 			}
@@ -138,14 +138,14 @@ function ProductForm() {
 				</Col>
 				<Col sm={24} md={12}>
 					<Form.Item
-						label='Group'
-						name='group'
-						rules={[{ required: true, message: 'Missing group' }]}
+						label='Category'
+						name='category'
+						rules={[{ required: true, message: 'Missing category' }]}
 					>
 						<Select
 							showSearch
-							placeholder='Select a group'
-							options={groupList}
+							placeholder='Select a category'
+							options={categories}
 							optionFilterProp='label'
 							filterOption={(input, option) =>
 								option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0

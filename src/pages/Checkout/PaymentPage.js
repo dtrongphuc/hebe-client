@@ -7,6 +7,8 @@ import { useSelector } from 'react-redux';
 
 function PaymentPage(props) {
 	const { email } = useSelector((state) => state.user);
+	const { paymentMethodSelected } = useSelector((state) => state.checkout);
+
 	const selectAddressString = createSelector(
 		(state) => state.checkout,
 		({ address }) => {
@@ -31,6 +33,11 @@ function PaymentPage(props) {
 		},
 	];
 
+	const onSubmit = (e) => {
+		e.preventDefault();
+		console.log('submit');
+	};
+
 	return (
 		<>
 			<ShippingInfo items={shippingInfoItems} />
@@ -40,17 +47,19 @@ function PaymentPage(props) {
 					All transactions are secure and encrypted
 				</p>
 			</section>
-			<Payment />
-			<NavButtons
-				next={{
-					content: 'Pay now',
-					link: '/',
-				}}
-				prev={{
-					content: 'Return to shipping',
-					link: '/',
-				}}
-			/>
+			<form onSubmit={onSubmit}>
+				<Payment />
+				<NavButtons
+					next={{
+						content: 'Pay now',
+						type: 'submit',
+					}}
+					prev={{
+						content: 'Return to shipping',
+						link: '/checkout/shipping',
+					}}
+				/>
+			</form>
 		</>
 	);
 }

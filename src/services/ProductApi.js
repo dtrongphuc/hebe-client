@@ -30,7 +30,7 @@ export async function getProductById(productId) {
 
 export async function getAllProducts() {
 	try {
-		const response = await api.get(`/product/getAll`);
+		const response = await api.get(`/product/all`);
 		return response.data;
 	} catch (error) {
 		return Promise.reject(error);

@@ -24,7 +24,7 @@ const reducer = combineReducers({
 const persistConfig = {
 	key: 'root',
 	storage,
-	blacklist: ['address', 'user', 'creditCard'],
+	blacklist: ['address', 'user', 'creditCard', 'cart'],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducer);

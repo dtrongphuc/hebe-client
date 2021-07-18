@@ -15,7 +15,7 @@ export async function postNewBrand(formData) {
 
 export async function getAllBrands() {
 	try {
-		const response = await api.get(`/brand/get-all`);
+		const response = await api.get(`/brand/all`);
 		return response.data;
 	} catch (error) {
 		return error;

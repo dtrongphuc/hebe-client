@@ -15,7 +15,7 @@ export default function ReviewList() {
 		(async function () {
 			try {
 				const response = await getReviews();
-				setReviews(response);
+				setReviews(response?.reviews);
 			} catch (error) {
 				console.log(error);
 			}
