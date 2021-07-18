@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { IoChevronForwardOutline } from 'react-icons/io5';
+import { useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import './styles.scss';
 
-const links = [
+let links = [
 	{
 		name: 'cart',
 		link: '/checkout/cart',
@@ -32,10 +33,15 @@ const links = [
 
 function Breadcrumb() {
 	const [breadcrumbList, setBreadcrumbList] = useState([]);
+	const { delivery } = useSelector((state) => state.checkout);
+
 	let location = useLocation();
 	React.useEffect(() => {
 		const { pathname } = location;
 		const currentPathName = pathname.replace('/checkout/', '');
+		if (delivery !== 'shipping') {
+			links = links.filter((link) => link.name !== 'shipping');
+		}
 
 		let flag = false;
 		let linksMap = links.map((link) => {
@@ -54,7 +60,7 @@ function Breadcrumb() {
 		});
 
 		setBreadcrumbList([...linksMap]);
-	}, [location]);
+	}, [location, delivery]);
 
 	return (
 		<ol className='checkout-breadcrumb'>

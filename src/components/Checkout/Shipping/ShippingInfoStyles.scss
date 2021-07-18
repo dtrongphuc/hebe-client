@@ -19,7 +19,7 @@
 
 	.left {
 		display: flex;
-		justify-content: space-between;
+		justify-content: flex-start;
 		align-items: flex-start;
 		flex-wrap: wrap;
 		width: 100%;
@@ -50,5 +50,11 @@
 	&-content {
 		text-align: left;
 		flex: 1;
+	}
+
+	&-des {
+		color: #737373;
+		font-size: 0.8571428571em;
+		line-height: 1.5em;
 	}
 }
