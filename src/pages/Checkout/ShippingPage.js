@@ -10,8 +10,8 @@ function ShippingPage() {
 	const { email } = useSelector((state) => state.user);
 	const selectAddressString = createSelector(
 		(state) => state.checkout,
-		({ address }) => {
-			let { firstname, lastname, ...rest } = address;
+		({ addressInfo }) => {
+			let { firstname, lastname, ...rest } = addressInfo;
 			let string = Object.values({ ...rest })
 				.filter((value) => value !== '')
 				.join(', ');

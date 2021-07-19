@@ -1,12 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './styles.scss';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { IoChevronBackOutline } from 'react-icons/io5';
 
 function NavButtons({ next, prev }) {
-	let history = useHistory();
-
 	return (
 		<div className='checkout-nav__section'>
 			<div className='row'>
@@ -14,7 +12,7 @@ function NavButtons({ next, prev }) {
 					<button
 						type={next?.type || 'button'}
 						className='checkout__nav-btn'
-						onClick={() => next?.link && history.push(next.link)}
+						onClick={next.onClick}
 					>
 						{next.content}
 					</button>

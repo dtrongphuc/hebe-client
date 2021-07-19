@@ -20,7 +20,7 @@ import countries from 'utils/countries';
 function Address() {
 	const dispatch = useDispatch();
 	const { addresses } = useSelector((state) => state.address);
-	const { address } = useSelector((state) => state.checkout);
+	const { addressInfo, focused } = useSelector((state) => state.checkout);
 	const defaultAddress = useSelector(selectDefaultAddress);
 
 	useEffect(() => {
@@ -53,12 +53,15 @@ function Address() {
 		}
 	};
 
-	const handleInputChange = (e) => {
+	const handleInputChange = (rules) => (e) => {
 		const field = {
 			[e.target.name]: e.target.value,
 		};
+		let error = {
+			[e.target.name]: rules?.required && !e.target.value ? rules?.msg : '',
+		};
 
-		dispatch(addressFieldChange(field));
+		dispatch(addressFieldChange({ field, error }));
 	};
 
 	const addressOptions = addresses
@@ -101,8 +104,10 @@ function Address() {
 						<TextField
 							placeholder='First name'
 							name='firstname'
-							value={address?.firstname}
+							focusedName={focused}
+							value={addressInfo?.firstname}
 							onChange={handleInputChange}
+							rules={{ required: true, msg: 'Enter a first name' }}
 						/>
 					</div>
 				</div>
@@ -111,8 +116,10 @@ function Address() {
 						<TextField
 							placeholder='Last name'
 							name='lastname'
-							value={address?.lastname}
+							focusedName={focused}
+							value={addressInfo?.lastname}
 							onChange={handleInputChange}
+							rules={{ required: true, msg: 'Enter a last name' }}
 						/>
 					</div>
 				</div>
@@ -121,7 +128,8 @@ function Address() {
 				<TextField
 					placeholder='Company (optional)'
 					name='company'
-					value={address?.company}
+					focusedName={focused}
+					value={addressInfo?.company}
 					onChange={handleInputChange}
 				/>
 			</div>
@@ -129,15 +137,18 @@ function Address() {
 				<TextField
 					placeholder='Address'
 					name='address'
-					value={address?.address}
+					focusedName={focused}
+					value={addressInfo?.address}
 					onChange={handleInputChange}
+					rules={{ required: true, msg: 'Enter an address' }}
 				/>
 			</div>
 			<div className='mt-3'>
 				<TextField
 					placeholder='Apartment, suite, etc. (optional)'
 					name='apartment'
-					value={address?.apartment}
+					focusedName={focused}
+					value={addressInfo?.apartment}
 					onChange={handleInputChange}
 				/>
 			</div>
@@ -145,8 +156,10 @@ function Address() {
 				<TextField
 					placeholder='City'
 					name='city'
-					value={address?.city}
+					focusedName={focused}
+					value={addressInfo?.city}
 					onChange={handleInputChange}
+					rules={{ required: true, msg: 'Enter a city' }}
 				/>
 			</div>
 			<div className='row'>
@@ -156,8 +169,9 @@ function Address() {
 							name='country'
 							placeholder='Country/region'
 							options={countryOptions}
-							defaultValue={address?.country}
+							defaultValue={addressInfo?.country}
 							onChange={handleInputChange}
+							rules={{ required: true, msg: 'Enter a country' }}
 						/>
 					</div>
 				</div>
@@ -166,8 +180,10 @@ function Address() {
 						<TextField
 							placeholder='Postal code'
 							name='postal'
-							value={address?.postal}
+							focusedName={focused}
+							value={addressInfo?.postal}
 							onChange={handleInputChange}
+							rules={{ required: true, msg: 'Enter a ZIP / postal code' }}
 						/>
 					</div>
 				</div>
@@ -176,8 +192,10 @@ function Address() {
 				<TextField
 					placeholder='Phone (optional)'
 					name='phone'
-					value={address?.phone}
+					focusedName={focused}
+					value={addressInfo?.phone}
 					onChange={handleInputChange}
+					rules={{ required: true, msg: 'Enter a phone' }}
 				/>
 			</div>
 		</section>

@@ -13,19 +13,25 @@ import { PERSIST } from 'redux-persist/es/constants';
 import { PURGE } from 'redux-persist/es/constants';
 import { REGISTER } from 'redux-persist/es/constants';
 
+const persistConfig = {
+	key: 'root',
+	storage,
+	whitelist: [],
+};
+
+const checkoutPersistConfig = {
+	key: 'checkout',
+	storage,
+	blacklist: ['errors', 'focused'],
+};
+
 const reducer = combineReducers({
 	user: userReducer,
 	address: addressReducer,
 	cart: cartReducer,
-	checkout: checkoutReducer,
+	checkout: persistReducer(checkoutPersistConfig, checkoutReducer),
 	creditCard: creditCardReducer,
 });
-
-const persistConfig = {
-	key: 'root',
-	storage,
-	blacklist: ['address', 'user', 'creditCard', 'cart'],
-};
 
 const persistedReducer = persistReducer(persistConfig, reducer);
 

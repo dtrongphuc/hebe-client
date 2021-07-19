@@ -19,7 +19,7 @@ export const getShippingMethodsThunk = createAsyncThunk(
 );
 
 const initialState = {
-	address: {
+	addressInfo: {
 		firstname: '',
 		lastname: '',
 		company: '',
@@ -30,6 +30,8 @@ const initialState = {
 		postal: '',
 		phone: '',
 	},
+	errors: {},
+	focused: '',
 	delivery: 'shipping',
 	shippingPrice: {
 		display: 'Calculated at next step',
@@ -47,35 +49,44 @@ const checkoutSlice = createSlice({
 	initialState,
 	reducers: {
 		selectedAddressChange: (state, action) => {
-			const newAddress = action.payload;
-
+			const field = action.payload;
 			return {
 				...state,
-				address: {
-					...state.address,
-					...newAddress,
+				addressInfo: {
+					...state.addressInfo,
+					...field,
 				},
 			};
 		},
 		resetAddress: (state) => {
 			return {
 				...state,
-				address: {
-					...state.address,
-					...initialState.address,
+				addressInfo: {
+					...state.addressInfo,
+					...initialState.addressInfo,
+				},
+				errors: {
+					...initialState.errors,
 				},
 			};
 		},
 		addressFieldChange: (state, action) => {
-			const field = action.payload;
+			const { field, error } = action.payload;
 
 			return {
 				...state,
-				address: {
-					...state.address,
+				addressInfo: {
+					...state.addressInfo,
 					...field,
 				},
+				errors: {
+					...state.errors,
+					...error,
+				},
 			};
+		},
+		focusedChange: (state, action) => {
+			state.focused = action.payload;
 		},
 		deliveryChange: (state, action) => {
 			const delivery = action.payload;
@@ -173,6 +184,7 @@ export const {
 	pickupLocationSelectedChange,
 	shippingMethodSelectedChange,
 	paymentMethodChange,
+	focusedChange,
 } = checkoutSlice.actions;
 
 export default checkoutSlice.reducer;

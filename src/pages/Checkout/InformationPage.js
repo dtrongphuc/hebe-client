@@ -6,10 +6,24 @@ import Delivery from 'components/Checkout/Information/Delivery';
 import Address from 'components/Checkout/Information/Address';
 import NavButtons from 'components/Checkout/NavButtons/NavButtons';
 import Pickup from 'components/Checkout/Information/Pickup';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { focusedChange } from 'features/checkout/checkoutSlice';
 
 function InformationPage() {
-	const { delivery } = useSelector((state) => state.checkout);
+	const { delivery, errors } = useSelector((state) => state.checkout);
+	let history = useHistory();
+	const dispatch = useDispatch();
+
+	const handleNextStepClicked = () => {
+		let firstError = Object.keys(errors).find((key) => errors[key] !== '');
+		if (firstError) {
+			dispatch(focusedChange(firstError));
+			return;
+		}
+		let link = `/checkout/${delivery === 'shipping' ? 'shipping' : 'payment'}`;
+		history.push(link);
+	};
 
 	return (
 		<>
@@ -19,6 +33,7 @@ function InformationPage() {
 			</div>
 			<Contact />
 			<Delivery />
+
 			{delivery === 'pickup' && <Pickup />}
 			{delivery === 'shipping' && <Address />}
 
@@ -28,7 +43,7 @@ function InformationPage() {
 						delivery === 'shipping'
 							? 'Continue to shipping'
 							: 'Continue to payment',
-					link: `/checkout/${delivery === 'shipping' ? 'shipping' : 'payment'}`,
+					onClick: handleNextStepClicked,
 				}}
 				prev={{
 					content: 'Return to cart',

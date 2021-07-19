@@ -2,4 +2,23 @@
 
 .checkout-field {
 	@include checkoutField("input[type='text']");
+
+	&--error {
+		display: none;
+	}
+
+	&.error {
+		& > input,
+		& > input:focus {
+			border-color: #ff89bd;
+			box-shadow: 0 0 0 1px #ff89bd;
+		}
+
+		.checkout-field--error {
+			display: block;
+			color: #ff89bd;
+			font-size: 1em;
+			margin-top: 4px;
+		}
+	}
 }
