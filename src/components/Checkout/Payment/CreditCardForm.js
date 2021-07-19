@@ -20,6 +20,62 @@ function CreditCardForm(props) {
 		);
 	};
 
+	const onCardNumberChange = (e) => {
+		let regex = /^[0-9]{0,17}$/;
+
+		if (!regex.test(e.target.value)) {
+			return;
+		}
+
+		dispatch(
+			onCardChange({
+				[e.target.name]: e.target.value,
+			})
+		);
+	};
+
+	const onCardExpirationChange = (e) => {
+		let regex1 = /^[0-9]{0,2}$/;
+		let regex2 = /^(0[1-9]|1[0-2])\/?([0-9]{0,4})$/;
+		let value = e.target.value;
+
+		if (value.length <= 2) {
+			if (!regex1.test(value)) {
+				return;
+			}
+		}
+
+		if (value.length === 2) {
+			value = `${value}/`;
+		}
+
+		if (value.length > 2) {
+			if (!regex2.test(value)) {
+				return;
+			}
+		}
+
+		dispatch(
+			onCardChange({
+				[e.target.name]: value,
+			})
+		);
+	};
+
+	const cardSecurityCodeChange = (e) => {
+		let regex = /^[0-9]*$/;
+
+		if (!regex.test(e.target.value)) {
+			return;
+		}
+
+		dispatch(
+			onCardChange({
+				[e.target.name]: e.target.value,
+			})
+		);
+	};
+
 	return (
 		<div className='payment-item__content-wrapper'>
 			<Input
@@ -31,7 +87,7 @@ function CreditCardForm(props) {
 					icon: <FaLock color='#919191' />,
 				}}
 				value={card_number}
-				onChange={onChange}
+				onChange={onCardNumberChange}
 			/>
 			<Input
 				type='text'
@@ -47,7 +103,7 @@ function CreditCardForm(props) {
 						name='card_exp'
 						placeholder='Expiration date(MM/YY)'
 						value={card_exp}
-						onChange={onChange}
+						onChange={onCardExpirationChange}
 					/>
 				</div>
 				<div className='col-12 col-md-6'>
@@ -61,7 +117,7 @@ function CreditCardForm(props) {
 							icon: <BsFillQuestionCircleFill color='#919191' />,
 						}}
 						value={card_code}
-						onChange={onChange}
+						onChange={cardSecurityCodeChange}
 					/>
 				</div>
 			</div>

@@ -4,9 +4,12 @@ import ShippingInfo from 'components/Checkout/Shipping/ShippingInfo';
 import ShippingMethod from 'components/Checkout/Shipping/ShippingMethod';
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import './ShippingPageStyles.scss';
 
 function ShippingPage() {
+	let history = useHistory();
+
 	const { email } = useSelector((state) => state.user);
 	const selectAddressString = createSelector(
 		(state) => state.checkout,
@@ -32,6 +35,10 @@ function ShippingPage() {
 		},
 	];
 
+	const handleNextStepClicked = () => {
+		history.push('/checkout/payment');
+	};
+
 	return (
 		<>
 			<ShippingInfo items={shippingInfoItems} />
@@ -39,7 +46,7 @@ function ShippingPage() {
 			<NavButtons
 				next={{
 					content: 'Continue to payment',
-					link: '/checkout/payment',
+					onClick: handleNextStepClicked,
 				}}
 				prev={{
 					content: 'Return to information',
