@@ -5,15 +5,17 @@ import NavButtons from 'components/Checkout/NavButtons/NavButtons';
 import Payment from 'components/Checkout/Payment/Payment';
 import ShippingInfo from 'components/Checkout/Shipping/ShippingInfo';
 import ModalLoading from 'components/ModalLoading/ModalLoading';
+import { clearCart } from 'features/cart/cartSlice';
 import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { createOrder } from 'services/OrderApi';
 
 function PaymentPage(props) {
 	let history = useHistory();
+	const dispatch = useDispatch();
 	const [loading, setLoading] = useState(false);
 	const [showSuccess, setShowSuccess] = useState(false);
 	const { email } = useSelector((state) => state.user);
@@ -109,6 +111,7 @@ function PaymentPage(props) {
 			const response = await createOrder(data);
 			if (response.success) {
 				setShowSuccess(true);
+				dispatch(clearCart());
 			}
 		} catch (error) {
 			console.log(error);

@@ -35,6 +35,11 @@ const cartSlice = createSlice({
 			);
 			item.quantity = quantity;
 		},
+		clearCart: (state, action) => {
+			return {
+				...initialState,
+			};
+		},
 	},
 	extraReducers: {
 		[fetchCartThunk.fulfilled]: (state, action) => {
@@ -64,6 +69,6 @@ const cartSlice = createSlice({
 	},
 });
 
-export const { quantityChange } = cartSlice.actions;
+export const { quantityChange, clearCart } = cartSlice.actions;
 
 export default cartSlice.reducer;
