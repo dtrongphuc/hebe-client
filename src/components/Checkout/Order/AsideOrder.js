@@ -52,7 +52,7 @@ function AsideOrder() {
 									NZD
 								</span>
 								<span className='order__text order__text--bold order__text--lg ml-2'>
-									{priceString(totalPrice)}
+									{priceString(totalPrice + (shippingPrice?.price || 0))}
 								</span>
 							</span>
 						</div>

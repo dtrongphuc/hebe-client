@@ -35,7 +35,7 @@ function InformationPage() {
 			<Delivery />
 
 			{delivery === 'pickup' && <Pickup />}
-			{delivery === 'shipping' && <Address />}
+			{delivery === 'shipping' && <Address title='Shipping address' />}
 
 			<NavButtons
 				next={{

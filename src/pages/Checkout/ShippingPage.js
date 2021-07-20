@@ -2,7 +2,7 @@ import { createSelector } from '@reduxjs/toolkit';
 import NavButtons from 'components/Checkout/NavButtons/NavButtons';
 import ShippingInfo from 'components/Checkout/Shipping/ShippingInfo';
 import ShippingMethod from 'components/Checkout/Shipping/ShippingMethod';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import './ShippingPageStyles.scss';
@@ -11,6 +11,8 @@ function ShippingPage() {
 	let history = useHistory();
 
 	const { email } = useSelector((state) => state.user);
+	const { delivery } = useSelector((state) => state.checkout);
+
 	const selectAddressString = createSelector(
 		(state) => state.checkout,
 		({ addressInfo }) => {
@@ -35,24 +37,35 @@ function ShippingPage() {
 		},
 	];
 
+	// check delivery method is shipping
+	useEffect(() => {
+		if (delivery !== 'shipping') {
+			history.push('/checkout/information');
+		}
+	}, [delivery, history]);
+
 	const handleNextStepClicked = () => {
 		history.push('/checkout/payment');
 	};
 
 	return (
 		<>
-			<ShippingInfo items={shippingInfoItems} />
-			<ShippingMethod />
-			<NavButtons
-				next={{
-					content: 'Continue to payment',
-					onClick: handleNextStepClicked,
-				}}
-				prev={{
-					content: 'Return to information',
-					link: '/checkout/information',
-				}}
-			/>
+			{delivery === 'shipping' && (
+				<>
+					<ShippingInfo items={shippingInfoItems} />
+					<ShippingMethod />
+					<NavButtons
+						next={{
+							content: 'Continue to payment',
+							onClick: handleNextStepClicked,
+						}}
+						prev={{
+							content: 'Return to information',
+							link: '/checkout/information',
+						}}
+					/>
+				</>
+			)}
 		</>
 	);
 }

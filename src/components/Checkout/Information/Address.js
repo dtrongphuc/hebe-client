@@ -1,5 +1,5 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import './AddressStyles.scss';
 import TextField from '../TextField/TextField';
 import SelectField from '../SelectField/SelectField';
@@ -17,7 +17,7 @@ import {
 } from 'features/checkout/checkoutSlice';
 import countries from 'utils/countries';
 
-function Address() {
+function Address({ title, subTitle }) {
 	const dispatch = useDispatch();
 	const { addresses } = useSelector((state) => state.address);
 	const { addressInfo, focused } = useSelector((state) => state.checkout);
@@ -88,7 +88,8 @@ function Address() {
 
 	return (
 		<section className='section-info'>
-			<h2 className='section-info__heading'>Shipping address</h2>
+			<h2 className='section-info__heading mb-1'>{title}</h2>
+			<p className='section-info__text'>{subTitle}</p>
 			<div className='mt-3'>
 				<SelectField
 					name='saved-address'
@@ -202,6 +203,9 @@ function Address() {
 	);
 }
 
-// Address.propTypes = {};
+Address.propTypes = {
+	title: PropTypes.string,
+	subTitle: PropTypes.string,
+};
 
 export default Address;

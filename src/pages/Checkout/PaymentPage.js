@@ -1,18 +1,32 @@
 import { createSelector } from '@reduxjs/toolkit';
+import Address from 'components/Checkout/Information/Address';
+import ModalSuccess from 'components/Checkout/ModalSuccess/ModalSuccess';
 import NavButtons from 'components/Checkout/NavButtons/NavButtons';
 import Payment from 'components/Checkout/Payment/Payment';
 import ShippingInfo from 'components/Checkout/Shipping/ShippingInfo';
+import ModalLoading from 'components/ModalLoading/ModalLoading';
 import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { createOrder } from 'services/OrderApi';
 
 function PaymentPage(props) {
+	let history = useHistory();
+	const [loading, setLoading] = useState(false);
+	const [showSuccess, setShowSuccess] = useState(false);
 	const { email } = useSelector((state) => state.user);
 
 	const [shippingInfo, setShippingInfo] = useState(null);
 
-	const { delivery } = useSelector((state) => state.checkout);
+	const {
+		delivery,
+		shippingMethodSelected,
+		pickupLocationSelected,
+		paymentMethod,
+		addressInfo,
+	} = useSelector((state) => state.checkout);
 
 	const selectAddressString = createSelector(
 		(state) => state.checkout,
@@ -78,9 +92,29 @@ function PaymentPage(props) {
 		}
 	}, [delivery, address, method, pickup, email]);
 
-	const onSubmit = (e) => {
+	// when [pay now] clicked
+	const onSubmit = async (e) => {
 		e.preventDefault();
-		console.log('submit');
+		try {
+			setLoading(true);
+			let data = {
+				billInfo: {
+					...addressInfo,
+				},
+				deliveryMethod: delivery,
+				shippingMethod: delivery === 'shipping' ? shippingMethodSelected : null,
+				pickupLocation: delivery === 'pickup' ? pickupLocationSelected : null,
+				paymentMethod: paymentMethod,
+			};
+			const response = await createOrder(data);
+			if (response.success) {
+				setShowSuccess(true);
+			}
+		} catch (error) {
+			console.log(error);
+		} finally {
+			setLoading(false);
+		}
 	};
 
 	return (
@@ -94,17 +128,37 @@ function PaymentPage(props) {
 			</section>
 			<form onSubmit={onSubmit}>
 				<Payment />
+				{delivery === 'pickup' && (
+					<Address
+						title='Billing address'
+						subTitle='Enter the address that matches your card or payment method.'
+					/>
+				)}
 				<NavButtons
 					next={{
 						content: 'Pay now',
 						type: 'submit',
 					}}
 					prev={{
-						content: 'Return to shipping',
-						link: '/checkout/shipping',
+						content:
+							delivery === 'shipping'
+								? 'Return to shipping'
+								: 'Return to information',
+						link:
+							delivery === 'shipping'
+								? '/checkout/shipping'
+								: '/checkout/information',
 					}}
 				/>
 			</form>
+			<ModalSuccess
+				show={showSuccess}
+				close={() => {
+					setShowSuccess(false);
+					history.push('/');
+				}}
+			/>
+			<ModalLoading loading={loading} />
 		</>
 	);
 }

@@ -31,6 +31,27 @@ let links = [
 	},
 ];
 
+const linksNotIncludesShipping = links.filter(
+	(link) => link.name !== 'shipping'
+);
+const mapActiveLink = (links, currentPathName) => {
+	let flag = false;
+	return links.map((link) => {
+		if (flag === true) {
+			link.disabled = true;
+			link.active = false;
+		} else if (link.name === currentPathName) {
+			flag = true;
+			link.active = true;
+		} else {
+			link.active = false;
+			link.disabled = false;
+		}
+
+		return link;
+	});
+};
+
 function Breadcrumb() {
 	const [breadcrumbList, setBreadcrumbList] = useState([]);
 	const { delivery } = useSelector((state) => state.checkout);
@@ -39,25 +60,11 @@ function Breadcrumb() {
 	React.useEffect(() => {
 		const { pathname } = location;
 		const currentPathName = pathname.replace('/checkout/', '');
-		if (delivery !== 'shipping') {
-			links = links.filter((link) => link.name !== 'shipping');
-		}
 
-		let flag = false;
-		let linksMap = links.map((link) => {
-			if (flag === true) {
-				link.disabled = true;
-				link.active = false;
-			} else if (link.name === currentPathName) {
-				flag = true;
-				link.active = true;
-			} else {
-				link.active = false;
-				link.disabled = false;
-			}
-
-			return link;
-		});
+		let linksMap =
+			delivery !== 'shipping'
+				? mapActiveLink(linksNotIncludesShipping, currentPathName)
+				: mapActiveLink(links, currentPathName);
 
 		setBreadcrumbList([...linksMap]);
 	}, [location, delivery]);
