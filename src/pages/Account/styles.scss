@@ -14,20 +14,36 @@
 		margin-top: 16px;
 	}
 
+	&-text {
+		color: #000;
+		font-size: 1em;
+
+		&--small {
+			font-size: 0.9em;
+		}
+
+		&--blur {
+			color: #737373;
+		}
+
+		&--bold {
+			font-weight: 700;
+		}
+
+		&--lg {
+			font-size: 1.2em;
+		}
+
+		&--wrap {
+			word-break: break-all;
+		}
+	}
+
 	&__col-title {
 		font-size: 1.4rem;
 		font-weight: 400;
 		margin-bottom: 14px;
 		color: #000;
-	}
-
-	&-text {
-		color: #000;
-		font-size: 1rem;
-
-		&--small {
-			font-size: 0.9rem;
-		}
 	}
 
 	&-link {

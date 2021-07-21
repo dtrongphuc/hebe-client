@@ -5,34 +5,33 @@ import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { countAddresses, getDefaultAddress } from 'services/AddressApi';
 import AddressItem from 'components/AddressList/AddressItem';
+import { countOrder } from 'services/OrderApi';
 // import PropTypes from 'prop-types'
 
 function AccountPage() {
 	const dispatch = useDispatch();
 	const [defaultAddress, setDefaultAddress] = useState(null);
 	const [addressCount, setAddressCount] = useState(0);
+	const [orderCount, setOrderCount] = useState(0);
 
 	useEffect(() => {
-		const getCountAddresses = async () => {
+		const promiseAll = async () => {
 			try {
-				const response = await countAddresses();
-				setAddressCount(response?.count);
+				const [rpAddressCount, rpDefaultAddress, rpOrderCount] =
+					await Promise.all([
+						countAddresses(),
+						getDefaultAddress(),
+						countOrder(),
+					]);
+				setAddressCount(rpAddressCount?.count);
+				setDefaultAddress(rpDefaultAddress?.address);
+				setOrderCount(rpOrderCount?.count);
 			} catch (error) {
 				console.log(error);
 			}
 		};
 
-		const getAddress = async () => {
-			try {
-				const response = await getDefaultAddress();
-				setDefaultAddress(response?.address);
-			} catch (error) {
-				console.log(error);
-			}
-		};
-
-		getCountAddresses();
-		getAddress();
+		promiseAll();
 	}, [dispatch]);
 
 	return (
@@ -46,9 +45,17 @@ function AccountPage() {
 				</div>
 				<div className='col-12 col-md-8 mt-2'>
 					<p className='account__col-title'>Order History</p>
-					<small className='account-text account-text--small'>
-						You haven't placed any orders yet.
-					</small>
+					{(!orderCount || orderCount === 0) && (
+						<small className='account-text account-text--small'>
+							You haven't placed any orders yet.
+						</small>
+					)}
+					<Link
+						className='account-text account-text--small account-link mt-1'
+						to='/account/orders'
+					>
+						View Orders ({orderCount})
+					</Link>
 				</div>
 				<div className='col-12 col-md-4 mt-2'>
 					<p className='account__col-title'>Account Details</p>

@@ -8,3 +8,12 @@ export async function createOrder(data) {
 		return error;
 	}
 }
+
+export async function countOrder() {
+	try {
+		const response = await api.get('/orders/count');
+		return response.data;
+	} catch (error) {
+		return error;
+	}
+}

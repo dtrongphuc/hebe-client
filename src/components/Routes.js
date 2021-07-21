@@ -21,6 +21,7 @@ import CustomerLayout from 'layouts/CustomerLayout';
 import CheckoutLayout from 'layouts/CheckoutLayout';
 import ShippingPage from 'pages/Checkout/ShippingPage';
 import PaymentPage from 'pages/Checkout/PaymentPage';
+import OrderHistoryPage from 'pages/OrderHistory/OrderHistoryPage';
 
 function Routes() {
 	const dispatch = useDispatch();
@@ -102,6 +103,12 @@ function Routes() {
 							path='/account/addresses'
 							component={AddressesPage}
 						/>
+						<PrivateRoute
+							exact
+							path='/account/orders'
+							component={OrderHistoryPage}
+						/>
+
 						<Route exact path='/account/login' component={LoginPage} />
 						<Route exact path='/account/register' component={RegisterPage} />
 						<PrivateRoute exact path='/cart' component={CartPage} />
