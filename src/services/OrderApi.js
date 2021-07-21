@@ -17,3 +17,25 @@ export async function countOrder() {
 		return error;
 	}
 }
+
+export async function getOrdersPagination(page) {
+	try {
+		const response = await api.get('/orders/by-user', {
+			params: {
+				page,
+			},
+		});
+		return response.data;
+	} catch (error) {
+		return error;
+	}
+}
+
+export async function getMaxPagination() {
+	try {
+		const response = await api.get('/orders/max-page');
+		return response.data;
+	} catch (error) {
+		return error;
+	}
+}

@@ -8,7 +8,7 @@ export default function AuthHeader() {
 
 	return (
 		<div className='auth-header__wrapper'>
-			<Container>
+			<Container fluid='lg'>
 				{!isLogged && (
 					<ul className='auth-header'>
 						<li>
