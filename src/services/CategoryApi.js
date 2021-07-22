@@ -30,3 +30,12 @@ export async function getCategoryCollections(path) {
 		return error;
 	}
 }
+
+export async function getCategoriesLink() {
+	try {
+		const response = await api.get(`/category/link`);
+		return response.data;
+	} catch (error) {
+		return error;
+	}
+}

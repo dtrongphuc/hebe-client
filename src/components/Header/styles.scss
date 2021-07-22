@@ -59,15 +59,32 @@
 			margin-right: 2rem;
 
 			& > a {
+				display: block;
 				color: rgb(14, 14, 14);
 				font-weight: 400;
 				font-size: 0.84rem;
 				text-transform: uppercase;
+				padding-bottom: 30px;
+				padding-top: 30px;
 			}
 
 			&:last-child {
 				margin-right: 0;
 			}
+
+			&:after {
+				content: '';
+				position: absolute;
+				background: red;
+			}
+
+			&:hover > .nav-child {
+				display: block;
+			}
+		}
+
+		& > li:first-child > a {
+			margin-left: 30px;
 		}
 	}
 }
@@ -170,4 +187,41 @@
 	.mobile-header {
 		display: flex;
 	}
+}
+
+// NAV CHILD
+.nav-child {
+	display: none;
+	position: absolute;
+	background: #fff;
+	top: calc(100% - 8px);
+	left: 0;
+	right: 0;
+	height: 80vh;
+
+	padding-top: 2em;
+	padding-bottom: 2em;
+
+	&__item {
+		margin-top: 0.6em;
+		text-align: left;
+		a {
+			color: #000;
+			text-decoration: none;
+			font-size: 0.95em;
+			text-transform: capitalize;
+			text-align: left;
+
+			&:hover {
+				color: currentColor;
+				text-decoration: none;
+			}
+		}
+	}
+}
+
+.nav-child__col-title {
+	color: #000;
+	font-size: 0.8em;
+	margin-bottom: 1em;
 }

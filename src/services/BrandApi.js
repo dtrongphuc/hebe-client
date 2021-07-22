@@ -30,3 +30,12 @@ export async function getBrandCollections(path) {
 		return error;
 	}
 }
+
+export async function getBrandsLink() {
+	try {
+		const response = await api.get(`/brand/link`);
+		return response.data;
+	} catch (error) {
+		return error;
+	}
+}

@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import getNavbarLinks from './Links';
 import logo from 'assets/img/logo.webp';
 import { useSelector } from 'react-redux';
 import { priceString } from 'utils/util';
+import ShopChild from './ShopChild';
+import { useEffect } from 'react';
+import { getCategoriesLink } from 'services/CategoryApi';
+import { getBrandsLink } from 'services/BrandApi';
 
 export default function Navbar() {
 	const { total } = useSelector((state) => state.cart);
@@ -15,6 +19,29 @@ export default function Navbar() {
 		}
 		return '';
 	};
+	const [categories, setCategories] = useState([]);
+	const [brands, setBrands] = useState([]);
+
+	useEffect(() => {
+		const shopLinks = async () => {
+			try {
+				const [{ categories }, { brands }] = await Promise.all([
+					getCategoriesLink(),
+					getBrandsLink(),
+				]);
+				if (categories) {
+					setCategories([...categories]);
+				}
+				if (brands) {
+					setBrands([...brands]);
+				}
+			} catch (error) {
+				console.log(error);
+			}
+		};
+
+		shopLinks();
+	}, []);
 
 	return (
 		<div className='main__header desktop-header'>
@@ -30,14 +57,20 @@ export default function Navbar() {
 					<ul>
 						{getNavbarLinks()
 							.filter((link) => link.showOn.includes('desktop'))
-							.map((link) => (
-								<li key={link.name}>
-									<Link to={link.path}>
-										{link.name}
-										{link.name === 'cart' && cartPrice()}
-									</Link>
-								</li>
-							))}
+							.map((link) => {
+								return (
+									<li key={link.name}>
+										<Link to={link.path}>
+											{link.name}
+											{link.name === 'cart' && cartPrice()}
+										</Link>
+
+										{link.name === 'shop' && (
+											<ShopChild categories={categories} brands={brands} />
+										)}
+									</li>
+								);
+							})}
 					</ul>
 				</nav>
 			</Container>
