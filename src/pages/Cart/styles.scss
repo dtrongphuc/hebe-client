@@ -107,6 +107,11 @@
 			outline: none;
 			box-shadow: 0 0 8px 2px rgba($color: #000, $alpha: 0.1);
 		}
+
+		&.invalid {
+			border-color: rgb(255, 14, 14);
+			border-width: 2px;
+		}
 	}
 }
 

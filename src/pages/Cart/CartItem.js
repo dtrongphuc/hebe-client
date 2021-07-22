@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { IoAddSharp, IoRemoveSharp, IoClose } from 'react-icons/io5';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,14 +7,14 @@ import { unwrapResult } from '@reduxjs/toolkit';
 import { message } from 'antd';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { priceString } from 'utils/util';
-function CartItem({ item }) {
+function CartItem({ item, invalidIndex }) {
 	const cartId = useSelector((state) => state.cart.shoppingCart?._id);
 	const warning = useSelector((state) => state.cart.warning);
 	const { product, variant, sku, quantity, total } = item;
 
 	// quantity before input lose focus
 	const [oldQuantity, setOldQuantity] = useState(quantity);
-
+	const cartItem = useRef(null);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
@@ -22,6 +22,12 @@ function CartItem({ item }) {
 			message.warning({ content: warning, duration: 3 });
 		}
 	}, [warning]);
+
+	useEffect(() => {
+		if (invalidIndex === 0 && !!cartItem.current) {
+			cartItem.current.scrollIntoView();
+		}
+	}, [invalidIndex]);
 
 	const handleIncrease = async () => {
 		let state = {
@@ -44,6 +50,8 @@ function CartItem({ item }) {
 	};
 
 	const handleDecrease = async () => {
+		if (quantity <= 1) return;
+
 		let state = {
 			action_type: 1,
 			info: {
@@ -121,7 +129,7 @@ function CartItem({ item }) {
 	};
 
 	return (
-		<div className='cart-item'>
+		<div ref={cartItem} className='cart-item'>
 			<div className='row h-100'>
 				<div className='col-12 col-lg-7 my-auto'>
 					<div className='d-flex align-items-center'>
@@ -180,7 +188,9 @@ function CartItem({ item }) {
 								</div>
 								<input
 									type='text'
-									className='cart-quantity'
+									className={`cart-quantity ${
+										invalidIndex !== -1 ? 'invalid' : ''
+									}`}
 									value={quantity}
 									onChange={onQuantityChange}
 									onFocus={(e) => setOldQuantity(e.target.value)}
@@ -212,6 +222,7 @@ function CartItem({ item }) {
 
 CartItem.propTypes = {
 	item: PropTypes.object,
+	invalid: PropTypes.number,
 };
 
 export default CartItem;

@@ -7,7 +7,7 @@ import './styles.scss';
 let links = [
 	{
 		name: 'cart',
-		link: '/checkout/cart',
+		link: '/cart',
 		active: false,
 		disabled: false,
 	},

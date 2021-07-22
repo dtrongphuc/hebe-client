@@ -30,3 +30,12 @@ export const updateStock = async (action_type, info, update) => {
 		return Promise.reject(error);
 	}
 };
+
+export const checkCart = async () => {
+	try {
+		const response = await api.get(`/cart/check`);
+		return response.data;
+	} catch (error) {
+		return Promise.reject(error);
+	}
+};
