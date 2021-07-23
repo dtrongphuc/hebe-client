@@ -8,8 +8,6 @@ export default function MobileBars({ isOpen, categories, brands }) {
 	const [menu, setMenu] = useState([]);
 
 	useEffect(() => {
-		console.log('categories', categories);
-		console.log('brands', brands);
 		if (categories && brands) {
 			setMenu([
 				{

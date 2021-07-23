@@ -14,7 +14,7 @@ export default function ProductItem({ product, fromPage }) {
 	}, [product]);
 
 	const productClicked = () => {
-		history.push(`/frontpage/products/${product.path}`, {
+		history.push(`/products/${product.path}`, {
 			from: fromPage,
 		});
 	};
@@ -22,7 +22,7 @@ export default function ProductItem({ product, fromPage }) {
 	return (
 		<div className='product-item' onClick={productClicked}>
 			<Link
-				to={`/frontpage/products/${product.path}`}
+				to={`/products/${product.path}`}
 				onClick={(e) => e.preventDefault()}
 			>
 				<img src={`${avatar}`} alt='' className='product-item__image' />

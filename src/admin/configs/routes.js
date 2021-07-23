@@ -3,6 +3,7 @@ import DashBoardPage from 'admin/pages/Dashboard/DashBoardPage';
 import BannerPage from 'admin/pages/Settings/BannerPage';
 import PickupLocationsPage from 'admin/pages/Settings/PickupLocationsPage';
 import ShippingMethodsPage from 'admin/pages/Settings/ShippingMethodsPage';
+import AddCategoryPage from 'admin/pages/Category/AddCategoryPage';
 
 const routes = [
 	{
@@ -33,6 +34,17 @@ const routes = [
 	{
 		path: '/admin/settings/shipping-methods',
 		component: ShippingMethodsPage,
+		exact: true,
+	},
+	// CATEGORIES
+	{
+		path: '/admin/category/all',
+		component: ShippingMethodsPage,
+		exact: true,
+	},
+	{
+		path: '/admin/category/add',
+		component: AddCategoryPage,
 		exact: true,
 	},
 ];

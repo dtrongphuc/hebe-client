@@ -1,12 +1,8 @@
 import api from './api';
 
-export async function postNewCategory(formData) {
+export async function addNewCategory(data) {
 	try {
-		const response = await api.post(`/category/create`, formData, {
-			headers: {
-				'Content-Type': 'multipart/form-data',
-			},
-		});
+		const response = await api.post(`/category/add`, data);
 		return response.data;
 	} catch (error) {
 		return error;

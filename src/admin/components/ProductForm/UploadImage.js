@@ -1,10 +1,6 @@
 import { Upload, Modal } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { useState, useEffect } from 'react';
-import {
-	generateUploadPresignedUrl,
-	generateDestroyPresignedUrl,
-} from 'utils/util';
 import axios from 'axios';
 import {
 	getDestroySignature,
@@ -29,16 +25,11 @@ function UploadImages({ files, setFiles, setImages }) {
 	useEffect(() => {
 		(async () => {
 			try {
-				const { timestamp, signature } = await getUploadSignature(cloud.folder);
-				if (timestamp && signature) {
-					let uploadURL = generateUploadPresignedUrl(
-						cloud.folder,
-						timestamp,
-						signature
-					);
+				const { url } = await getUploadSignature(cloud.folder);
+				if (url) {
 					setCloud((prevState) => ({
 						...prevState,
-						uploadURL,
+						uploadURL: url,
 					}));
 				}
 			} catch (error) {
@@ -97,14 +88,9 @@ function UploadImages({ files, setFiles, setImages }) {
 		const { public_id } = file.response;
 
 		try {
-			const { timestamp, signature } = await getDestroySignature(public_id);
-			let destroyURL = generateDestroyPresignedUrl(
-				public_id,
-				timestamp,
-				signature
-			);
+			const { url } = await getDestroySignature(public_id);
 
-			const response = await axios.post(destroyURL);
+			const response = await axios.post(url);
 			if (response.status === 200) {
 				return true;
 			}

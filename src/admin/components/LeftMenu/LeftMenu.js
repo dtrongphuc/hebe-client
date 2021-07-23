@@ -4,6 +4,7 @@ import {
 	DashboardOutlined,
 	SkinOutlined,
 	SettingOutlined,
+	ContainerOutlined,
 } from '@ant-design/icons';
 import { useHistory, useLocation } from 'react-router-dom';
 
@@ -48,8 +49,16 @@ function LeftMenu() {
 			<Menu.Item key='/admin' icon={<DashboardOutlined />}>
 				Dashboard
 			</Menu.Item>
+			<SubMenu
+				key='/admin/category'
+				icon={<ContainerOutlined />}
+				title='Category'
+			>
+				<Menu.Item key='/admin/category/all'>Categories</Menu.Item>
+				<Menu.Item key='/admin/category/add'>Add category</Menu.Item>
+			</SubMenu>
 			<SubMenu key='/admin/product' icon={<SkinOutlined />} title='Product'>
-				<Menu.Item key='/admin/product/all'>All products</Menu.Item>
+				<Menu.Item key='/admin/product/all'>Products</Menu.Item>
 				<Menu.Item key='/admin/product/add'>Add product</Menu.Item>
 			</SubMenu>
 			<SubMenu
