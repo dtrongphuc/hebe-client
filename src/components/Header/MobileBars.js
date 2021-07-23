@@ -1,8 +1,29 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import Expander from './DropDown/Expander';
 import getNavbarLinks from './Links';
 
-export default function MobileBars({ isOpen }) {
+export default function MobileBars({ isOpen, categories, brands }) {
+	const [menu, setMenu] = useState([]);
+
+	useEffect(() => {
+		console.log('categories', categories);
+		console.log('brands', brands);
+		if (categories && brands) {
+			setMenu([
+				{
+					name: 'SHOP BY',
+					items: [...categories],
+				},
+				{
+					name: 'BRANDS',
+					items: [...brands],
+				},
+			]);
+		}
+	}, [categories, brands]);
+
 	return (
 		<div className={`mobile-nav ${isOpen && 'open'}`}>
 			<ul className='mobile-nav__list'>
@@ -11,6 +32,7 @@ export default function MobileBars({ isOpen }) {
 					.map((link) => (
 						<li key={link.name}>
 							<Link to={link.path}>{link.name}</Link>
+							{link.name === 'shop' && <Expander items={menu} />}
 						</li>
 					))}
 			</ul>

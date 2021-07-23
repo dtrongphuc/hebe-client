@@ -1,0 +1,51 @@
+// MOBILE MENU DROPDOWN
+.mobile-menu-dropdown {
+	display: block;
+
+	ul {
+		position: relative;
+		margin-left: 15px;
+		& > li {
+			&:after {
+				content: '';
+				clear: both;
+				display: table;
+			}
+
+			&.menu-separate {
+				border-top: 1px solid rgba(0, 0, 0, 0.2);
+			}
+
+			& > a {
+				color: rgba(0, 0, 0, 0.9);
+				text-transform: uppercase;
+				letter-spacing: 0.5px;
+				line-height: 1.2;
+				font-size: 11.7px;
+				font-weight: 400;
+
+				display: inline-block;
+				padding-top: 15px;
+				padding-bottom: 15px;
+				&:hover {
+					color: #000;
+					text-decoration: none;
+				}
+			}
+		}
+	}
+}
+
+.nav-carat {
+	float: right;
+	cursor: pointer;
+	font-size: 12px;
+	padding-right: 8px;
+	padding-top: 15px;
+	padding-bottom: 15px;
+	color: #000;
+
+	.minus {
+		display: none;
+	}
+}

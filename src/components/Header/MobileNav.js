@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import logo from '../../assets/img/logo.webp';
 import MobileBars from './MobileBars';
 
-export default function MobileNav() {
+export default function MobileNav({ categories, brands }) {
 	const [isNavOpen, setIsNavOpen] = useState(false);
 
 	const handleOpenNav = () => {
@@ -25,7 +25,11 @@ export default function MobileNav() {
 						/>
 					</Link>
 					<div className='mobile-bars-icon' onClick={handleOpenNav}></div>
-					<MobileBars isOpen={isNavOpen} />
+					<MobileBars
+						isOpen={isNavOpen}
+						categories={categories}
+						brands={brands}
+					/>
 				</nav>
 			</Container>
 		</div>

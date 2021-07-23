@@ -11,13 +11,13 @@ export default function Footer() {
 		<footer className='main-footer'>
 			<Container fluid='lg'>
 				<Row>
-					<Col xs={12} md={4}>
+					<Col xs={12} lg={4}>
 						<CustomerCare />
 					</Col>
-					<Col xs={12} md={4}>
+					<Col xs={12} lg={4}>
 						<About />
 					</Col>
-					<Col xs={12} md={4}>
+					<Col xs={12} lg={4}>
 						<Newsletter />
 					</Col>
 					<Col xs={12}>
