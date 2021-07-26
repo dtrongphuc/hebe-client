@@ -1,20 +1,17 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
-import { Form, Button, Input, message } from 'antd';
+import { Form, Button, Input } from 'antd';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import UploadSingle from '../UploadSingle/UploadSingle';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { addNewCategory } from 'services/CategoryApi';
 
 const initialValues = {
 	layout: 'vertical',
 };
 
-function CategoryForm(props) {
-	const [form] = Form.useForm();
-	const [fileList, setFileList] = useState([]);
+function CategoryForm({ form, defaultFileList = [], onFinish }) {
+	const [fileList, setFileList] = useState([...defaultFileList]);
 
 	useEffect(() => {
 		if (fileList.length > 0) {
@@ -24,25 +21,7 @@ function CategoryForm(props) {
 		} else {
 			form.setFieldsValue({ image: null });
 		}
-
-		console.log('effect');
 	}, [fileList, form]);
-
-	const onFinish = async (values) => {
-		console.log(values);
-		const key = 'submit';
-		message.loading({ content: 'Loading...', key });
-		try {
-			const response = await addNewCategory(values);
-			if (response?.success) {
-				form.resetFields();
-				setFileList([]);
-				message.success({ content: 'Successful!', key, duration: 3 });
-			}
-		} catch (error) {
-			message.error({ content: 'Error!', key, duration: 3 });
-		}
-	};
 
 	return (
 		<Form
@@ -74,7 +53,7 @@ function CategoryForm(props) {
 					<CKEditor
 						style={{ height: 100 }}
 						editor={ClassicEditor}
-						data=''
+						data={form?.getFieldValue('description')}
 						onChange={(event, editor) => {
 							const data = editor.getData();
 							form.setFieldsValue({
@@ -91,6 +70,7 @@ function CategoryForm(props) {
 			>
 				<UploadSingle
 					folder='categories'
+					defaultFileList={defaultFileList}
 					fileList={fileList}
 					setFileList={setFileList}
 				/>
@@ -103,7 +83,5 @@ function CategoryForm(props) {
 		</Form>
 	);
 }
-
-CategoryForm.propTypes = {};
 
 export default CategoryForm;

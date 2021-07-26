@@ -4,6 +4,8 @@ import BannerPage from 'admin/pages/Settings/BannerPage';
 import PickupLocationsPage from 'admin/pages/Settings/PickupLocationsPage';
 import ShippingMethodsPage from 'admin/pages/Settings/ShippingMethodsPage';
 import AddCategoryPage from 'admin/pages/Category/AddCategoryPage';
+import CategoryListPage from 'admin/pages/Category/CategoryListPage';
+import EditCategoryPage from 'admin/pages/Category/EditCategoryPage';
 
 const routes = [
 	{
@@ -39,13 +41,17 @@ const routes = [
 	// CATEGORIES
 	{
 		path: '/admin/category/all',
-		component: ShippingMethodsPage,
+		component: CategoryListPage,
 		exact: true,
 	},
 	{
 		path: '/admin/category/add',
 		component: AddCategoryPage,
 		exact: true,
+	},
+	{
+		path: '/admin/category/edit/:path',
+		component: EditCategoryPage,
 	},
 ];
 

@@ -18,9 +18,19 @@ export async function getAllCategories() {
 	}
 }
 
-export async function getCategoryCollections(path) {
+export async function getCategory(path) {
 	try {
-		const response = await api.get(`/category/${path}`);
+		const response = await api.get(`/category/info/${path}`);
+		return response.data;
+	} catch (error) {
+		return error;
+	}
+}
+
+// EDIT SUBMIT
+export async function postEditCategory(path, data) {
+	try {
+		const response = await api.post(`/category/edit/${path}`, data);
 		return response.data;
 	} catch (error) {
 		return error;

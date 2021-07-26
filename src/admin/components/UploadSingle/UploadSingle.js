@@ -8,7 +8,7 @@ import {
 } from 'services/CloudinaryApi';
 import axios from 'axios';
 
-function UploadSingle({ folder, fileList, setFileList }) {
+function UploadSingle({ folder, defaultFileList, fileList, setFileList }) {
 	const [cloud, setCloud] = useState({
 		folder: folder,
 		uploadURL: '',
@@ -55,10 +55,9 @@ function UploadSingle({ folder, fileList, setFileList }) {
 	};
 
 	const handleRemove = async (file) => {
-		const { public_id } = file.response;
-
+		let publicId = file?.response?.public_id || file.uid;
 		try {
-			const { url } = await getDestroySignature(public_id);
+			const { url } = await getDestroySignature(publicId);
 
 			const response = await axios.post(url);
 			if (response.status === 200) {
@@ -71,7 +70,6 @@ function UploadSingle({ folder, fileList, setFileList }) {
 	};
 
 	const handleChange = ({ fileList }) => {
-		console.log(fileList);
 		setFileList([...fileList]);
 	};
 
@@ -79,6 +77,7 @@ function UploadSingle({ folder, fileList, setFileList }) {
 		<Space direction='vertical' style={{ width: '100%' }} size='large'>
 			<Upload
 				action={cloud.uploadURL}
+				defaultFileList={defaultFileList}
 				customRequest={uploadRequest}
 				listType='picture'
 				fileList={fileList}

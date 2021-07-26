@@ -1,7 +1,14 @@
 import React from 'react';
 
 function DashBoardPage() {
-	return <p>Day la dashboard</p>;
+	return (
+		<div
+			className='site-layout-background'
+			style={{ padding: 24, minHeight: 360, margin: '16px 0' }}
+		>
+			<p>Day la dashboard</p>
+		</div>
+	);
 }
 
 export default DashBoardPage;
