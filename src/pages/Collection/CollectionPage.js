@@ -69,7 +69,7 @@ export default function CollectionPage() {
 		<div className='collection-page'>
 			<Hero
 				title={info?.name}
-				background={info?.image}
+				background={info?.image?.src}
 				heroText={info?.description}
 			/>
 			<Sort onSortChange={onSortChange} />

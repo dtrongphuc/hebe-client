@@ -1,13 +1,11 @@
-import React from 'react';
-import CategoryForm from 'admin/components/CategoryForm/CategoryForm';
+import React, { useState, useEffect } from 'react';
 import { Form, message } from 'antd';
 import { useHistory, useParams } from 'react-router-dom';
-import { useEffect } from 'react';
-import { getCategory, postEditCategory } from 'services/CategoryApi';
-import { useState } from 'react';
 import ModalLoading from 'components/ModalLoading/ModalLoading';
+import BrandForm from 'admin/components/BrandForm/BrandForm';
+import { getBrand, postEditBrand } from 'services/BrandApi';
 
-function EditCategoryPage() {
+function EditBrandPage() {
 	const [form] = Form.useForm();
 	let { path } = useParams();
 	let history = useHistory();
@@ -18,9 +16,9 @@ function EditCategoryPage() {
 		const fetch = async () => {
 			try {
 				setLoading(true);
-				const response = await getCategory(path);
+				const response = await getBrand(path);
 				if (response?.success) {
-					let { name, image, description } = response.category;
+					let { name, image, description } = response.brand;
 
 					setDefaultFileList([
 						{
@@ -51,10 +49,10 @@ function EditCategoryPage() {
 		const key = 'submit';
 		message.loading({ content: 'Loading...', key });
 		try {
-			const response = await postEditCategory(path, values);
+			const response = await postEditBrand(path, values);
 			if (response?.success) {
 				message.success({ content: 'Successful!', key, duration: 3 });
-				history.push('/admin/category/all');
+				history.push('/admin/brand/all');
 			}
 		} catch (error) {
 			message.error({ content: 'Error!', key, duration: 3 });
@@ -67,7 +65,7 @@ function EditCategoryPage() {
 			style={{ padding: 24, minHeight: 360, margin: '16px 0' }}
 		>
 			{!loading && (
-				<CategoryForm
+				<BrandForm
 					form={form}
 					defaultFileList={defaultFileList}
 					onFinish={onFinish}
@@ -78,4 +76,4 @@ function EditCategoryPage() {
 	);
 }
 
-export default EditCategoryPage;
+export default EditBrandPage;

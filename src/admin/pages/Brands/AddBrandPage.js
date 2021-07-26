@@ -1,10 +1,10 @@
 import React from 'react';
-import CategoryForm from 'admin/components/CategoryForm/CategoryForm';
 import { Form, message } from 'antd';
-import { addNewCategory } from 'services/CategoryApi';
+import { addNewBrand } from 'services/BrandApi';
+import BrandForm from 'admin/components/BrandForm/BrandForm';
 import { useHistory } from 'react-router-dom';
 
-function AddCategoryPage() {
+function AddBrandPage() {
 	const [form] = Form.useForm();
 	let history = useHistory();
 
@@ -12,10 +12,10 @@ function AddCategoryPage() {
 		const key = 'submit';
 		message.loading({ content: 'Loading...', key });
 		try {
-			const response = await addNewCategory(values);
+			const response = await addNewBrand(values);
 			if (response?.success) {
 				message.success({ content: 'Successful!', key, duration: 3 });
-				history.push('/admin/category/all');
+				history.push('/admin/brand/all');
 			}
 		} catch (error) {
 			message.error({ content: 'Error!', key, duration: 3 });
@@ -27,9 +27,9 @@ function AddCategoryPage() {
 			className='site-layout-background'
 			style={{ padding: 24, minHeight: 360, margin: '16px 0' }}
 		>
-			<CategoryForm form={form} onFinish={onFinish} />
+			<BrandForm form={form} onFinish={onFinish} />
 		</div>
 	);
 }
 
-export default AddCategoryPage;
+export default AddBrandPage;

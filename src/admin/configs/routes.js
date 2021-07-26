@@ -6,6 +6,9 @@ import ShippingMethodsPage from 'admin/pages/Settings/ShippingMethodsPage';
 import AddCategoryPage from 'admin/pages/Category/AddCategoryPage';
 import CategoryListPage from 'admin/pages/Category/CategoryListPage';
 import EditCategoryPage from 'admin/pages/Category/EditCategoryPage';
+import BrandListPage from 'admin/pages/Brands/BrandListPage';
+import AddBrandPage from 'admin/pages/Brands/AddBrandPage';
+import EditBrandPage from 'admin/pages/Brands/EditBrandPage';
 
 const routes = [
 	{
@@ -38,6 +41,7 @@ const routes = [
 		component: ShippingMethodsPage,
 		exact: true,
 	},
+
 	// CATEGORIES
 	{
 		path: '/admin/category/all',
@@ -52,6 +56,22 @@ const routes = [
 	{
 		path: '/admin/category/edit/:path',
 		component: EditCategoryPage,
+	},
+
+	//BRANDS
+	{
+		path: '/admin/brand/all',
+		component: BrandListPage,
+		exact: true,
+	},
+	{
+		path: '/admin/brand/add',
+		component: AddBrandPage,
+		exact: true,
+	},
+	{
+		path: '/admin/brand/edit/:path',
+		component: EditBrandPage,
 	},
 ];
 
