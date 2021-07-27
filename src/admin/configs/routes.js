@@ -9,6 +9,8 @@ import EditCategoryPage from 'admin/pages/Category/EditCategoryPage';
 import BrandListPage from 'admin/pages/Brands/BrandListPage';
 import AddBrandPage from 'admin/pages/Brands/AddBrandPage';
 import EditBrandPage from 'admin/pages/Brands/EditBrandPage';
+import ProductListPage from 'admin/pages/Product/ProductListPage';
+import EditProductPage from 'admin/pages/Product/EditProductPage';
 
 const routes = [
 	{
@@ -20,11 +22,6 @@ const routes = [
 		path: '/admin/dashboard',
 		component: DashBoardPage,
 		exact: true,
-	},
-	{
-		path: '/admin/product/add',
-		component: AddProductPage,
-		exact: false,
 	},
 	{
 		path: '/admin/settings/banner',
@@ -72,6 +69,22 @@ const routes = [
 	{
 		path: '/admin/brand/edit/:path',
 		component: EditBrandPage,
+	},
+
+	//PRODUCT
+	{
+		path: '/admin/product/all',
+		component: ProductListPage,
+		exact: false,
+	},
+	{
+		path: '/admin/product/add',
+		component: AddProductPage,
+		exact: true,
+	},
+	{
+		path: '/admin/product/edit/:path',
+		component: EditProductPage,
 	},
 ];
 

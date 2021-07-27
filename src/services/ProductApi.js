@@ -54,3 +54,13 @@ export async function getEditProduct(productId) {
 		return error;
 	}
 }
+
+// EDIT SUBMIT
+export async function postEditProduct(path, data) {
+	try {
+		const response = await api.post(`/product/edit/${path}`, data);
+		return response.data;
+	} catch (error) {
+		return error;
+	}
+}

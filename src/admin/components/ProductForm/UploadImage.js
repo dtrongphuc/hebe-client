@@ -16,7 +16,7 @@ function getBase64(file) {
 	});
 }
 
-function UploadImages({ files, setFiles, setImages }) {
+function UploadImages({ files, setFiles, setImages, defaultFileList }) {
 	const [cloud, setCloud] = useState({
 		folder: 'products',
 		uploadURL: '',
@@ -85,10 +85,9 @@ function UploadImages({ files, setFiles, setImages }) {
 	};
 
 	const handleRemove = async (file) => {
-		const { public_id } = file.response;
-
+		let publicId = file?.response?.public_id || file.public_id;
 		try {
-			const { url } = await getDestroySignature(public_id);
+			const { url } = await getDestroySignature(publicId);
 
 			const response = await axios.post(url);
 			if (response.status === 200) {
@@ -112,6 +111,7 @@ function UploadImages({ files, setFiles, setImages }) {
 				action={cloud.uploadURL}
 				customRequest={uploadRequest}
 				listType='picture-card'
+				defaultFileList={defaultFileList}
 				fileList={files.fileList}
 				onPreview={handlePreview}
 				onChange={handleChange}

@@ -1,15 +1,6 @@
 import React, { useState } from 'react';
 // import PropTypes from 'prop-types'
-import {
-	Form,
-	Input,
-	Button,
-	Row,
-	Col,
-	InputNumber,
-	Select,
-	message,
-} from 'antd';
+import { Form, Input, Button, Row, Col, InputNumber, Select } from 'antd';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import UploadImages from './UploadImage';
@@ -17,25 +8,13 @@ import { useEffect } from 'react';
 import { getAllBrands } from 'services/BrandApi';
 import { getAllCategories } from 'services/CategoryApi';
 import VariantList from './Variants/VariantList';
-import { postNewProduct } from 'services/ProductApi';
 
-const initialValues = {
-	layout: 'vertical',
-	name: '',
-	price: 0,
-	salePrice: 0,
-	images: [],
-	variants: [],
-	description: '',
-};
-
-function ProductForm() {
-	const [form] = Form.useForm();
+function ProductForm({ form, defaultFileList = [], onFinish }) {
 	const [files, setFiles] = useState({
 		previewVisible: false,
 		previewImage: '',
 		previewTitle: '',
-		fileList: [],
+		fileList: [...defaultFileList],
 		limit: 8,
 	});
 	const [brandList, setBrandList] = useState([]);
@@ -76,36 +55,14 @@ function ProductForm() {
 	}, []);
 
 	const setImages = (fileList) => {
-		let images = fileList?.map((file) => file.response);
+		let images = fileList?.map((file) => file?.response || file);
 		form.setFieldsValue({ images });
-	};
-
-	const onFinish = async (values) => {
-		const key = 'submit';
-		message.loading({ content: 'Loading...', key });
-		try {
-			const response = await postNewProduct({ ...values });
-			if (response?.success) {
-				form.resetFields();
-				setFiles((prevState) => ({
-					...prevState,
-					previewVisible: false,
-					previewImage: '',
-					previewTitle: '',
-					fileList: [],
-				}));
-				message.success({ content: 'Thành công!', key, duration: 3 });
-			}
-		} catch (error) {
-			message.error({ content: 'Có lỗi xảy ra!', key, duration: 3 });
-		}
 	};
 
 	return (
 		<Form
 			layout='vertical'
 			form={form}
-			initialValues={initialValues}
 			onFinish={onFinish}
 			onFinishFailed={({ values, errorFields, outOfDate }) =>
 				console.log(values)
@@ -192,7 +149,7 @@ function ProductForm() {
 					<CKEditor
 						style={{ height: 100 }}
 						editor={ClassicEditor}
-						data=''
+						data={form?.getFieldValue('description')}
 						onChange={(event, editor) => {
 							const data = editor.getData();
 							form.setFieldsValue({
@@ -214,7 +171,12 @@ function ProductForm() {
 				label='Images'
 				rules={[{ required: true, message: 'Images is required' }]}
 			>
-				<UploadImages files={files} setFiles={setFiles} setImages={setImages} />
+				<UploadImages
+					files={files}
+					setFiles={setFiles}
+					setImages={setImages}
+					defaultFileList={defaultFileList}
+				/>
 			</Form.Item>
 			<Form.Item>
 				<Button type='primary' htmlType='submit'>
