@@ -4,6 +4,8 @@ import { useHistory, useParams } from 'react-router-dom';
 import ModalLoading from 'components/ModalLoading/ModalLoading';
 import BrandForm from 'admin/components/BrandForm/BrandForm';
 import { getBrand, postEditBrand } from 'services/BrandApi';
+import { getUploadSignature } from 'services/CloudinaryApi';
+import { uploadFileRequest } from 'utils/util';
 
 function EditBrandPage() {
 	const [form] = Form.useForm();
@@ -11,6 +13,7 @@ function EditBrandPage() {
 	let history = useHistory();
 	const [defaultFileList, setDefaultFileList] = useState([]);
 	const [loading, setLoading] = useState(true);
+	const uploadFolder = 'brands';
 
 	useEffect(() => {
 		const fetch = async () => {
@@ -49,7 +52,12 @@ function EditBrandPage() {
 		const key = 'submit';
 		message.loading({ content: 'Loading...', key });
 		try {
-			const response = await postEditBrand(path, values);
+			const { url } = await getUploadSignature(uploadFolder);
+			const images = await uploadFileRequest(url, values.image);
+			const response = await postEditBrand(path, {
+				...values,
+				image: images[0],
+			});
 			if (response?.success) {
 				message.success({ content: 'Successful!', key, duration: 3 });
 				history.push('/admin/brand/all');

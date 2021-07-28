@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Button, Input } from 'antd';
+import { Form, Button, Input, Space } from 'antd';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import UploadSingle from '../UploadSingle/UploadSingle';
@@ -15,9 +15,7 @@ function BrandForm({ form, defaultFileList = [], onFinish }) {
 
 	useEffect(() => {
 		if (fileList.length > 0) {
-			if (fileList[0]?.response) {
-				form.setFieldsValue({ image: { ...fileList[0]?.response } });
-			}
+			form.setFieldsValue({ image: { ...fileList[0] } });
 		} else {
 			form.setFieldsValue({ image: null });
 		}
@@ -76,9 +74,15 @@ function BrandForm({ form, defaultFileList = [], onFinish }) {
 				/>
 			</Form.Item>
 			<Form.Item>
-				<Button type='primary' htmlType='submit'>
-					Submit
-				</Button>
+				<Space>
+					<Button danger htmlType='button'>
+						Cancel
+					</Button>
+
+					<Button type='primary' htmlType='submit'>
+						Submit
+					</Button>
+				</Space>
 			</Form.Item>
 		</Form>
 	);
