@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Input, Space, Row, Col, Button } from 'antd';
+import { Table, Input, Space, Row, Col, Button, Form } from 'antd';
 import { Link } from 'react-router-dom';
-import { SearchOutlined } from '@ant-design/icons';
 import { getAllProducts } from 'services/ProductApi';
 
 function ProductListPage() {
+	const [form] = Form.useForm();
 	const [data, setData] = useState([]);
 
 	useEffect(() => {
@@ -48,13 +48,11 @@ function ProductListPage() {
 		{
 			title: 'Sale price',
 			dataIndex: 'salePrice',
-			defaultSortOrder: 'descend',
 			sorter: (a, b) => a.salePrice - b.salePrice,
 		},
 		{
 			title: 'Price',
 			dataIndex: 'price',
-			defaultSortOrder: 'descend',
 			sorter: (a, b) => a.price - b.price,
 		},
 		{
@@ -85,26 +83,51 @@ function ProductListPage() {
 				className='site-layout-background text-center'
 				style={{ padding: 16, margin: '16px 0' }}
 			>
-				<Row gutter={16} wrap={false}>
-					<Col flex='auto'>
-						<Input name='product_name' placeholder='Product name' />
-					</Col>
-					<Col flex='auto'>
-						<Input name='category_name' placeholder='Category name' />
-					</Col>
-					<Col flex='auto'>
-						<Input name='brand_name' placeholder='Brand name' />
-					</Col>
-					<Col flex='100px'>
-						<Button type='primary' icon={<SearchOutlined />} onClick={onSearch}>
-							Search
-						</Button>
-					</Col>
-				</Row>
+				<Form form={form} onFinish={onSearch}>
+					<Row gutter={24} wrap={false}>
+						<Col flex='auto'>
+							<Form.Item label='Product' style={{ marginBottom: 12 }}>
+								<Input name='product_name' placeholder='Product name' />
+							</Form.Item>
+						</Col>
+						<Col flex='auto'>
+							<Form.Item label='Category' style={{ marginBottom: 12 }}>
+								<Input name='category_name' placeholder='Category name' />
+							</Form.Item>
+						</Col>
+						<Col flex='auto'>
+							<Form.Item label='Brand' style={{ marginBottom: 12 }}>
+								<Input name='brand_name' placeholder='Brand name' />
+							</Form.Item>
+						</Col>
+					</Row>
+					<Row>
+						<Col
+							span={24}
+							style={{
+								textAlign: 'right',
+							}}
+						>
+							<Button type='primary' htmlType='submit'>
+								Search
+							</Button>
+							<Button
+								style={{
+									margin: '0 8px',
+								}}
+								onClick={() => {
+									form.resetFields();
+								}}
+							>
+								Clear
+							</Button>
+						</Col>
+					</Row>
+				</Form>
 			</div>
 			<div
 				className='site-layout-background'
-				style={{ padding: 24, minHeight: 360, margin: '16px 0' }}
+				style={{ padding: 24, margin: '16px 0' }}
 			>
 				<Table columns={columns} dataSource={data} rowKey='_id' />
 			</div>

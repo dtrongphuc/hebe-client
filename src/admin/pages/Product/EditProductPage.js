@@ -4,6 +4,8 @@ import { useHistory, useParams } from 'react-router-dom';
 import ModalLoading from 'components/ModalLoading/ModalLoading';
 import { getProductByPathName, postEditProduct } from 'services/ProductApi';
 import ProductForm from 'admin/components/ProductForm/ProductForm';
+import { getUploadSignature } from 'services/CloudinaryApi';
+import { uploadFileRequest } from 'utils/util';
 
 function EditProductPage() {
 	const [form] = Form.useForm();
@@ -11,6 +13,7 @@ function EditProductPage() {
 	let history = useHistory();
 	const [defaultFileList, setDefaultFileList] = useState([]);
 	const [loading, setLoading] = useState(true);
+	const uploadFolder = 'products';
 
 	useEffect(() => {
 		const fetch = async () => {
@@ -18,7 +21,6 @@ function EditProductPage() {
 				setLoading(true);
 				const response = await getProductByPathName(path);
 				if (response?.success) {
-					console.log(response.product);
 					let {
 						name,
 						brand,
@@ -69,7 +71,12 @@ function EditProductPage() {
 		const key = 'submit';
 		message.loading({ content: 'Loading...', key });
 		try {
-			const response = await postEditProduct(path, values);
+			const { url } = await getUploadSignature(uploadFolder);
+			const images = await uploadFileRequest(url, values.images);
+			const response = await postEditProduct(path, {
+				...values,
+				images: [...images],
+			});
 			if (response?.success) {
 				message.success({ content: 'Successful!', key, duration: 3 });
 				history.push('/admin/product/all');
@@ -82,7 +89,7 @@ function EditProductPage() {
 	return (
 		<div
 			className='site-layout-background'
-			style={{ padding: 24, minHeight: 360, margin: '16px 0' }}
+			style={{ padding: 24, margin: '16px 0' }}
 		>
 			{!loading && (
 				<ProductForm

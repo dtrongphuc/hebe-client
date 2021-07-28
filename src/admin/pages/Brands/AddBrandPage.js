@@ -25,7 +25,7 @@ function AddBrandPage() {
 	return (
 		<div
 			className='site-layout-background'
-			style={{ padding: 24, minHeight: 360, margin: '16px 0' }}
+			style={{ padding: 24, margin: '16px 0' }}
 		>
 			<BrandForm form={form} onFinish={onFinish} />
 		</div>

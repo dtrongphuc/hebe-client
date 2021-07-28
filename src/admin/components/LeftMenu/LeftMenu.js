@@ -39,13 +39,12 @@ function LeftMenu() {
 
 	return (
 		<Menu
-			theme='dark'
+			mode='inline'
 			defaultSelectedKeys={selectedKeys}
 			selectedKeys={selectedKeys}
 			openKeys={openKeys}
 			onClick={onSelectedKeysChange}
 			onOpenChange={onOpenChange}
-			mode='inline'
 		>
 			<Menu.Item key='/admin' icon={<DashboardOutlined />}>
 				Dashboard

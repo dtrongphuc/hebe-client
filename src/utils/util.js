@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 export const priceString = (price) => {
 	return new Intl.NumberFormat('en-US', {
 		style: 'currency',
@@ -25,4 +27,31 @@ export const capitalize = (string) => {
 		.split(' ')
 		.map((word) => word.charAt(0).toUpperCase() + word.substring(1))
 		.join(' ');
+};
+
+export const uploadFileRequest = async (url, fileList) => {
+	try {
+		let files = await Promise.all(
+			fileList.map((file) => {
+				if (file?.public_id) {
+					return Promise.resolve(file);
+				}
+
+				const formData = new FormData();
+				formData.append('file', file.originFileObj);
+				return axios.post(url, formData, {
+					headers: {
+						'Content-Type': `multipart/form-data; boundary=${formData._boundary}`,
+					},
+				});
+			})
+		);
+		return files?.map((file) => ({
+			url: file?.data?.secure_url || file.url,
+			public_id: file?.data?.public_id || file.public_id,
+		}));
+	} catch (error) {
+		console.log(error);
+		return Promise.reject(error);
+	}
 };

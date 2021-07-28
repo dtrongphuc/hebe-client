@@ -1,6 +1,15 @@
 import React, { useState } from 'react';
 // import PropTypes from 'prop-types'
-import { Form, Input, Button, Row, Col, InputNumber, Select } from 'antd';
+import {
+	Form,
+	Input,
+	Button,
+	Row,
+	Col,
+	InputNumber,
+	Select,
+	Space,
+} from 'antd';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import UploadImages from './UploadImage';
@@ -54,10 +63,11 @@ function ProductForm({ form, defaultFileList = [], onFinish }) {
 		fetchCollectionList();
 	}, []);
 
-	const setImages = (fileList) => {
-		let images = fileList?.map((file) => file?.response || file);
+	// on Files change
+	useEffect(() => {
+		let images = files.fileList?.map((file) => file?.response || file);
 		form.setFieldsValue({ images });
-	};
+	}, [files, form]);
 
 	return (
 		<Form
@@ -174,14 +184,19 @@ function ProductForm({ form, defaultFileList = [], onFinish }) {
 				<UploadImages
 					files={files}
 					setFiles={setFiles}
-					setImages={setImages}
 					defaultFileList={defaultFileList}
 				/>
 			</Form.Item>
 			<Form.Item>
-				<Button type='primary' htmlType='submit'>
-					Submit
-				</Button>
+				<Space>
+					<Button danger htmlType='button'>
+						Cancel
+					</Button>
+
+					<Button type='primary' htmlType='submit'>
+						Submit
+					</Button>
+				</Space>
 			</Form.Item>
 		</Form>
 	);
