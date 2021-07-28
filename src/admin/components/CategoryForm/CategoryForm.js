@@ -15,9 +15,7 @@ function CategoryForm({ form, defaultFileList = [], onFinish }) {
 
 	useEffect(() => {
 		if (fileList.length > 0) {
-			if (fileList[0]?.response) {
-				form.setFieldsValue({ image: fileList[0]?.response });
-			}
+			form.setFieldsValue({ image: fileList[0] });
 		} else {
 			form.setFieldsValue({ image: null });
 		}

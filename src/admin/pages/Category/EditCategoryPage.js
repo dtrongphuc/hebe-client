@@ -6,6 +6,8 @@ import { useEffect } from 'react';
 import { getCategory, postEditCategory } from 'services/CategoryApi';
 import { useState } from 'react';
 import ModalLoading from 'components/ModalLoading/ModalLoading';
+import { getUploadSignature } from 'services/CloudinaryApi';
+import { uploadFileRequest } from 'utils/util';
 
 function EditCategoryPage() {
 	const [form] = Form.useForm();
@@ -13,6 +15,7 @@ function EditCategoryPage() {
 	let history = useHistory();
 	const [defaultFileList, setDefaultFileList] = useState([]);
 	const [loading, setLoading] = useState(true);
+	const uploadFolder = 'categories';
 
 	useEffect(() => {
 		const fetch = async () => {
@@ -51,7 +54,12 @@ function EditCategoryPage() {
 		const key = 'submit';
 		message.loading({ content: 'Loading...', key });
 		try {
-			const response = await postEditCategory(path, values);
+			const { url } = await getUploadSignature(uploadFolder);
+			const images = await uploadFileRequest(url, values.image);
+			const response = await postEditCategory(path, {
+				...values,
+				image: images[0],
+			});
 			if (response?.success) {
 				message.success({ content: 'Successful!', key, duration: 3 });
 				history.push('/admin/category/all');
