@@ -64,3 +64,17 @@ export async function postEditProduct(path, data) {
 		return error;
 	}
 }
+
+//toggle showing
+export async function toggleShowingProduct(id) {
+	try {
+		const response = await api.get(`/product/toggle-active`, {
+			params: {
+				id,
+			},
+		});
+		return response.data;
+	} catch (error) {
+		return error;
+	}
+}

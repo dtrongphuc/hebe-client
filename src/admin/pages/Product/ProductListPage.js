@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Table, Input, Space, Button } from 'antd';
+import { Table, Input, Space, Button, message } from 'antd';
 import { Link } from 'react-router-dom';
-import { getAllProducts } from 'services/ProductApi';
+import { getAllProducts, toggleShowingProduct } from 'services/ProductApi';
 import Highlighter from 'react-highlight-words';
 import { SearchOutlined } from '@ant-design/icons';
 
@@ -11,17 +11,21 @@ function ProductListPage() {
 		searchText: '',
 		searchedColumn: '',
 	});
+	const [loading, setLoading] = useState(false);
 	const searchInput = useRef();
 
 	useEffect(() => {
 		const getData = async () => {
 			try {
+				setLoading(true);
 				const response = await getAllProducts();
 				if (response?.success) {
 					setData(response?.products);
 				}
 			} catch (error) {
 				console.log(error);
+			} finally {
+				setLoading(false);
 			}
 		};
 
@@ -137,9 +141,28 @@ function ProductListPage() {
 		setSearch({ searchText: '' });
 	};
 
-	const toggleShowing = (id) => (e) => {
+	const toggleShowing = (id) => async (e) => {
 		e.preventDefault();
-		console.log(id);
+		try {
+			setLoading(true);
+			const response = await toggleShowingProduct(id);
+			if (!response?.success) return;
+
+			let selected = data.find((item) => item._id === id);
+			let index = data.indexOf(selected);
+			selected.showing = !selected.showing;
+
+			setData((state) => [
+				...state.slice(0, index),
+				{ ...selected },
+				...state.slice(index + 1),
+			]);
+		} catch (error) {
+			console.log(error);
+			message.warning('Error!');
+		} finally {
+			setLoading(false);
+		}
 	};
 
 	const columns = [
@@ -198,7 +221,12 @@ function ProductListPage() {
 			className='site-layout-background'
 			style={{ padding: 24, margin: '16px 0' }}
 		>
-			<Table columns={columns} dataSource={data} rowKey='_id' />
+			<Table
+				columns={columns}
+				dataSource={data}
+				rowKey='_id'
+				loading={loading}
+			/>
 		</div>
 	);
 }

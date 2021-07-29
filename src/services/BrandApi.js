@@ -55,3 +55,17 @@ export async function postEditBrand(path, data) {
 		return error;
 	}
 }
+
+//toggle showing
+export async function toggleShowingBrand(id) {
+	try {
+		const response = await api.get(`/brand/toggle-active`, {
+			params: {
+				id,
+			},
+		});
+		return response.data;
+	} catch (error) {
+		return error;
+	}
+}

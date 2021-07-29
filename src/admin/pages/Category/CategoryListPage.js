@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { Table, Input, Space, Button } from 'antd';
+import { Table, Input, Space, Button, message } from 'antd';
 import { Link } from 'react-router-dom';
-import { getAllCategories } from 'services/CategoryApi';
+import { getAllCategories, toggleShowingCategory } from 'services/CategoryApi';
 import Highlighter from 'react-highlight-words';
 import { SearchOutlined } from '@ant-design/icons';
 
@@ -11,11 +11,13 @@ function CategoryListPage() {
 		searchText: '',
 		searchedColumn: '',
 	});
+	const [loading, setLoading] = useState(false);
 	const searchInput = useRef();
 
 	useEffect(() => {
 		const getData = async () => {
 			try {
+				setLoading(true);
 				const response = await getAllCategories();
 				if (response?.success) {
 					let mapData = response.categories.map((category) => ({
@@ -26,6 +28,8 @@ function CategoryListPage() {
 				}
 			} catch (error) {
 				console.log(error);
+			} finally {
+				setLoading(false);
 			}
 		};
 
@@ -124,9 +128,28 @@ function CategoryListPage() {
 		setSearch({ searchText: '' });
 	};
 
-	const toggleShowing = (id) => (e) => {
+	const toggleShowing = (id) => async (e) => {
 		e.preventDefault();
-		console.log(id);
+		try {
+			setLoading(true);
+			const response = await toggleShowingCategory(id);
+			if (!response?.success) return;
+
+			let selected = data.find((item) => item._id === id);
+			let index = data.indexOf(selected);
+			selected.showing = !selected.showing;
+
+			setData((state) => [
+				...state.slice(0, index),
+				{ ...selected },
+				...state.slice(index + 1),
+			]);
+		} catch (error) {
+			console.log(error);
+			message.warning('Error!');
+		} finally {
+			setLoading(false);
+		}
 	};
 
 	const columns = [
@@ -165,7 +188,7 @@ function CategoryListPage() {
 			className='site-layout-background'
 			style={{ padding: 24, margin: '16px 0' }}
 		>
-			<Table columns={columns} dataSource={data} />
+			<Table columns={columns} dataSource={data} loading={loading} />
 		</div>
 	);
 }

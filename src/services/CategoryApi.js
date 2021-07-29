@@ -45,3 +45,17 @@ export async function getCategoriesLink() {
 		return error;
 	}
 }
+
+//toggle showing
+export async function toggleShowingCategory(id) {
+	try {
+		const response = await api.get(`/category/toggle-active`, {
+			params: {
+				id,
+			},
+		});
+		return response.data;
+	} catch (error) {
+		return error;
+	}
+}
