@@ -1,12 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { Table, Input, Space } from 'antd';
+import React, { useState, useEffect, useRef } from 'react';
+import { Table, Input, Space, Button } from 'antd';
 import { Link } from 'react-router-dom';
 import { getAllBrands } from 'services/BrandApi';
-
-const { Search } = Input;
+import Highlighter from 'react-highlight-words';
+import { SearchOutlined } from '@ant-design/icons';
 
 function BrandListPage() {
 	const [data, setData] = useState([]);
+	const [search, setSearch] = useState({
+		searchText: '',
+		searchedColumn: '',
+	});
+	const searchInput = useRef();
 
 	useEffect(() => {
 		const getData = async () => {
@@ -27,7 +32,97 @@ function BrandListPage() {
 		getData();
 	}, []);
 
-	const onSearch = (value) => console.log(value);
+	const getColumnSearchProps = (dataIndex) => ({
+		filterDropdown: ({
+			setSelectedKeys,
+			selectedKeys,
+			confirm,
+			clearFilters,
+		}) => (
+			<div style={{ padding: 8 }}>
+				<Input
+					ref={searchInput}
+					placeholder={`Search ${dataIndex}`}
+					value={selectedKeys[0]}
+					onChange={(e) =>
+						setSelectedKeys(e.target.value ? [e.target.value] : [])
+					}
+					onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
+					style={{ marginBottom: 8, display: 'block' }}
+				/>
+				<Space>
+					<Button
+						type='primary'
+						onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
+						icon={<SearchOutlined />}
+						size='small'
+						style={{ width: 90 }}
+					>
+						Search
+					</Button>
+					<Button
+						onClick={() => handleReset(clearFilters)}
+						size='small'
+						style={{ width: 90 }}
+					>
+						Reset
+					</Button>
+					<Button
+						type='link'
+						size='small'
+						onClick={() => {
+							confirm({ closeDropdown: false });
+							setSearch({
+								searchText: selectedKeys[0],
+								searchedColumn: dataIndex,
+							});
+						}}
+					>
+						Filter
+					</Button>
+				</Space>
+			</div>
+		),
+		filterIcon: (filtered) => (
+			<SearchOutlined style={{ color: filtered ? '#1890ff' : undefined }} />
+		),
+		onFilter: (value, record) =>
+			record[dataIndex]
+				? record[dataIndex]
+						.toString()
+						.toLowerCase()
+						.includes(value.toLowerCase())
+				: '',
+		onFilterDropdownVisibleChange: (visible) => {
+			if (visible) {
+				setTimeout(() => searchInput.current.select(), 100);
+			}
+		},
+		render: (text) =>
+			search.searchedColumn === dataIndex ? (
+				<Highlighter
+					highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+					searchWords={[search.searchText]}
+					autoEscape
+					textToHighlight={text ? text.toString() : ''}
+				/>
+			) : (
+				text
+			),
+	});
+
+	const handleSearch = (selectedKeys, confirm, dataIndex) => {
+		confirm();
+		setSearch({
+			searchText: selectedKeys[0],
+			searchedColumn: dataIndex,
+		});
+	};
+
+	const handleReset = (clearFilters) => {
+		clearFilters();
+		setSearch({ searchText: '' });
+	};
 
 	const toggleShowing = (id) => (e) => {
 		e.preventDefault();
@@ -40,6 +135,7 @@ function BrandListPage() {
 			dataIndex: 'name',
 			key: 'name',
 			width: '70%',
+			...getColumnSearchProps('name'),
 		},
 		{
 			title: 'Action',
@@ -65,26 +161,12 @@ function BrandListPage() {
 	];
 
 	return (
-		<>
-			<div
-				className='site-layout-background text-center'
-				style={{ padding: 16, margin: '16px 0' }}
-			>
-				<Search
-					placeholder='Search by brand name'
-					onSearch={onSearch}
-					allowClear
-					style={{ maxWidth: 400 }}
-					enterButton
-				/>
-			</div>
-			<div
-				className='site-layout-background'
-				style={{ padding: 24, margin: '16px 0' }}
-			>
-				<Table columns={columns} dataSource={data} />
-			</div>
-		</>
+		<div
+			className='site-layout-background'
+			style={{ padding: 24, margin: '16px 0' }}
+		>
+			<Table columns={columns} dataSource={data} />
+		</div>
 	);
 }
 
