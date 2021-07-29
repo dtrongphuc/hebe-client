@@ -53,3 +53,15 @@ export async function isAuth() {
 		return { loggedIn: false };
 	}
 }
+
+// get users account
+export async function getUserAccounts() {
+	try {
+		const response = await api.get('/account/users');
+		if (response.status === 200) {
+			return response.data;
+		}
+	} catch (error) {
+		return Promise.reject(error);
+	}
+}
