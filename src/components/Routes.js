@@ -22,6 +22,7 @@ import CheckoutLayout from 'layouts/CheckoutLayout';
 import ShippingPage from 'pages/Checkout/ShippingPage';
 import PaymentPage from 'pages/Checkout/PaymentPage';
 import OrderHistoryPage from 'pages/OrderHistory/OrderHistoryPage';
+import ErrorPage from 'pages/404/ErrorPage';
 
 function Routes() {
 	const dispatch = useDispatch();
@@ -85,6 +86,8 @@ function Routes() {
 				<Route>
 					<CustomerLayout>
 						<Route exact path='/' component={HomePage} />
+						<Route exact path='/error' component={ErrorPage} />
+
 						<Route
 							exact
 							path='/:path/products/:productPath'
