@@ -5,6 +5,7 @@ import ProductList from 'components/Products/ProductList';
 import { getCollectionByPath } from 'services/CollectionAPI';
 import { useParams } from 'react-router';
 import './styles.scss';
+import { useHistory } from 'react-router-dom';
 
 const BEST_SELLING = 'best-selling';
 const PRICE_LOW_TO_HIGH = 'price-low-to-high';
@@ -15,20 +16,21 @@ export default function CollectionPage() {
 	const [products, setProducts] = useState([]);
 	const { path } = useParams();
 	let fromPage = path.replaceAll('-', ' ').toUpperCase();
+	let history = useHistory();
 
 	useEffect(() => {
 		(async function () {
 			try {
 				let response = await getCollectionByPath(path);
-				if (response) {
+				if (response?.success) {
 					setInfo(response.info);
 					setProducts(response.products);
 				}
 			} catch (error) {
-				console.log(error.data);
+				console.log(error);
 			}
 		})();
-	}, [path]);
+	}, [path, history]);
 
 	const onSortChange = (e) => {
 		const selected = e.target.value;

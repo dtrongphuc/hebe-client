@@ -3,7 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { checkAuthThunk } from 'features/user/userSlice';
 import { fetchCartThunk } from 'features/cart/cartSlice';
 import { unwrapResult } from '@reduxjs/toolkit';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import {
+	BrowserRouter as Router,
+	Redirect,
+	Route,
+	Switch,
+} from 'react-router-dom';
 import Admin from 'admin/Admin';
 import ScrollToTop from 'components/ScrollToTop';
 import HomePage from 'pages/Home/HomePage';
@@ -86,7 +91,6 @@ function Routes() {
 				<Route>
 					<CustomerLayout>
 						<Route exact path='/' component={HomePage} />
-						<Route exact path='/error' component={ErrorPage} />
 
 						<Route
 							exact
@@ -98,8 +102,8 @@ function Routes() {
 							path='/products/:productPath'
 							component={ProductDetailPage}
 						/>
-						<Route path='/collections/:path' component={CollectionPage} />
-						<Route path='/contact' component={ContactPage} />
+						<Route exact path='/collections/:path' component={CollectionPage} />
+						<Route exact path='/contact' component={ContactPage} />
 						<PrivateRoute exact path='/account' component={AccountPage} />
 						<PrivateRoute
 							exact
@@ -115,6 +119,8 @@ function Routes() {
 						<Route exact path='/account/login' component={LoginPage} />
 						<Route exact path='/account/register' component={RegisterPage} />
 						<PrivateRoute exact path='/cart' component={CartPage} />
+						<Route exact path='/404' component={ErrorPage} />
+						<Redirect from='*' to='/404' />
 					</CustomerLayout>
 				</Route>
 			</Switch>
