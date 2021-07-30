@@ -12,6 +12,7 @@ import EditBrandPage from 'admin/pages/Brands/EditBrandPage';
 import ProductListPage from 'admin/pages/Product/ProductListPage';
 import EditProductPage from 'admin/pages/Product/EditProductPage';
 import CustomerListPage from 'admin/pages/Customers/CustomersListPage';
+import EditCustomerPage from 'admin/pages/Customers/EditCustomerPage';
 
 const routes = [
 	{
@@ -92,6 +93,10 @@ const routes = [
 	{
 		path: '/admin/customer/all',
 		component: CustomerListPage,
+	},
+	{
+		path: '/admin/customer/edit/:id',
+		component: EditCustomerPage,
 	},
 ];
 

@@ -90,37 +90,42 @@ function Routes() {
 
 				<Route>
 					<CustomerLayout>
-						<Route exact path='/' component={HomePage} />
+						<Switch>
+							<Route exact path='/' component={HomePage} />
+							<Route exact path='/404' component={ErrorPage} />
+							<Route
+								exact
+								path='/:path/products/:productPath'
+								component={ProductDetailPage}
+							/>
+							<Route
+								exact
+								path='/products/:productPath'
+								component={ProductDetailPage}
+							/>
+							<Route
+								exact
+								path='/collections/:path'
+								component={CollectionPage}
+							/>
+							<Route exact path='/contact' component={ContactPage} />
+							<PrivateRoute exact path='/account' component={AccountPage} />
+							<PrivateRoute
+								exact
+								path='/account/addresses'
+								component={AddressesPage}
+							/>
+							<PrivateRoute
+								exact
+								path='/account/orders'
+								component={OrderHistoryPage}
+							/>
 
-						<Route
-							exact
-							path='/:path/products/:productPath'
-							component={ProductDetailPage}
-						/>
-						<Route
-							exact
-							path='/products/:productPath'
-							component={ProductDetailPage}
-						/>
-						<Route exact path='/collections/:path' component={CollectionPage} />
-						<Route exact path='/contact' component={ContactPage} />
-						<PrivateRoute exact path='/account' component={AccountPage} />
-						<PrivateRoute
-							exact
-							path='/account/addresses'
-							component={AddressesPage}
-						/>
-						<PrivateRoute
-							exact
-							path='/account/orders'
-							component={OrderHistoryPage}
-						/>
-
-						<Route exact path='/account/login' component={LoginPage} />
-						<Route exact path='/account/register' component={RegisterPage} />
-						<PrivateRoute exact path='/cart' component={CartPage} />
-						<Route exact path='/404' component={ErrorPage} />
-						<Redirect from='*' to='/404' />
+							<Route exact path='/account/login' component={LoginPage} />
+							<Route exact path='/account/register' component={RegisterPage} />
+							<PrivateRoute exact path='/cart' component={CartPage} />
+							<Redirect to='/404' />
+						</Switch>
 					</CustomerLayout>
 				</Route>
 			</Switch>

@@ -65,3 +65,31 @@ export async function getUserAccounts() {
 		return Promise.reject(error);
 	}
 }
+
+// get account by id
+export async function getAccountById(id) {
+	try {
+		const response = await api.get('/account/user', {
+			params: {
+				id,
+			},
+		});
+		if (response.status === 200) {
+			return response.data;
+		}
+	} catch (error) {
+		return Promise.reject(error);
+	}
+}
+
+// submit edit user account
+export async function submitEditAccount(data) {
+	try {
+		const response = await api.post('/account/user/edit', data);
+		if (response.status === 200) {
+			return response.data;
+		}
+	} catch (error) {
+		return Promise.reject(error);
+	}
+}

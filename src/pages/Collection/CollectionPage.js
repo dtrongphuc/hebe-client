@@ -25,6 +25,8 @@ export default function CollectionPage() {
 				if (response?.success) {
 					setInfo(response.info);
 					setProducts(response.products);
+				} else if (response.status === 404) {
+					history.push('/404');
 				}
 			} catch (error) {
 				console.log(error);
