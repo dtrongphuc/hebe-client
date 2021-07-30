@@ -39,3 +39,12 @@ export async function getMaxPagination() {
 		return error;
 	}
 }
+
+export async function getOrders() {
+	try {
+		const response = await api.get('/orders');
+		return response.data;
+	} catch (error) {
+		return error;
+	}
+}

@@ -21,7 +21,7 @@ function InformationPage() {
 			dispatch(focusedChange(firstError));
 			return;
 		}
-		let link = `/checkout/${delivery === 'shipping' ? 'shipping' : 'payment'}`;
+		let link = `/checkout/${delivery === 'shipment' ? 'shipping' : 'payment'}`;
 		history.push(link);
 	};
 
@@ -35,12 +35,12 @@ function InformationPage() {
 			<Delivery />
 
 			{delivery === 'pickup' && <Pickup />}
-			{delivery === 'shipping' && <Address title='Shipping address' />}
+			{delivery === 'shipment' && <Address title='Shipping address' />}
 
 			<NavButtons
 				next={{
 					content:
-						delivery === 'shipping'
+						delivery === 'shipment'
 							? 'Continue to shipping'
 							: 'Continue to payment',
 					onClick: handleNextStepClicked,

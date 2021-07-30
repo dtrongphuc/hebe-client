@@ -59,7 +59,7 @@ function PaymentPage(props) {
 	const pickup = useSelector(selectPickupStore);
 
 	useEffect(() => {
-		if (delivery === 'shipping') {
+		if (delivery === 'shipment') {
 			setShippingInfo([
 				{
 					label: 'Contact',
@@ -104,7 +104,7 @@ function PaymentPage(props) {
 					...addressInfo,
 				},
 				deliveryMethod: delivery,
-				shippingMethod: delivery === 'shipping' ? shippingMethodSelected : null,
+				shippingMethod: delivery === 'shipment' ? shippingMethodSelected : null,
 				pickupLocation: delivery === 'pickup' ? pickupLocationSelected : null,
 				paymentMethod: paymentMethod,
 			};
@@ -144,11 +144,11 @@ function PaymentPage(props) {
 					}}
 					prev={{
 						content:
-							delivery === 'shipping'
+							delivery === 'shipment'
 								? 'Return to shipping'
 								: 'Return to information',
 						link:
-							delivery === 'shipping'
+							delivery === 'shipment'
 								? '/checkout/shipping'
 								: '/checkout/information',
 					}}

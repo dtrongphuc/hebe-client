@@ -23,12 +23,13 @@ function CartPage() {
 			const response = await checkCart();
 			if (response.success && response?.invalid.length > 0) {
 				setInvalidCartItem([...response.invalid]);
+				setLoading(false);
+
 				return;
 			}
 			return history.push('/checkout/information');
 		} catch (error) {
 			console.log(error);
-		} finally {
 			setLoading(false);
 		}
 	};

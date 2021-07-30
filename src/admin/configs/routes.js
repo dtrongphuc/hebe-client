@@ -11,8 +11,9 @@ import AddBrandPage from 'admin/pages/Brands/AddBrandPage';
 import EditBrandPage from 'admin/pages/Brands/EditBrandPage';
 import ProductListPage from 'admin/pages/Product/ProductListPage';
 import EditProductPage from 'admin/pages/Product/EditProductPage';
-import CustomerListPage from 'admin/pages/Customers/CustomersListPage';
-import EditCustomerPage from 'admin/pages/Customers/EditCustomerPage';
+import CustomerListPage from 'admin/pages/Customer/CustomerListPage';
+import EditCustomerPage from 'admin/pages/Customer/EditCustomerPage';
+import OrderListPage from 'admin/pages/Order/OrderListPage';
 
 const routes = [
 	{
@@ -97,6 +98,12 @@ const routes = [
 	{
 		path: '/admin/customer/edit/:id',
 		component: EditCustomerPage,
+	},
+
+	//ORDERS
+	{
+		path: '/admin/order/all',
+		component: OrderListPage,
 	},
 ];
 

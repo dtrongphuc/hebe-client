@@ -32,7 +32,7 @@ const initialState = {
 	},
 	errors: {},
 	focused: '',
-	delivery: 'shipping',
+	delivery: 'shipment',
 	shippingPrice: {
 		display: 'Calculated at next step',
 		price: null,

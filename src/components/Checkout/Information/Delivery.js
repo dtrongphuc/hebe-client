@@ -22,12 +22,12 @@ function Delivery() {
 					<input
 						type='radio'
 						name='delivery'
-						id='shipping'
+						id='shipment'
 						className='checkout-radio'
-						checked={delivery === 'shipping'}
+						checked={delivery === 'shipment'}
 						onChange={handleChange}
 					/>
-					<label htmlFor='shipping'>
+					<label htmlFor='shipment'>
 						<MdLocalShipping size='1.6em' />
 						<span>Ship</span>
 					</label>

@@ -39,7 +39,7 @@ function ShippingPage() {
 
 	// check delivery method is shipping
 	useEffect(() => {
-		if (delivery !== 'shipping') {
+		if (delivery !== 'shipment') {
 			history.push('/checkout/information');
 		}
 	}, [delivery, history]);
@@ -50,7 +50,7 @@ function ShippingPage() {
 
 	return (
 		<>
-			{delivery === 'shipping' && (
+			{delivery === 'shipment' && (
 				<>
 					<ShippingInfo items={shippingInfoItems} />
 					<ShippingMethod />

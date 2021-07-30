@@ -62,7 +62,7 @@ function Breadcrumb() {
 		const currentPathName = pathname.replace('/checkout/', '');
 
 		let linksMap =
-			delivery !== 'shipping'
+			delivery !== 'shipment'
 				? mapActiveLink(linksNotIncludesShipping, currentPathName)
 				: mapActiveLink(links, currentPathName);
 
