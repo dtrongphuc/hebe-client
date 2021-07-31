@@ -26,7 +26,7 @@ function PaymentPage(props) {
 		delivery,
 		shippingMethodSelected,
 		pickupLocationSelected,
-		paymentMethod,
+		paymentMethodSelected,
 		addressInfo,
 	} = useSelector((state) => state.checkout);
 
@@ -106,7 +106,7 @@ function PaymentPage(props) {
 				deliveryMethod: delivery,
 				shippingMethod: delivery === 'shipment' ? shippingMethodSelected : null,
 				pickupLocation: delivery === 'pickup' ? pickupLocationSelected : null,
-				paymentMethod: paymentMethod,
+				paymentMethod: paymentMethodSelected,
 			};
 			const response = await createOrder(data);
 			if (response.success) {

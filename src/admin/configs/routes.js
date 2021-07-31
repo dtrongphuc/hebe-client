@@ -14,6 +14,7 @@ import EditProductPage from 'admin/pages/Product/EditProductPage';
 import CustomerListPage from 'admin/pages/Customer/CustomerListPage';
 import EditCustomerPage from 'admin/pages/Customer/EditCustomerPage';
 import OrderListPage from 'admin/pages/Order/OrderListPage';
+import OrderDetailPage from 'admin/pages/Order/OrderDetailPage';
 
 const routes = [
 	{
@@ -104,6 +105,10 @@ const routes = [
 	{
 		path: '/admin/order/all',
 		component: OrderListPage,
+	},
+	{
+		path: '/admin/order/detail/:id',
+		component: OrderDetailPage,
 	},
 ];
 

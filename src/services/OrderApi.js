@@ -48,3 +48,17 @@ export async function getOrders() {
 		return error;
 	}
 }
+
+// get order detail by id
+export async function getOrderById(id) {
+	try {
+		const response = await api.get('/orders/by-id', {
+			params: {
+				id,
+			},
+		});
+		return response.data;
+	} catch (error) {
+		return error;
+	}
+}

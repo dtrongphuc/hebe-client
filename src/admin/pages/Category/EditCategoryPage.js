@@ -70,7 +70,10 @@ function EditCategoryPage() {
 	};
 
 	return (
-		<div className='site-layout-background' style={{ margin: '16px 0' }}>
+		<div
+			className='site-layout-background'
+			style={{ padding: 24, margin: '16px 0' }}
+		>
 			{!loading && (
 				<CategoryForm
 					form={form}

@@ -29,7 +29,7 @@ function AdminLayout({ children }) {
 				>
 					<Content
 						style={{
-							padding: 24,
+							padding: '24px 0 0 0',
 							margin: 0,
 						}}
 					>

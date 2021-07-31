@@ -217,7 +217,7 @@ function OrderListPage() {
 			key: 'action',
 			render: (text, record) => (
 				<Space size='middle'>
-					<Link to={`/admin/order/view/${record._id}`}>View</Link>
+					<Link to={`/admin/order/detail/${record._id}`}>View</Link>
 				</Space>
 			),
 		},
