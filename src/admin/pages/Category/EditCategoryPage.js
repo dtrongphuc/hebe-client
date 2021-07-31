@@ -30,6 +30,7 @@ function EditCategoryPage() {
 							name: image.publicId,
 							status: 'done',
 							url: image.src,
+							publicId: image.publicId,
 						},
 					]);
 

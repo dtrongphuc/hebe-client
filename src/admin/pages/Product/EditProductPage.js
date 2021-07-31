@@ -35,7 +35,7 @@ function EditProductPage() {
 						setDefaultFileList((prevState) => [
 							...prevState,
 							{
-								public_id: image.publicId,
+								publicId: image.publicId,
 								url: image.src,
 								position: image.position,
 								uid: image._id,

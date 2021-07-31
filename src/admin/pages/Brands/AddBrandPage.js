@@ -14,6 +14,7 @@ function AddBrandPage() {
 	const onFinish = async (values) => {
 		const key = 'submit';
 		message.loading({ content: 'Loading...', key });
+		console.log(values);
 		try {
 			const { url } = await getUploadSignature(uploadFolder);
 			const images = await uploadFileRequest(url, values.image);

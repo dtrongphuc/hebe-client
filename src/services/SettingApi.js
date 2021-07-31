@@ -1,23 +1,5 @@
 import api from './api';
 
-export async function putShippingSettings(data) {
-	try {
-		const response = await api.put('/config/shipping', data);
-		return response.data;
-	} catch (error) {
-		return error;
-	}
-}
-
-export async function getShippingSettings() {
-	try {
-		const response = await api.get('/config/shipping');
-		return response.data;
-	} catch (error) {
-		return error;
-	}
-}
-
 export async function getPickupLocations() {
 	try {
 		const response = await api.get('/pickup-locations');
@@ -48,6 +30,24 @@ export async function getShippingMethods() {
 export async function putShippingMethods(data) {
 	try {
 		const response = await api.put('/shipping-methods', data);
+		return response.data;
+	} catch (error) {
+		return error;
+	}
+}
+
+export async function getBanner() {
+	try {
+		const response = await api.get('/settings/banner');
+		return response.data;
+	} catch (error) {
+		return error;
+	}
+}
+
+export async function submitEditBanner(data) {
+	try {
+		const response = await api.post('/settings/banner', data);
 		return response.data;
 	} catch (error) {
 		return error;

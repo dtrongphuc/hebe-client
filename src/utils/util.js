@@ -31,10 +31,9 @@ export const capitalize = (string) => {
 
 export const uploadFileRequest = async (url, fileList) => {
 	try {
-		console.log(fileList);
 		let files = await Promise.all(
 			[].concat(fileList).map((file) => {
-				if (file?.public_id) {
+				if (file?.publicId && file?.publicId === file?.uid) {
 					return Promise.resolve(file);
 				}
 
@@ -49,7 +48,7 @@ export const uploadFileRequest = async (url, fileList) => {
 		);
 		return files?.map((file) => ({
 			src: file?.data?.secure_url || file.url,
-			publicId: file?.data?.public_id || file.public_id,
+			publicId: file?.data?.public_id || file.publicId,
 		}));
 	} catch (error) {
 		console.log(error);
