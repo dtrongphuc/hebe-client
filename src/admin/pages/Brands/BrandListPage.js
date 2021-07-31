@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Table, Input, Space, Button, message } from 'antd';
+import { Table, Input, Space, Button, message, Card } from 'antd';
 import { Link } from 'react-router-dom';
 import { getAllBrands, toggleShowingBrand } from 'services/BrandApi';
 import Highlighter from 'react-highlight-words';
@@ -184,12 +184,9 @@ function BrandListPage() {
 	];
 
 	return (
-		<div
-			className='site-layout-background'
-			style={{ padding: 24, margin: '16px 0' }}
-		>
+		<Card title='Brands' bordered={false}>
 			<Table columns={columns} dataSource={data} loading={loading} />
-		</div>
+		</Card>
 	);
 }
 

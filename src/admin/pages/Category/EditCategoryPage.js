@@ -1,11 +1,10 @@
 import React from 'react';
 import CategoryForm from 'admin/components/CategoryForm/CategoryForm';
-import { Form, message } from 'antd';
+import { Card, Form, message } from 'antd';
 import { useHistory, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { getCategory, postEditCategory } from 'services/CategoryApi';
 import { useState } from 'react';
-import ModalLoading from 'components/ModalLoading/ModalLoading';
 import { getUploadSignature } from 'services/CloudinaryApi';
 import { uploadFileRequest } from 'utils/util';
 
@@ -70,19 +69,13 @@ function EditCategoryPage() {
 	};
 
 	return (
-		<div
-			className='site-layout-background'
-			style={{ padding: 24, margin: '16px 0' }}
-		>
-			{!loading && (
-				<CategoryForm
-					form={form}
-					defaultFileList={defaultFileList}
-					onFinish={onFinish}
-				/>
-			)}
-			<ModalLoading loading={loading} />
-		</div>
+		<Card title='Edit category' bordered={false} loading={loading}>
+			<CategoryForm
+				form={form}
+				defaultFileList={defaultFileList}
+				onFinish={onFinish}
+			/>
+		</Card>
 	);
 }
 

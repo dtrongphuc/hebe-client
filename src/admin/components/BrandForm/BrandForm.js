@@ -68,7 +68,6 @@ function BrandForm({ form, defaultFileList = [], onFinish }) {
 			>
 				<UploadSingle
 					folder='brands'
-					defaultFileList={defaultFileList}
 					fileList={fileList}
 					setFileList={setFileList}
 				/>

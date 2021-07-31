@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Form, message } from 'antd';
+import { Card, Form, message } from 'antd';
 import { useHistory, useParams } from 'react-router-dom';
-import ModalLoading from 'components/ModalLoading/ModalLoading';
 import { getProductByPathName, postEditProduct } from 'services/ProductApi';
 import ProductForm from 'admin/components/ProductForm/ProductForm';
 import { getUploadSignature } from 'services/CloudinaryApi';
@@ -87,19 +86,13 @@ function EditProductPage() {
 	};
 
 	return (
-		<div
-			className='site-layout-background'
-			style={{ padding: 24, margin: '16px 0' }}
-		>
-			{!loading && (
-				<ProductForm
-					form={form}
-					defaultFileList={defaultFileList}
-					onFinish={onFinish}
-				/>
-			)}
-			<ModalLoading loading={loading} />
-		</div>
+		<Card title='Edit product' bordered={false} loading={loading}>
+			<ProductForm
+				form={form}
+				defaultFileList={defaultFileList}
+				onFinish={onFinish}
+			/>
+		</Card>
 	);
 }
 

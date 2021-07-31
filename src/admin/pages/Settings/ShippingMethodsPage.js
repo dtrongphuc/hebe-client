@@ -1,11 +1,9 @@
-import React from 'react';
-import { Button, Divider, Form } from 'antd';
-import { Typography } from 'antd';
+import React, { useState } from 'react';
+import { Button, Card, Form } from 'antd';
 import ShippingMethodList from 'admin/components/ShippingMethod/ShippingMethodList';
 import { getShippingMethods, putShippingMethods } from 'services/SettingApi';
 import { useEffect } from 'react';
 
-const { Title } = Typography;
 // import PropTypes from 'prop-types'
 
 const mapShippingMethodsToFields = (methods) => {
@@ -23,10 +21,12 @@ const mapShippingMethodsToFields = (methods) => {
 
 function ShippingMethodsPage() {
 	const [form] = Form.useForm();
+	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
 		(async () => {
 			try {
+				setLoading(true);
 				const { shippingMethods } = await getShippingMethods();
 				if (shippingMethods) {
 					form.setFieldsValue({
@@ -35,6 +35,8 @@ function ShippingMethodsPage() {
 				}
 			} catch (error) {
 				console.log(error);
+			} finally {
+				setLoading(false);
 			}
 		})();
 	}, [form]);
@@ -54,40 +56,34 @@ function ShippingMethodsPage() {
 	};
 
 	return (
-		<Form
-			layout='vertical'
-			onFinish={onFinish}
-			onFinishFailed={onFinishFailed}
-			form={form}
-			initialValues={{
-				shipping_methods: [],
-			}}
-		>
-			<Title level={3}>Shipping methods</Title>
-			<Divider />
-
-			<Form.Item
-				rules={[{ required: true, message: 'Missing shipping methods' }]}
-				label='Shipping methods'
-				name='shipping_methods'
+		<Card title='Shipping methods' bordered={false} loading={loading}>
+			<Form
+				layout='vertical'
+				onFinish={onFinish}
+				onFinishFailed={onFinishFailed}
+				form={form}
+				initialValues={{
+					shipping_methods: [],
+				}}
 			>
-				<ShippingMethodList form={form} />
-			</Form.Item>
-
-			<Form.Item>
-				<Button
-					type='primary'
-					danger
-					htmlType='button'
-					style={{ marginRight: 16 }}
+				<Form.Item
+					rules={[{ required: true, message: 'Missing shipping methods' }]}
+					label='Shipping methods'
+					name='shipping_methods'
 				>
-					Cancel
-				</Button>
-				<Button type='primary' htmlType='submit'>
-					Submit
-				</Button>
-			</Form.Item>
-		</Form>
+					<ShippingMethodList form={form} />
+				</Form.Item>
+
+				<Form.Item>
+					<Button danger htmlType='button' style={{ marginRight: 16 }}>
+						Cancel
+					</Button>
+					<Button type='primary' htmlType='submit'>
+						Submit
+					</Button>
+				</Form.Item>
+			</Form>
+		</Card>
 	);
 }
 

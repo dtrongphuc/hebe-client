@@ -1,10 +1,8 @@
 import React, { useEffect } from 'react';
-import { Button, Divider, Form } from 'antd';
-import { Typography } from 'antd';
+import { Button, Card, Form } from 'antd';
 import PickupLocationList from 'admin/components/PickupLocation/PickupLocationList';
 import { getPickupLocations, putPickupLocations } from 'services/SettingApi';
-
-const { Title } = Typography;
+import { useState } from 'react';
 
 const mapLocationsToFields = (locations) => {
 	let result = locations?.map((location) => {
@@ -21,12 +19,14 @@ const mapLocationsToFields = (locations) => {
 	return result;
 };
 
-function PickupLocationsPage(props) {
+function PickupLocationsPage() {
 	const [form] = Form.useForm();
+	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
 		(async () => {
 			try {
+				setLoading(true);
 				const { locations } = await getPickupLocations();
 				if (locations) {
 					form.setFieldsValue({
@@ -35,6 +35,8 @@ function PickupLocationsPage(props) {
 				}
 			} catch (error) {
 				console.log(error);
+			} finally {
+				setLoading(false);
 			}
 		})();
 	}, [form]);
@@ -58,40 +60,33 @@ function PickupLocationsPage(props) {
 	};
 
 	return (
-		<Form
-			layout='vertical'
-			onFinish={onFinish}
-			onFinishFailed={onFinishFailed}
-			form={form}
-			initialValues={initialValues}
-		>
-			<Title level={3}>Pickup locations</Title>
-			<Divider />
-			<Form.Item
-				rules={[{ required: true, message: 'Missing pickup locations' }]}
-				label='Pickup locations'
-				name='pickup_locations'
+		<Card title='Pickup locations' bordered={false} loading={loading}>
+			<Form
+				layout='vertical'
+				onFinish={onFinish}
+				onFinishFailed={onFinishFailed}
+				form={form}
+				initialValues={initialValues}
 			>
-				<PickupLocationList form={form} />
-			</Form.Item>
-
-			<Form.Item>
-				<Button
-					type='primary'
-					danger
-					htmlType='button'
-					style={{ marginRight: 16 }}
+				<Form.Item
+					rules={[{ required: true, message: 'Missing pickup locations' }]}
+					label='Pickup locations'
+					name='pickup_locations'
 				>
-					Cancel
-				</Button>
-				<Button type='primary' htmlType='submit'>
-					Submit
-				</Button>
-			</Form.Item>
-		</Form>
+					<PickupLocationList form={form} />
+				</Form.Item>
+
+				<Form.Item>
+					<Button danger htmlType='button' style={{ marginRight: 16 }}>
+						Cancel
+					</Button>
+					<Button type='primary' htmlType='submit'>
+						Submit
+					</Button>
+				</Form.Item>
+			</Form>
+		</Card>
 	);
 }
-
-PickupLocationsPage.propTypes = {};
 
 export default PickupLocationsPage;

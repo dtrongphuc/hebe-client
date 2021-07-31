@@ -1,12 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import { Form, Input, Button, Upload, Divider } from 'antd';
-import { UploadOutlined } from '@ant-design/icons';
-import { Typography } from 'antd';
-
-const { Title } = Typography;
+import { Form, Input, Button, Card } from 'antd';
+import UploadSingle from 'admin/components/UploadSingle/UploadSingle';
 
 const BannerPage = () => {
+	const [loading, setLoading] = useState(false);
+	const [fileList, setFileList] = useState([]);
+
 	const onFinish = (values) => {
 		console.log('Success:', values);
 	};
@@ -15,80 +15,62 @@ const BannerPage = () => {
 		console.log('Failed:', errorInfo);
 	};
 
-	const props = {
-		action: '//jsonplaceholder.typicode.com/posts/',
-		listType: 'picture',
-		previewFile(file) {
-			console.log('Your upload file:', file);
-			// Your process logic. Here we just mock to the same file
-			return fetch('https://next.json-generator.com/api/json/get/4ytyBoLK8', {
-				method: 'POST',
-				body: file,
-			})
-				.then((res) => res.json())
-				.then(({ thumbnail }) => thumbnail);
-		},
-	};
-
 	return (
-		<Form layout='vertical' onFinish={onFinish} onFinishFailed={onFinishFailed}>
-			<Title level={3}>Banner</Title>
-			<Divider />
-			<Form.Item
-				label='Title'
-				name='banner-title'
-				rules={[
-					{
-						required: true,
-						message: 'Please input banner title!',
-					},
-				]}
+		<Card title='Banner' bordered={false} loading={loading}>
+			<Form
+				layout='vertical'
+				onFinish={onFinish}
+				onFinishFailed={onFinishFailed}
 			>
-				<Input />
-			</Form.Item>
-
-			<Form.Item
-				label='Tittle path'
-				name='banner-path'
-				rules={[
-					{
-						required: true,
-						message: 'Please input path!',
-					},
-				]}
-			>
-				<Input />
-			</Form.Item>
-
-			<Form.Item
-				label='Banner image'
-				name='banner-image'
-				rules={[
-					{
-						required: true,
-						message: 'Please upload a banner!',
-					},
-				]}
-			>
-				<Upload {...props}>
-					<Button icon={<UploadOutlined />}>Upload</Button>
-				</Upload>
-			</Form.Item>
-
-			<Form.Item>
-				<Button
-					type='primary'
-					danger
-					htmlType='button'
-					style={{ marginRight: 16 }}
+				<Form.Item
+					label='Title'
+					name='banner-title'
+					rules={[
+						{
+							required: true,
+							message: 'Please input banner title!',
+						},
+					]}
 				>
-					Cancel
-				</Button>
-				<Button type='primary' htmlType='submit'>
-					Submit
-				</Button>
-			</Form.Item>
-		</Form>
+					<Input />
+				</Form.Item>
+
+				<Form.Item
+					label='Tittle path'
+					name='banner-path'
+					rules={[
+						{
+							required: true,
+							message: 'Please input path!',
+						},
+					]}
+				>
+					<Input />
+				</Form.Item>
+
+				<Form.Item
+					label='Banner image'
+					name='banner-image'
+					rules={[
+						{
+							required: true,
+							message: 'Please upload a banner!',
+						},
+					]}
+				>
+					<UploadSingle fileList={fileList} />
+				</Form.Item>
+
+				<Form.Item>
+					<Button danger htmlType='button' style={{ marginRight: 16 }}>
+						Cancel
+					</Button>
+					<Button type='primary' htmlType='submit'>
+						Submit
+					</Button>
+				</Form.Item>
+			</Form>
+		</Card>
 	);
 };
 

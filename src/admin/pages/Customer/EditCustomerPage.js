@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Form, message } from 'antd';
+import { Card, Form, message } from 'antd';
 import { useHistory, useParams } from 'react-router-dom';
-import ModalLoading from 'components/ModalLoading/ModalLoading';
 import CustomerForm from 'admin/components/CustomerForm/CustomerForm';
 import { getAccountById, submitEditAccount } from 'services/AccountApi';
 
@@ -51,13 +50,9 @@ function EditCustomerPage() {
 	};
 
 	return (
-		<div
-			className='site-layout-background'
-			style={{ padding: 24, margin: '16px 0' }}
-		>
-			{!loading && <CustomerForm form={form} onFinish={onFinish} />}
-			<ModalLoading loading={loading} />
-		</div>
+		<Card title='Edit customer' bordered={false} loading={loading}>
+			<CustomerForm form={form} onFinish={onFinish} />
+		</Card>
 	);
 }
 

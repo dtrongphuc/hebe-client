@@ -1,6 +1,7 @@
 import LeftMenu from 'admin/components/LeftMenu/LeftMenu';
 import { Layout, Menu } from 'antd';
 import PropTypes from 'prop-types';
+import { Helmet } from 'react-helmet';
 import './styles.scss';
 
 const { Header, Content, Sider } = Layout;
@@ -8,6 +9,9 @@ const { Header, Content, Sider } = Layout;
 function AdminLayout({ children }) {
 	return (
 		<Layout>
+			<Helmet>
+				<title>Admin - Hebe Boutique</title>
+			</Helmet>
 			<Header
 				style={{ position: 'fixed', zIndex: 1, width: '100%' }}
 				className='admin-header'

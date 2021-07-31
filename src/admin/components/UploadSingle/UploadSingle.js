@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { Upload, Space, Button } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 
-function UploadSingle({ defaultFileList, fileList, setFileList }) {
+function UploadSingle({ fileList, setFileList }) {
 	// useEffect(() => {
 	// 	(async () => {
 	// 		try {
@@ -74,7 +74,6 @@ function UploadSingle({ defaultFileList, fileList, setFileList }) {
 		<Space direction='vertical' style={{ width: '100%' }} size='large'>
 			<Upload
 				// action={cloud.uploadURL}
-				defaultFileList={defaultFileList}
 				beforeUpload={beforeUpload}
 				// customRequest={uploadRequest}
 				listType='picture'
@@ -90,7 +89,7 @@ function UploadSingle({ defaultFileList, fileList, setFileList }) {
 }
 
 UploadSingle.propTypes = {
-	folder: PropTypes.string.isRequired,
+	fileList: PropTypes.array,
 };
 
 export default UploadSingle;

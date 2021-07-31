@@ -1,6 +1,6 @@
 import React from 'react';
 import ProductForm from 'admin/components/ProductForm/ProductForm';
-import { Form, message } from 'antd';
+import { Card, Form, message } from 'antd';
 import { postNewProduct } from 'services/ProductApi';
 import { useHistory } from 'react-router-dom';
 import { getUploadSignature } from 'services/CloudinaryApi';
@@ -29,12 +29,9 @@ function AddProductPage() {
 	};
 
 	return (
-		<div
-			className='site-layout-background'
-			style={{ padding: 24, margin: '16px 0' }}
-		>
+		<Card title='Add new product' bordered={false}>
 			<ProductForm form={form} onFinish={onFinish} />
-		</div>
+		</Card>
 	);
 }
 

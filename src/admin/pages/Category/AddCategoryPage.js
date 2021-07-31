@@ -1,6 +1,6 @@
 import React from 'react';
 import CategoryForm from 'admin/components/CategoryForm/CategoryForm';
-import { Form, message } from 'antd';
+import { Card, Form, message } from 'antd';
 import { addNewCategory } from 'services/CategoryApi';
 import { useHistory } from 'react-router-dom';
 import { getUploadSignature } from 'services/CloudinaryApi';
@@ -28,12 +28,9 @@ function AddCategoryPage() {
 	};
 
 	return (
-		<div
-			className='site-layout-background'
-			style={{ padding: 24, margin: '16px 0' }}
-		>
+		<Card title='Add new category' bordered={false}>
 			<CategoryForm form={form} onFinish={onFinish} />
-		</div>
+		</Card>
 	);
 }
 

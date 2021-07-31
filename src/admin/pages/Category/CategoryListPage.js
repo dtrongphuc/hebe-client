@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { Table, Input, Space, Button, message } from 'antd';
+import { Table, Input, Space, Button, message, Card } from 'antd';
 import { Link } from 'react-router-dom';
 import { getAllCategories, toggleShowingCategory } from 'services/CategoryApi';
 import Highlighter from 'react-highlight-words';
@@ -184,12 +184,9 @@ function CategoryListPage() {
 	];
 
 	return (
-		<div
-			className='site-layout-background'
-			style={{ padding: 24, margin: '16px 0' }}
-		>
+		<Card title='Categories' bordered={false}>
 			<Table columns={columns} dataSource={data} loading={loading} />
-		</div>
+		</Card>
 	);
 }
 

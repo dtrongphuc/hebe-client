@@ -48,8 +48,8 @@ export const uploadFileRequest = async (url, fileList) => {
 			})
 		);
 		return files?.map((file) => ({
-			url: file?.data?.secure_url || file.url,
-			public_id: file?.data?.public_id || file.public_id,
+			src: file?.data?.secure_url || file.url,
+			publicId: file?.data?.public_id || file.public_id,
 		}));
 	} catch (error) {
 		console.log(error);

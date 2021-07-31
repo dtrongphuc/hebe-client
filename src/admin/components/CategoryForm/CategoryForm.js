@@ -68,7 +68,6 @@ function CategoryForm({ form, defaultFileList = [], onFinish }) {
 			>
 				<UploadSingle
 					folder='categories'
-					defaultFileList={defaultFileList}
 					fileList={fileList}
 					setFileList={setFileList}
 				/>

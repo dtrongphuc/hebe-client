@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Table, Input, Space, Button, message } from 'antd';
+import { Table, Input, Space, Button, message, Card } from 'antd';
 import { Link } from 'react-router-dom';
 import { getAllProducts, toggleShowingProduct } from 'services/ProductApi';
 import Highlighter from 'react-highlight-words';
@@ -217,17 +217,14 @@ function ProductListPage() {
 	];
 
 	return (
-		<div
-			className='site-layout-background'
-			style={{ padding: 24, margin: '16px 0' }}
-		>
+		<Card title='Products' bordered={false}>
 			<Table
 				columns={columns}
 				dataSource={data}
 				rowKey='_id'
 				loading={loading}
 			/>
-		</div>
+		</Card>
 	);
 }
 

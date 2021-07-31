@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, message } from 'antd';
+import { Card, Form, message } from 'antd';
 import { addNewBrand } from 'services/BrandApi';
 import BrandForm from 'admin/components/BrandForm/BrandForm';
 import { useHistory } from 'react-router-dom';
@@ -28,12 +28,9 @@ function AddBrandPage() {
 	};
 
 	return (
-		<div
-			className='site-layout-background'
-			style={{ padding: 24, margin: '16px 0' }}
-		>
+		<Card title='Add new brand' bordered={false}>
 			<BrandForm form={form} onFinish={onFinish} />
-		</div>
+		</Card>
 	);
 }
 

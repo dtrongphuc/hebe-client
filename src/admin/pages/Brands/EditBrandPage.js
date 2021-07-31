@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Form, message } from 'antd';
+import { Card, Form, message } from 'antd';
 import { useHistory, useParams } from 'react-router-dom';
-import ModalLoading from 'components/ModalLoading/ModalLoading';
 import BrandForm from 'admin/components/BrandForm/BrandForm';
 import { getBrand, postEditBrand } from 'services/BrandApi';
 import { getUploadSignature } from 'services/CloudinaryApi';
@@ -68,19 +67,13 @@ function EditBrandPage() {
 	};
 
 	return (
-		<div
-			className='site-layout-background'
-			style={{ padding: 24, margin: '16px 0' }}
-		>
-			{!loading && (
-				<BrandForm
-					form={form}
-					defaultFileList={defaultFileList}
-					onFinish={onFinish}
-				/>
-			)}
-			<ModalLoading loading={loading} />
-		</div>
+		<Card title='Edit brand' bordered={false} loading={loading}>
+			<BrandForm
+				form={form}
+				defaultFileList={defaultFileList}
+				onFinish={onFinish}
+			/>
+		</Card>
 	);
 }
 

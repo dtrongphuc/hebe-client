@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Table, Input, Space, Button, Tag } from 'antd';
+import { Table, Input, Space, Button, Tag, Card } from 'antd';
 import { Link } from 'react-router-dom';
 import Highlighter from 'react-highlight-words';
 import { SearchOutlined } from '@ant-design/icons';
@@ -224,17 +224,14 @@ function OrderListPage() {
 	];
 
 	return (
-		<div
-			className='site-layout-background'
-			style={{ padding: 24, margin: '16px 0' }}
-		>
+		<Card title='Orders' bordered={false}>
 			<Table
 				columns={columns}
 				dataSource={data}
 				rowKey='_id'
 				loading={loading}
 			/>
-		</div>
+		</Card>
 	);
 }
 
