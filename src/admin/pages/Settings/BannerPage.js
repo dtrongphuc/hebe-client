@@ -12,7 +12,7 @@ const BannerPage = () => {
 	const [form] = Form.useForm();
 	const [loading, setLoading] = useState(false);
 	const [fileList, setFileList] = useState([]);
-	const [collection, setCollection] = useState([]);
+	const [brandList, setBrandList] = useState([]);
 
 	useEffect(() => {
 		const getBannerInfo = async () => {
@@ -20,7 +20,7 @@ const BannerPage = () => {
 				setLoading(true);
 				const response = await getBanner();
 				if (response?.success && response?.banner) {
-					let { title, collection, image } = response.banner;
+					let { title, brand, image } = response.banner;
 					setFileList([
 						{
 							uid: image.publicId,
@@ -32,7 +32,7 @@ const BannerPage = () => {
 
 					form.setFieldsValue({
 						title,
-						collection,
+						brand: brand?._id,
 						image,
 					});
 				}
@@ -55,7 +55,7 @@ const BannerPage = () => {
 					label: name,
 					value: _id,
 				}));
-				setCollection(options);
+				setBrandList(options);
 			} catch (error) {
 				console.log(error);
 			}
@@ -115,19 +115,19 @@ const BannerPage = () => {
 				</Form.Item>
 
 				<Form.Item
-					label='Collection'
-					name='collection'
+					label='Brands'
+					name='brand'
 					rules={[
 						{
 							required: true,
-							message: 'Please enter a collection!',
+							message: 'Please enter a brand!',
 						},
 					]}
 				>
 					<Select
 						showSearch
-						placeholder='Select a collection'
-						options={collection}
+						placeholder='Select a brand'
+						options={brandList}
 						optionFilterProp='label'
 						filterOption={(input, option) =>
 							option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0

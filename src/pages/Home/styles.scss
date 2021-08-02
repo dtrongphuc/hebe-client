@@ -38,6 +38,11 @@
 			text-decoration: underline;
 			font-size: 1.8rem;
 			font-weight: 400;
+
+			&:hover {
+				color: #fff;
+				text-decoration: underline;
+			}
 		}
 	}
 
