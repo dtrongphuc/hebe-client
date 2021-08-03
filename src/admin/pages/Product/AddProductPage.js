@@ -5,6 +5,7 @@ import { postNewProduct } from 'services/ProductApi';
 import { useHistory } from 'react-router-dom';
 import { getUploadSignature } from 'services/CloudinaryApi';
 import { uploadFileRequest } from 'utils/util';
+import SubmitControl from 'admin/components/SubmitControl/SubmitControl';
 
 function AddProductPage() {
 	const [form] = Form.useForm();
@@ -28,10 +29,25 @@ function AddProductPage() {
 		}
 	};
 
+	const onSubmitClick = () => {
+		form.submit();
+	};
+
+	const onCancelClick = () => {
+		console.log('cancel');
+	};
+
 	return (
-		<Card title='Add new product' bordered={false}>
-			<ProductForm form={form} onFinish={onFinish} />
-		</Card>
+		<>
+			<SubmitControl
+				title='Add new product'
+				onSubmit={onSubmitClick}
+				onCancel={onCancelClick}
+			/>
+			<Card title='Add new product' bordered={false}>
+				<ProductForm form={form} onFinish={onFinish} />
+			</Card>
+		</>
 	);
 }
 

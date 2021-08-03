@@ -5,6 +5,7 @@ import BrandForm from 'admin/components/BrandForm/BrandForm';
 import { getBrand, postEditBrand } from 'services/BrandApi';
 import { getUploadSignature } from 'services/CloudinaryApi';
 import { uploadFileRequest } from 'utils/util';
+import SubmitControl from 'admin/components/SubmitControl/SubmitControl';
 
 function EditBrandPage() {
 	const [form] = Form.useForm();
@@ -67,14 +68,29 @@ function EditBrandPage() {
 		}
 	};
 
+	const onSubmitClick = () => {
+		form.submit();
+	};
+
+	const onCancelClick = () => {
+		console.log('cancel');
+	};
+
 	return (
-		<Card title='Edit brand' bordered={false} loading={loading}>
-			<BrandForm
-				form={form}
-				defaultFileList={defaultFileList}
-				onFinish={onFinish}
+		<>
+			<SubmitControl
+				title='Edit brand'
+				onSubmit={onSubmitClick}
+				onCancel={onCancelClick}
 			/>
-		</Card>
+			<Card title='Edit brand' bordered={false} loading={loading}>
+				<BrandForm
+					form={form}
+					defaultFileList={defaultFileList}
+					onFinish={onFinish}
+				/>
+			</Card>
+		</>
 	);
 }
 

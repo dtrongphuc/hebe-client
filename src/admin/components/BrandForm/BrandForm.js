@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Button, Input, Space } from 'antd';
+import { Form, Input } from 'antd';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import UploadSingle from '../UploadSingle/UploadSingle';
@@ -71,17 +71,6 @@ function BrandForm({ form, defaultFileList = [], onFinish }) {
 					fileList={fileList}
 					setFileList={setFileList}
 				/>
-			</Form.Item>
-			<Form.Item>
-				<Space>
-					<Button danger htmlType='button'>
-						Cancel
-					</Button>
-
-					<Button type='primary' htmlType='submit'>
-						Submit
-					</Button>
-				</Space>
 			</Form.Item>
 		</Form>
 	);

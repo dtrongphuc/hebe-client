@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Button, Input } from 'antd';
+import { Form, Input } from 'antd';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import UploadSingle from '../UploadSingle/UploadSingle';
@@ -71,11 +71,6 @@ function CategoryForm({ form, defaultFileList = [], onFinish }) {
 					fileList={fileList}
 					setFileList={setFileList}
 				/>
-			</Form.Item>
-			<Form.Item>
-				<Button type='primary' htmlType='submit'>
-					Submit
-				</Button>
 			</Form.Item>
 		</Form>
 	);

@@ -7,6 +7,7 @@ import { getCategory, postEditCategory } from 'services/CategoryApi';
 import { useState } from 'react';
 import { getUploadSignature } from 'services/CloudinaryApi';
 import { uploadFileRequest } from 'utils/util';
+import SubmitControl from 'admin/components/SubmitControl/SubmitControl';
 
 function EditCategoryPage() {
 	const [form] = Form.useForm();
@@ -69,14 +70,29 @@ function EditCategoryPage() {
 		}
 	};
 
+	const onSubmitClick = () => {
+		form.submit();
+	};
+
+	const onCancelClick = () => {
+		console.log('cancel');
+	};
+
 	return (
-		<Card title='Edit category' bordered={false} loading={loading}>
-			<CategoryForm
-				form={form}
-				defaultFileList={defaultFileList}
-				onFinish={onFinish}
+		<>
+			<SubmitControl
+				title='Edit category'
+				onSubmit={onSubmitClick}
+				onCancel={onCancelClick}
 			/>
-		</Card>
+			<Card title='Edit category' bordered={false} loading={loading}>
+				<CategoryForm
+					form={form}
+					defaultFileList={defaultFileList}
+					onFinish={onFinish}
+				/>
+			</Card>
+		</>
 	);
 }
 

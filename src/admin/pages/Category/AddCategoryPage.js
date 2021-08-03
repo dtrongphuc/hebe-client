@@ -5,6 +5,7 @@ import { addNewCategory } from 'services/CategoryApi';
 import { useHistory } from 'react-router-dom';
 import { getUploadSignature } from 'services/CloudinaryApi';
 import { uploadFileRequest } from 'utils/util';
+import SubmitControl from 'admin/components/SubmitControl/SubmitControl';
 
 function AddCategoryPage() {
 	const [form] = Form.useForm();
@@ -27,10 +28,25 @@ function AddCategoryPage() {
 		}
 	};
 
+	const onSubmitClick = () => {
+		form.submit();
+	};
+
+	const onCancelClick = () => {
+		console.log('cancel');
+	};
+
 	return (
-		<Card title='Add new category' bordered={false}>
-			<CategoryForm form={form} onFinish={onFinish} />
-		</Card>
+		<>
+			<SubmitControl
+				title='Add new category'
+				onSubmit={onSubmitClick}
+				onCancel={onCancelClick}
+			/>
+			<Card title='Add new category' bordered={false}>
+				<CategoryForm form={form} onFinish={onFinish} />
+			</Card>
+		</>
 	);
 }
 

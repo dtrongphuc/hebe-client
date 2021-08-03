@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 
-import { Form, Input, Button, Card, message, Select } from 'antd';
+import { Form, Input, Card, message, Select } from 'antd';
 import UploadSingle from 'admin/components/UploadSingle/UploadSingle';
 import { useEffect } from 'react';
 import { getBanner, submitEditBanner } from 'services/SettingApi';
 import { getUploadSignature } from 'services/CloudinaryApi';
 import { uploadFileRequest } from 'utils/util';
 import { getAllBrands } from 'services/BrandApi';
+import SubmitControl from 'admin/components/SubmitControl/SubmitControl';
 
 const BannerPage = () => {
 	const [form] = Form.useForm();
@@ -93,75 +94,81 @@ const BannerPage = () => {
 		console.log('Failed:', errorInfo);
 	};
 
+	const onSubmitClick = () => {
+		form.submit();
+	};
+
+	const onCancelClick = () => {
+		console.log('cancel');
+	};
+
 	return (
-		<Card title='Banner' bordered={false} loading={loading}>
-			<Form
-				form={form}
-				layout='vertical'
-				onFinish={onFinish}
-				onFinishFailed={onFinishFailed}
-			>
-				<Form.Item
-					label='Title'
-					name='title'
-					rules={[
-						{
-							required: true,
-							message: 'Please enter a title',
-						},
-					]}
+		<>
+			<SubmitControl
+				title='Banner'
+				onSubmit={onSubmitClick}
+				onCancel={onCancelClick}
+			/>
+			<Card title='Banner' bordered={false} loading={loading}>
+				<Form
+					form={form}
+					layout='vertical'
+					onFinish={onFinish}
+					onFinishFailed={onFinishFailed}
 				>
-					<Input />
-				</Form.Item>
+					<Form.Item
+						label='Title'
+						name='title'
+						rules={[
+							{
+								required: true,
+								message: 'Please enter a title',
+							},
+						]}
+					>
+						<Input />
+					</Form.Item>
 
-				<Form.Item
-					label='Brands'
-					name='brand'
-					rules={[
-						{
-							required: true,
-							message: 'Please enter a brand!',
-						},
-					]}
-				>
-					<Select
-						showSearch
-						placeholder='Select a brand'
-						options={brandList}
-						optionFilterProp='label'
-						filterOption={(input, option) =>
-							option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
-						}
-					/>
-				</Form.Item>
+					<Form.Item
+						label='Brands'
+						name='brand'
+						rules={[
+							{
+								required: true,
+								message: 'Please enter a brand!',
+							},
+						]}
+					>
+						<Select
+							showSearch
+							placeholder='Select a brand'
+							options={brandList}
+							optionFilterProp='label'
+							filterOption={(input, option) =>
+								option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
+							}
+						/>
+					</Form.Item>
 
-				<Form.Item
-					label='Image'
-					name='image'
-					rules={[
-						{
-							required: true,
-							message: 'Please upload a image!',
-						},
-					]}
-				>
-					<UploadSingle
-						folder='settings'
-						fileList={fileList}
-						setFileList={setFileList}
-					/>
-				</Form.Item>
-
-				<Form.Item>
-					<Button danger htmlType='button' style={{ marginRight: 16 }}>
-						Cancel
-					</Button>
-					<Button type='primary' htmlType='submit'>
-						Submit
-					</Button>
-				</Form.Item>
-			</Form>
-		</Card>
+					<Form.Item
+						label='Image'
+						name='image'
+						rules={[
+							{
+								required: true,
+								message: 'Please upload a image!',
+							},
+						]}
+					>
+						<UploadSingle
+							folder='settings'
+							fileList={fileList}
+							setFileList={setFileList}
+						/>
+					</Form.Item>
+				</Form>
+			</Card>
+		</>
 	);
 };
 

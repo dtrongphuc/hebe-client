@@ -5,6 +5,7 @@ import { getProductByPathName, postEditProduct } from 'services/ProductApi';
 import ProductForm from 'admin/components/ProductForm/ProductForm';
 import { getUploadSignature } from 'services/CloudinaryApi';
 import { uploadFileRequest } from 'utils/util';
+import SubmitControl from 'admin/components/SubmitControl/SubmitControl';
 
 function EditProductPage() {
 	const [form] = Form.useForm();
@@ -85,14 +86,29 @@ function EditProductPage() {
 		}
 	};
 
+	const onSubmitClick = () => {
+		form.submit();
+	};
+
+	const onCancelClick = () => {
+		console.log('cancel');
+	};
+
 	return (
-		<Card title='Edit product' bordered={false} loading={loading}>
-			<ProductForm
-				form={form}
-				defaultFileList={defaultFileList}
-				onFinish={onFinish}
+		<>
+			<SubmitControl
+				title='Edit product'
+				onSubmit={onSubmitClick}
+				onCancel={onCancelClick}
 			/>
-		</Card>
+			<Card title='Edit product' bordered={false} loading={loading}>
+				<ProductForm
+					form={form}
+					defaultFileList={defaultFileList}
+					onFinish={onFinish}
+				/>
+			</Card>
+		</>
 	);
 }
 

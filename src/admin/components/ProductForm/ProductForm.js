@@ -3,12 +3,10 @@ import React, { useState } from 'react';
 import {
 	Form,
 	Input,
-	Button,
 	Row,
 	Col,
 	InputNumber,
 	Select,
-	Space,
 } from 'antd';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
@@ -186,17 +184,6 @@ function ProductForm({ form, defaultFileList = [], onFinish }) {
 					setFiles={setFiles}
 					defaultFileList={defaultFileList}
 				/>
-			</Form.Item>
-			<Form.Item>
-				<Space>
-					<Button danger htmlType='button'>
-						Cancel
-					</Button>
-
-					<Button type='primary' htmlType='submit'>
-						Submit
-					</Button>
-				</Space>
 			</Form.Item>
 		</Form>
 	);

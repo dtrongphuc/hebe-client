@@ -2,6 +2,7 @@ import React from 'react';
 import { Form, message } from 'antd';
 // import { useHistory } from 'react-router-dom';
 import DiscountForm from 'admin/components/DiscountForm/DiscountForm';
+import SubmitControl from 'admin/components/SubmitControl/SubmitControl';
 
 const initialFormValues = {
 	code: '',
@@ -35,12 +36,27 @@ function AddDiscountPage() {
 		}
 	};
 
+	const onSubmitClick = () => {
+		form.submit();
+	};
+
+	const onCancelClick = () => {
+		console.log('cancel');
+	};
+
 	return (
-		<DiscountForm
-			form={form}
-			initialFormValues={initialFormValues}
-			onFinish={onFinish}
-		/>
+		<>
+			<SubmitControl
+				title='Add discount'
+				onSubmit={onSubmitClick}
+				onCancel={onCancelClick}
+			/>
+			<DiscountForm
+				form={form}
+				initialFormValues={initialFormValues}
+				onFinish={onFinish}
+			/>
+		</>
 	);
 }
 

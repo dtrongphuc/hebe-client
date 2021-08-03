@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Button, Card, Form } from 'antd';
+import { Card, Form } from 'antd';
 import ShippingMethodList from 'admin/components/ShippingMethod/ShippingMethodList';
 import { getShippingMethods, putShippingMethods } from 'services/SettingApi';
 import { useEffect } from 'react';
+import SubmitControl from 'admin/components/SubmitControl/SubmitControl';
 
 // import PropTypes from 'prop-types'
 
@@ -55,35 +56,41 @@ function ShippingMethodsPage() {
 		console.log('Failed:', errorInfo);
 	};
 
-	return (
-		<Card title='Shipping methods' bordered={false} loading={loading}>
-			<Form
-				layout='vertical'
-				onFinish={onFinish}
-				onFinishFailed={onFinishFailed}
-				form={form}
-				initialValues={{
-					shipping_methods: [],
-				}}
-			>
-				<Form.Item
-					rules={[{ required: true, message: 'Missing shipping methods' }]}
-					label='Shipping methods'
-					name='shipping_methods'
-				>
-					<ShippingMethodList form={form} />
-				</Form.Item>
+	const onSubmitClick = () => {
+		form.submit();
+	};
 
-				<Form.Item>
-					<Button danger htmlType='button' style={{ marginRight: 16 }}>
-						Cancel
-					</Button>
-					<Button type='primary' htmlType='submit'>
-						Submit
-					</Button>
-				</Form.Item>
-			</Form>
-		</Card>
+	const onCancelClick = () => {
+		console.log('cancel');
+	};
+
+	return (
+		<>
+			<SubmitControl
+				title='Shipping methods'
+				onSubmit={onSubmitClick}
+				onCancel={onCancelClick}
+			/>
+			<Card title='Shipping methods' bordered={false} loading={loading}>
+				<Form
+					layout='vertical'
+					onFinish={onFinish}
+					onFinishFailed={onFinishFailed}
+					form={form}
+					initialValues={{
+						shipping_methods: [],
+					}}
+				>
+					<Form.Item
+						rules={[{ required: true, message: 'Missing shipping methods' }]}
+						label='Shipping methods'
+						name='shipping_methods'
+					>
+						<ShippingMethodList form={form} />
+					</Form.Item>
+				</Form>
+			</Card>
+		</>
 	);
 }
 

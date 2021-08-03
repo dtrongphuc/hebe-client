@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Button, Input, Space, Switch } from 'antd';
+import { Form, Input, Switch } from 'antd';
 
 const initialValues = {
 	layout: 'vertical',
@@ -42,17 +42,6 @@ function CustomerForm({ form, onFinish }) {
 			</Form.Item>
 			<Form.Item name='active' label='Is enabled ?' valuePropName='checked'>
 				<Switch />
-			</Form.Item>
-			<Form.Item>
-				<Space>
-					<Button danger htmlType='button'>
-						Cancel
-					</Button>
-
-					<Button type='primary' htmlType='submit'>
-						Submit
-					</Button>
-				</Space>
 			</Form.Item>
 		</Form>
 	);

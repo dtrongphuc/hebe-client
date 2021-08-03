@@ -5,6 +5,7 @@ import BrandForm from 'admin/components/BrandForm/BrandForm';
 import { useHistory } from 'react-router-dom';
 import { getUploadSignature } from 'services/CloudinaryApi';
 import { uploadFileRequest } from 'utils/util';
+import SubmitControl from 'admin/components/SubmitControl/SubmitControl';
 
 function AddBrandPage() {
 	const [form] = Form.useForm();
@@ -28,10 +29,25 @@ function AddBrandPage() {
 		}
 	};
 
+	const onSubmitClick = () => {
+		form.submit();
+	};
+
+	const onCancelClick = () => {
+		console.log('cancel');
+	};
+
 	return (
-		<Card title='Add new brand' bordered={false}>
-			<BrandForm form={form} onFinish={onFinish} />
-		</Card>
+		<>
+			<SubmitControl
+				title='Add new brand'
+				onSubmit={onSubmitClick}
+				onCancel={onCancelClick}
+			/>
+			<Card title='Add new brand' bordered={false}>
+				<BrandForm form={form} onFinish={onFinish} />
+			</Card>
+		</>
 	);
 }
 

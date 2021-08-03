@@ -3,6 +3,7 @@ import { Card, Form, message } from 'antd';
 import { useHistory, useParams } from 'react-router-dom';
 import CustomerForm from 'admin/components/CustomerForm/CustomerForm';
 import { getAccountById, submitEditAccount } from 'services/AccountApi';
+import SubmitControl from 'admin/components/SubmitControl/SubmitControl';
 
 function EditCustomerPage() {
 	const [form] = Form.useForm();
@@ -49,10 +50,25 @@ function EditCustomerPage() {
 		}
 	};
 
+	const onSubmitClick = () => {
+		form.submit();
+	};
+
+	const onCancelClick = () => {
+		console.log('cancel');
+	};
+
 	return (
-		<Card title='Edit customer' bordered={false} loading={loading}>
-			<CustomerForm form={form} onFinish={onFinish} />
-		</Card>
+		<>
+			<SubmitControl
+				title='Edit customer'
+				onSubmit={onSubmitClick}
+				onCancel={onCancelClick}
+			/>
+			<Card title='Edit customer' bordered={false} loading={loading}>
+				<CustomerForm form={form} onFinish={onFinish} />
+			</Card>
+		</>
 	);
 }
 
