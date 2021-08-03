@@ -3,6 +3,7 @@ import { Form, Row, Col } from 'antd';
 import GeneralCard from './GeneralCard';
 import AttributeCard from './AttributeCard';
 import ProductConditionCard from './ProductConditionCard';
+import CustomerConditionCard from './CustomerConditionCard';
 
 const initialValues = {
 	layout: 'vertical',
@@ -34,6 +35,9 @@ function DiscountForm({ form, onFinish }) {
 					<Row gutter={[{ xs: 16, lg: 0 }, 16]}>
 						<Col span={24}>
 							<AttributeCard />
+						</Col>
+						<Col span={24}>
+							<CustomerConditionCard />
 						</Col>
 					</Row>
 				</Col>

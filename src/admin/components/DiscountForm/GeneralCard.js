@@ -1,10 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Form, Input, Card, Row, Col, InputNumber, DatePicker } from 'antd';
 const { RangePicker } = DatePicker;
 const { TextArea } = Input;
 
-function GeneralCard(props) {
+function GeneralCard() {
 	return (
 		<Card title='General' bordered={false}>
 			<Row gutter={12}>
@@ -40,6 +39,11 @@ function GeneralCard(props) {
 						<RangePicker style={{ width: '100%' }} />
 					</Form.Item>
 				</Col>
+				<Col span={12}>
+					<Form.Item label='Usage limit' name='usage_limit'>
+						<InputNumber min={0} style={{ width: '100%' }} />
+					</Form.Item>
+				</Col>
 				<Col span={24} style={{ marginTop: 12 }}>
 					<Form.Item label='Description' name='description'>
 						<TextArea rows={4} />
@@ -49,7 +53,5 @@ function GeneralCard(props) {
 		</Card>
 	);
 }
-
-GeneralCard.propTypes = {};
 
 export default GeneralCard;
