@@ -15,6 +15,8 @@ import CustomerListPage from 'admin/pages/Customer/CustomerListPage';
 import EditCustomerPage from 'admin/pages/Customer/EditCustomerPage';
 import OrderListPage from 'admin/pages/Order/OrderListPage';
 import OrderDetailPage from 'admin/pages/Order/OrderDetailPage';
+import DiscountListPage from 'admin/pages/Discount/DiscountListPage';
+import AddDiscountPage from 'admin/pages/Discount/AddDiscountPage';
 
 const routes = [
 	{
@@ -109,6 +111,16 @@ const routes = [
 	{
 		path: '/admin/order/detail/:id',
 		component: OrderDetailPage,
+	},
+
+	//DISCOUNTS
+	{
+		path: '/admin/discount/all',
+		component: DiscountListPage,
+	},
+	{
+		path: '/admin/discount/add',
+		component: AddDiscountPage,
 	},
 ];
 

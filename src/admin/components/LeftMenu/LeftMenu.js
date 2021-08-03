@@ -8,6 +8,7 @@ import {
 	TagOutlined,
 	UserOutlined,
 	ShoppingCartOutlined,
+	GiftOutlined,
 } from '@ant-design/icons';
 import { useHistory, useLocation } from 'react-router-dom';
 
@@ -72,6 +73,9 @@ function LeftMenu() {
 			</Menu.Item>
 			<Menu.Item key='/admin/order/all' icon={<ShoppingCartOutlined />}>
 				Orders
+			</Menu.Item>
+			<Menu.Item key='/admin/discount/all' icon={<GiftOutlined />}>
+				Discounts
 			</Menu.Item>
 			<SubMenu
 				key='/admin/settings'

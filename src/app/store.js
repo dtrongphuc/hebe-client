@@ -12,6 +12,7 @@ import { PAUSE } from 'redux-persist';
 import { PERSIST } from 'redux-persist/es/constants';
 import { PURGE } from 'redux-persist/es/constants';
 import { REGISTER } from 'redux-persist/es/constants';
+import discountReducer from 'admin/reducers/discountSlice';
 
 const persistConfig = {
 	key: 'root',
@@ -31,6 +32,7 @@ const reducer = combineReducers({
 	cart: cartReducer,
 	checkout: persistReducer(checkoutPersistConfig, checkoutReducer),
 	creditCard: creditCardReducer,
+	discount: discountReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducer);
