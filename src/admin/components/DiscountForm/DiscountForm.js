@@ -1,20 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { Form, Row, Col } from 'antd';
 import GeneralCard from './GeneralCard';
 import AttributeCard from './AttributeCard';
 import ProductConditionCard from './ProductConditionCard';
 import CustomerConditionCard from './CustomerConditionCard';
 
-const initialValues = {
-	layout: 'vertical',
-};
+function DiscountForm({ form, initialFormValues, onFinish }) {
+	const [showProductCondition, setShowProductCondition] = useState(false);
 
-function DiscountForm({ form, onFinish }) {
+	const applyToChange = () => {
+		if (form.getFieldValue('apply_to') === 'specific_products') {
+			setShowProductCondition(true);
+		} else if (showProductCondition) {
+			setShowProductCondition(false);
+		}
+	};
+
 	return (
 		<Form
 			layout='vertical'
 			form={form}
-			initialValues={initialValues}
+			initialValues={initialFormValues}
 			onFinish={onFinish}
 			onFinishFailed={({ values, errorFields, outOfDate }) =>
 				console.log(values)
@@ -27,14 +34,14 @@ function DiscountForm({ form, onFinish }) {
 							<GeneralCard />
 						</Col>
 						<Col span={24}>
-							<ProductConditionCard />
+							{showProductCondition && <ProductConditionCard />}
 						</Col>
 					</Row>
 				</Col>
 				<Col xs={24} lg={9}>
 					<Row gutter={[{ xs: 16, lg: 0 }, 16]}>
 						<Col span={24}>
-							<AttributeCard />
+							<AttributeCard applyToChange={applyToChange} />
 						</Col>
 						<Col span={24}>
 							<CustomerConditionCard />
@@ -45,5 +52,10 @@ function DiscountForm({ form, onFinish }) {
 		</Form>
 	);
 }
+
+DiscountForm.propTypes = {
+	initialFormValues: PropTypes.object,
+	onFinish: PropTypes.func,
+};
 
 export default DiscountForm;

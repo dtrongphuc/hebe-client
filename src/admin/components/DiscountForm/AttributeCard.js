@@ -1,8 +1,8 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { Form, Card, Switch, Radio, Space } from 'antd';
 
-function AttributeCard(props) {
+function AttributeCard({ applyToChange }) {
 	return (
 		<Card title='Attribute' bordered={false}>
 			<Form.Item label='Status' name='status' valuePropName='checked'>
@@ -18,18 +18,17 @@ function AttributeCard(props) {
 			<Form.Item label='Discount amount type' name='discount_type'>
 				<Radio.Group>
 					<Space direction='vertical'>
-						<Radio value={1}>Fixed amount</Radio>
-						<Radio value={2}>Percentage amount</Radio>
+						<Radio value='fixed_amount'>Fixed amount</Radio>
+						<Radio value='percentage'>Percentage amount</Radio>
 					</Space>
 				</Radio.Group>
 			</Form.Item>
 			<Form.Item label='Apply to' name='apply_to'>
-				<Radio.Group>
+				<Radio.Group onChange={applyToChange}>
 					<Space direction='vertical'>
-						<Radio value={3}>Entire order</Radio>
-						<Radio value={4}>Specific products</Radio>
-
-						<Radio value={5}>Shipping</Radio>
+						<Radio value='entire_order'>Entire order</Radio>
+						<Radio value='specific_products'>Specific products</Radio>
+						<Radio value='shipping'>Shipping</Radio>
 					</Space>
 				</Radio.Group>
 			</Form.Item>
@@ -37,6 +36,8 @@ function AttributeCard(props) {
 	);
 }
 
-AttributeCard.propTypes = {};
+AttributeCard.propTypes = {
+	applyToChange: PropTypes.func,
+};
 
 export default AttributeCard;

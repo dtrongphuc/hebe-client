@@ -19,7 +19,7 @@ function GeneralCard() {
 				<Col span={12}>
 					<Form.Item
 						label='Discount amount'
-						name='value'
+						name='discount_amount'
 						rules={[
 							{
 								required: true,

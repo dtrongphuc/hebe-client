@@ -3,6 +3,19 @@ import { Form, message } from 'antd';
 // import { useHistory } from 'react-router-dom';
 import DiscountForm from 'admin/components/DiscountForm/DiscountForm';
 
+const initialFormValues = {
+	code: '',
+	discount_amount: 0,
+	usage_limit: 100,
+	description: '',
+	status: true,
+	one_per_customer: true,
+	discount_type: 'fixed_amount',
+	apply_to: 'entire_order',
+	condition_customer_email: '',
+	condition_customer_purchase: 0,
+};
+
 function AddDiscountPage() {
 	const [form] = Form.useForm();
 	// let history = useHistory();
@@ -22,7 +35,13 @@ function AddDiscountPage() {
 		}
 	};
 
-	return <DiscountForm form={form} onFinish={onFinish} />;
+	return (
+		<DiscountForm
+			form={form}
+			initialFormValues={initialFormValues}
+			onFinish={onFinish}
+		/>
+	);
 }
 
 export default AddDiscountPage;
