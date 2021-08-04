@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Form, Card, Switch, Radio, Space } from 'antd';
 
-function AttributeCard({ applyToChange }) {
+function AttributeCard({ applyToChange, loading }) {
 	return (
-		<Card title='Attribute' bordered={false}>
+		<Card title='Attribute' bordered={false} loading={loading}>
 			<Form.Item label='Status' name='status' valuePropName='checked'>
 				<Switch defaultChecked />
 			</Form.Item>
@@ -38,6 +38,7 @@ function AttributeCard({ applyToChange }) {
 
 AttributeCard.propTypes = {
 	applyToChange: PropTypes.func,
+	loading: PropTypes.bool,
 };
 
 export default AttributeCard;

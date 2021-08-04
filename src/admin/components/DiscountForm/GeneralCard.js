@@ -3,9 +3,9 @@ import { Form, Input, Card, Row, Col, InputNumber, DatePicker } from 'antd';
 const { RangePicker } = DatePicker;
 const { TextArea } = Input;
 
-function GeneralCard() {
+function GeneralCard({ loading }) {
 	return (
-		<Card title='General' bordered={false}>
+		<Card title='General' bordered={false} loading={loading}>
 			<Row gutter={12}>
 				<Col span={12}>
 					<Form.Item

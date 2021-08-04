@@ -30,3 +30,25 @@ export async function toggleDiscountStatus(id) {
 		return error;
 	}
 }
+
+export async function getDiscountById(id) {
+	try {
+		const response = await api.get('/discount/by-id', {
+			params: {
+				id,
+			},
+		});
+		return response.data;
+	} catch (error) {
+		return error;
+	}
+}
+
+export async function submitEditDiscount(data) {
+	try {
+		const response = await api.post('/discount/edit', data);
+		return response.data;
+	} catch (error) {
+		return error;
+	}
+}

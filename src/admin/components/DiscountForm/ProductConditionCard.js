@@ -52,6 +52,7 @@ function ProductConditionCard() {
 	}, []);
 
 	const rowSelection = {
+		selectedRowKeys: selectedProducts,
 		onChange: (selectedRowKeys) => {
 			dispatch(selectedProductsChange(selectedRowKeys));
 		},

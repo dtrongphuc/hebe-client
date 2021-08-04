@@ -17,6 +17,7 @@ import OrderListPage from 'admin/pages/Order/OrderListPage';
 import OrderDetailPage from 'admin/pages/Order/OrderDetailPage';
 import DiscountListPage from 'admin/pages/Discount/DiscountListPage';
 import AddDiscountPage from 'admin/pages/Discount/AddDiscountPage';
+import EditDiscountPage from 'admin/pages/Discount/EditDiscountPage';
 
 const routes = [
 	{
@@ -121,6 +122,10 @@ const routes = [
 	{
 		path: '/admin/discount/add',
 		component: AddDiscountPage,
+	},
+	{
+		path: '/admin/discount/edit/:id',
+		component: EditDiscountPage,
 	},
 ];
 
