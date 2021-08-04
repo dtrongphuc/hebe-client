@@ -3,11 +3,14 @@ import { Form, message } from 'antd';
 // import { useHistory } from 'react-router-dom';
 import DiscountForm from 'admin/components/DiscountForm/DiscountForm';
 import SubmitControl from 'admin/components/SubmitControl/SubmitControl';
+import { createDiscount } from 'services/DiscountApi';
+import { useDispatch, useSelector } from 'react-redux';
+import { resetDiscount } from 'admin/reducers/discountSlice';
 
 const initialFormValues = {
 	code: '',
 	discount_amount: 0,
-	usage_limit: 100,
+	usage_limit: null,
 	description: '',
 	status: true,
 	one_per_customer: true,
@@ -19,18 +22,23 @@ const initialFormValues = {
 
 function AddDiscountPage() {
 	const [form] = Form.useForm();
-	// let history = useHistory();
+	const { selectedProducts } = useSelector((state) => state.discount);
+	const dispatch = useDispatch();
 
 	const onFinish = async (values) => {
 		const key = 'submit';
 		message.loading({ content: 'Loading...', key });
-		console.log(values);
 		try {
-			// const response = await addNewBrand({ ...values, image: images[0] });
-			// if (response?.success) {
-			// 	message.success({ content: 'Successful!', key, duration: 3 });
-			// 	history.push('/admin/brand/all');
-			// }
+			const response = await createDiscount({
+				...values,
+				target_products: [...selectedProducts],
+			});
+			if (response?.success) {
+				message.success({ content: 'Successful!', key, duration: 3 });
+				dispatch(resetDiscount());
+
+				form.resetFields();
+			}
 		} catch (error) {
 			message.error({ content: 'Error!', key, duration: 3 });
 		}

@@ -1,11 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Table, Input, Space, Button, Tag, Card } from 'antd';
-import { Link } from 'react-router-dom';
+import { Table, Input, Space, Button, Tag, Card, message } from 'antd';
 import Highlighter from 'react-highlight-words';
 import { SearchOutlined } from '@ant-design/icons';
-import { getOrders } from 'services/OrderApi';
-import { priceString } from 'utils/util';
-import moment from 'moment';
+import { getDiscounts, toggleDiscountStatus } from 'services/DiscountApi';
+import { Link } from 'react-router-dom';
 
 function DiscountListPage() {
 	const [data, setData] = useState([]);
@@ -20,9 +18,9 @@ function DiscountListPage() {
 		const getData = async () => {
 			try {
 				setLoading(true);
-				const response = await getOrders();
+				const response = await getDiscounts();
 				if (response?.success) {
-					setData(response?.orders);
+					setData(response?.discounts);
 				}
 			} catch (error) {
 				console.log(error);
@@ -123,10 +121,10 @@ function DiscountListPage() {
 					highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
 					searchWords={[search.searchText]}
 					autoEscape
-					textToHighlight={text ? `#${text}` : ''}
+					textToHighlight={text}
 				/>
 			) : (
-				`#${text}`
+				text
 			),
 	});
 
@@ -143,73 +141,65 @@ function DiscountListPage() {
 		setSearch({ searchText: '' });
 	};
 
+	const toggleStatus = (id) => async (e) => {
+		e.preventDefault();
+		try {
+			setLoading(true);
+			const response = await toggleDiscountStatus(id);
+			if (!response?.success) return;
+
+			let selected = data.find((item) => item._id === id);
+			let index = data.indexOf(selected);
+			selected.status = !selected.status;
+
+			setData((state) => [
+				...state.slice(0, index),
+				{ ...selected },
+				...state.slice(index + 1),
+			]);
+		} catch (error) {
+			console.log(error);
+			message.warning('Error!');
+		} finally {
+			setLoading(false);
+		}
+	};
+
 	const columns = [
 		{
-			title: 'Order number',
-			dataIndex: 'orderNumber',
-			defaultSortOrder: 'descend',
-			sorter: (a, b) => a.orderNumber - b.orderNumber,
-			...getColumnSearchProps('orderNumber', 'order number'),
+			title: 'Code',
+			dataIndex: 'code',
+			...getColumnSearchProps('code'),
 		},
 		{
-			title: 'Total',
-			dataIndex: 'lastPrice',
-			sorter: (a, b) => a.lastPrice - b.lastPrice,
-			render: (text) => priceString(text),
+			title: 'Description',
+			dataIndex: 'description',
 		},
 		{
-			title: 'Delivery method',
-			dataIndex: 'deliveryMethod',
+			title: 'Usage count',
+			dataIndex: 'usageCount',
+			sorter: (a, b) => a.usageCount - b.usageCount,
+		},
+		{
+			title: 'Status',
+			dataIndex: 'status',
 			filters: [
 				{
-					text: 'Ship',
-					value: 'shipment',
+					text: 'Enable',
+					value: true,
 				},
 				{
-					text: 'Pickup',
-					value: 'pickup',
+					text: 'Disabled',
+					value: false,
 				},
 			],
-			onFilter: (value, record) => record.deliveryMethod.includes(value),
+			onFilter: (value, record) => record.status === value,
 			render: (text, record) =>
-				text === 'shipment' ? (
-					<Tag color='green'>Shipment</Tag>
+				text === true ? (
+					<Tag color='green'>Enable</Tag>
 				) : (
-					<Tag color='blue'>Pickup</Tag>
+					<Tag color='red'>Disabled</Tag>
 				),
-		},
-		{
-			title: 'Payment status',
-			dataIndex: 'paymentStatus',
-			filters: [
-				{
-					text: 'Pending',
-					value: 'pending',
-				},
-				{
-					text: 'Paid',
-					value: 'paid',
-				},
-				{
-					text: 'Refunded',
-					value: 'refunded',
-				},
-			],
-			onFilter: (value, record) => record.paymentStatus.includes(value),
-			render: (text, record) =>
-				text === 'pending' ? (
-					<Tag color='default'>Pending</Tag>
-				) : text === 'paid' ? (
-					<Tag color='green'>Paid</Tag>
-				) : (
-					<Tag color='red'>Refunded</Tag>
-				),
-		},
-
-		{
-			title: 'Order date',
-			dataIndex: 'createdAt',
-			render: (text) => moment(text).format('DD/MM/YYYY - HH:mm:ss'),
 		},
 		{
 			title: 'Action',
@@ -217,7 +207,17 @@ function DiscountListPage() {
 			key: 'action',
 			render: (text, record) => (
 				<Space size='middle'>
-					<Link to={`/admin/order/detail/${record._id}`}>View</Link>
+					<Link to={`/admin/discount/edit/${record._id}`}>Edit</Link>
+					{record.status && (
+						<Link to='/' onClick={toggleStatus(record._id)}>
+							Disable
+						</Link>
+					)}
+					{!record.status && (
+						<Link to='/' onClick={toggleStatus(record._id)}>
+							Enable
+						</Link>
+					)}
 				</Space>
 			),
 		},

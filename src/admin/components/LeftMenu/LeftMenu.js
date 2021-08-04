@@ -74,9 +74,10 @@ function LeftMenu() {
 			<Menu.Item key='/admin/order/all' icon={<ShoppingCartOutlined />}>
 				Orders
 			</Menu.Item>
-			<Menu.Item key='/admin/discount/all' icon={<GiftOutlined />}>
-				Discounts
-			</Menu.Item>
+			<SubMenu key='/admin/discount' icon={<GiftOutlined />} title='Discount'>
+				<Menu.Item key='/admin/discount/all'>Discounts</Menu.Item>
+				<Menu.Item key='/admin/discount/add'>Add discount</Menu.Item>
+			</SubMenu>
 			<SubMenu
 				key='/admin/settings'
 				icon={<SettingOutlined />}

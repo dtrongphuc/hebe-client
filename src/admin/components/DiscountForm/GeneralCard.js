@@ -34,13 +34,17 @@ function GeneralCard() {
 					<Form.Item
 						label='Date'
 						name='date_range'
-						help='Empty to apply permanently'
+						help='Empty to apply unlimited'
 					>
 						<RangePicker style={{ width: '100%' }} />
 					</Form.Item>
 				</Col>
 				<Col span={12}>
-					<Form.Item label='Usage limit' name='usage_limit'>
+					<Form.Item
+						label='Usage limit'
+						name='usage_limit'
+						help='Empty to apply unlimited'
+					>
 						<InputNumber min={0} style={{ width: '100%' }} />
 					</Form.Item>
 				</Col>

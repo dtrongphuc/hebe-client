@@ -11,9 +11,12 @@ const discountSlice = createSlice({
 		selectedProductsChange: (state, action) => {
 			state.selectedProducts = action.payload;
 		},
+		resetDiscount: (state) => {
+			state.selectedProducts = [];
+		},
 	},
 });
 
-export const { selectedProductsChange } = discountSlice.actions;
+export const { selectedProductsChange, resetDiscount } = discountSlice.actions;
 
 export default discountSlice.reducer;
