@@ -2,6 +2,7 @@
 
 .checkout-field {
 	@include checkoutField("input[type='text']");
+	position: relative;
 
 	&--error {
 		display: none;

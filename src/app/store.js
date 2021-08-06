@@ -23,7 +23,7 @@ const persistConfig = {
 const checkoutPersistConfig = {
 	key: 'checkout',
 	storage,
-	blacklist: ['errors', 'focused'],
+	blacklist: ['errors', 'focused', 'discountError', 'discount'],
 };
 
 const reducer = combineReducers({

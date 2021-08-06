@@ -8,19 +8,28 @@ import NavButtons from 'components/Checkout/NavButtons/NavButtons';
 import Pickup from 'components/Checkout/Information/Pickup';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { focusedChange } from 'features/checkout/checkoutSlice';
+import {
+	focusAddressValidation,
+	toggleShowAddressError,
+} from 'features/checkout/checkoutSlice';
+import { useRef } from 'react';
 
 function InformationPage() {
-	const { delivery, errors } = useSelector((state) => state.checkout);
+	const { delivery } = useSelector((state) => state.checkout);
 	let history = useHistory();
 	const dispatch = useDispatch();
+	const addressRef = useRef();
 
 	const handleNextStepClicked = () => {
-		let firstError = Object.keys(errors).find((key) => errors[key] !== '');
-		if (firstError) {
-			dispatch(focusedChange(firstError));
+		let errors = document.querySelectorAll('.checkout-field.error');
+		if (errors.length > 0) {
+			let inputName = errors[0].querySelector('input')?.name;
+			dispatch(toggleShowAddressError(true));
+			dispatch(focusAddressValidation(inputName));
 			return;
 		}
+		dispatch(toggleShowAddressError(false));
+
 		let link = `/checkout/${delivery === 'shipment' ? 'shipping' : 'payment'}`;
 		history.push(link);
 	};
@@ -35,7 +44,9 @@ function InformationPage() {
 			<Delivery />
 
 			{delivery === 'pickup' && <Pickup />}
-			{delivery === 'shipment' && <Address title='Shipping address' />}
+			{delivery === 'shipment' && (
+				<Address title='Shipping address' sectionRef={addressRef} />
+			)}
 
 			<NavButtons
 				next={{

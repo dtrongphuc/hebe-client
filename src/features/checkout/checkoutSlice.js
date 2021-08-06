@@ -1,3 +1,4 @@
+import { applyDiscount } from 'services/DiscountApi';
 import { getPickupLocations, getShippingMethods } from 'services/SettingApi';
 
 const { createSlice, createAsyncThunk } = require('@reduxjs/toolkit');
@@ -18,6 +19,19 @@ export const getShippingMethodsThunk = createAsyncThunk(
 	}
 );
 
+export const applyDiscountThunk = createAsyncThunk(
+	'checkout/apply-discount',
+	async (code, { rejectWithValue }) => {
+		try {
+			const response = await applyDiscount(code);
+			return response?.discount;
+		} catch (err) {
+			let error = err; // cast the error for access
+			return rejectWithValue(error.data.errors);
+		}
+	}
+);
+
 const initialState = {
 	addressInfo: {
 		firstname: '',
@@ -30,8 +44,10 @@ const initialState = {
 		postal: '',
 		phone: '',
 	},
-	errors: {},
-	focused: '',
+	addressValidation: {
+		show: false,
+		focus: '',
+	},
 	delivery: 'shipment',
 	shippingPrice: {
 		display: 'Calculated at next step',
@@ -42,6 +58,11 @@ const initialState = {
 	shippingMethods: [],
 	shippingMethodSelected: '',
 	paymentMethodSelected: 'credit-card',
+	discount: {
+		loading: false,
+		applied: false,
+	},
+	discountError: '',
 };
 
 const checkoutSlice = createSlice({
@@ -65,13 +86,10 @@ const checkoutSlice = createSlice({
 					...state.addressInfo,
 					...initialState.addressInfo,
 				},
-				errors: {
-					...initialState.errors,
-				},
 			};
 		},
 		addressFieldChange: (state, action) => {
-			const { field, error } = action.payload;
+			const { field } = action.payload;
 
 			return {
 				...state,
@@ -79,14 +97,13 @@ const checkoutSlice = createSlice({
 					...state.addressInfo,
 					...field,
 				},
-				errors: {
-					...state.errors,
-					...error,
-				},
 			};
 		},
-		focusedChange: (state, action) => {
-			state.focused = action.payload;
+		toggleShowAddressError: (state, action) => {
+			state.addressValidation.show = action.payload;
+		},
+		focusAddressValidation: (state, action) => {
+			state.addressValidation.focus = action.payload;
 		},
 		deliveryChange: (state, action) => {
 			const delivery = action.payload;
@@ -131,6 +148,10 @@ const checkoutSlice = createSlice({
 		paymentMethodChange: (state, action) => {
 			state.paymentMethodSelected = action.payload;
 		},
+
+		setDiscountError: (state, action) => {
+			state.discountError = action.payload;
+		},
 	},
 	extraReducers: {
 		[getPickupLocationsThunk.fulfilled]: (state, action) => {
@@ -173,6 +194,36 @@ const checkoutSlice = createSlice({
 				},
 			};
 		},
+
+		// discount
+		[applyDiscountThunk.pending]: (state) => {
+			state.discount.loading = true;
+			state.discount.applied = false;
+			state.discountError = '';
+		},
+
+		[applyDiscountThunk.fulfilled]: (state, action) => {
+			return {
+				...state,
+				discount: {
+					loading: false,
+					applied: true,
+					...action.payload,
+				},
+				discountError: '',
+			};
+		},
+
+		[applyDiscountThunk.rejected]: (state, action) => {
+			return {
+				...state,
+				discount: {
+					loading: false,
+					applied: false,
+				},
+				discountError: action.payload[0]?.msg ?? action.payload?.message ?? '',
+			};
+		},
 	},
 });
 
@@ -184,7 +235,9 @@ export const {
 	pickupLocationSelectedChange,
 	shippingMethodSelectedChange,
 	paymentMethodChange,
-	focusedChange,
+	toggleShowAddressError,
+	focusAddressValidation,
+	setDiscountError,
 } = checkoutSlice.actions;
 
 export default checkoutSlice.reducer;

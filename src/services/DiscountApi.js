@@ -5,7 +5,7 @@ export async function getDiscounts() {
 		const response = await api.get('/discount/all');
 		return response.data;
 	} catch (error) {
-		return error;
+		return Promise.reject(error);
 	}
 }
 
@@ -14,7 +14,7 @@ export async function createDiscount(data) {
 		const response = await api.post('/discount/create', data);
 		return response.data;
 	} catch (error) {
-		return error;
+		return Promise.reject(error);
 	}
 }
 
@@ -27,7 +27,7 @@ export async function toggleDiscountStatus(id) {
 		});
 		return response.data;
 	} catch (error) {
-		return error;
+		return Promise.reject(error);
 	}
 }
 
@@ -40,7 +40,7 @@ export async function getDiscountById(id) {
 		});
 		return response.data;
 	} catch (error) {
-		return error;
+		return Promise.reject(error);
 	}
 }
 
@@ -49,6 +49,15 @@ export async function submitEditDiscount(data) {
 		const response = await api.post('/discount/edit', data);
 		return response.data;
 	} catch (error) {
-		return error;
+		return Promise.reject(error);
+	}
+}
+
+export async function applyDiscount(code) {
+	try {
+		const response = await api.post('/discount/apply', { code });
+		return response.data;
+	} catch (error) {
+		return Promise.reject(error);
 	}
 }

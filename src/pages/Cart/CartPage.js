@@ -55,7 +55,11 @@ function CartPage() {
 								<span>Subtotal:</span>
 								<span style={{ fontSize: '1.4rem' }}>{priceString(total)}</span>
 							</div>
-							<Button onClick={onCheckoutClicked} loading={loading}>
+							<Button
+								classNames='btn-submit-checkout'
+								onClick={onCheckoutClicked}
+								loading={loading}
+							>
 								Check Out
 							</Button>
 						</div>

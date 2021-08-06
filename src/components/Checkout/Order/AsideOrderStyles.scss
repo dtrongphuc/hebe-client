@@ -32,7 +32,7 @@
 
 .order__text {
 	line-height: normal;
-	font-size: 1.14em;
+	font-size: 14px;
 	color: #525252;
 	line-height: 1.3em;
 	text-decoration: none;
@@ -52,7 +52,11 @@
 		font-size: 0.8em;
 	}
 
+	&--md {
+		font-size: 1.16em;
+	}
+
 	&--lg {
-		font-size: 1.6em;
+		font-size: 1.7em;
 	}
 }

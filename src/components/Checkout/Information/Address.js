@@ -16,11 +16,12 @@ import {
 	selectedAddressChange,
 } from 'features/checkout/checkoutSlice';
 import countries from 'utils/countries';
-
-function Address({ title, subTitle }) {
+function Address({ title, subTitle, sectionRef }) {
 	const dispatch = useDispatch();
 	const { addresses } = useSelector((state) => state.address);
-	const { addressInfo, focused } = useSelector((state) => state.checkout);
+	const { addressInfo, addressValidation } = useSelector(
+		(state) => state.checkout
+	);
 	const defaultAddress = useSelector(selectDefaultAddress);
 
 	useEffect(() => {
@@ -53,15 +54,12 @@ function Address({ title, subTitle }) {
 		}
 	};
 
-	const handleInputChange = (rules) => (e) => {
+	const handleInputChange = (e) => {
 		const field = {
 			[e.target.name]: e.target.value,
 		};
-		let error = {
-			[e.target.name]: rules?.required && !e.target.value ? rules?.msg : '',
-		};
 
-		dispatch(addressFieldChange({ field, error }));
+		dispatch(addressFieldChange({ field }));
 	};
 
 	const addressOptions = addresses
@@ -87,7 +85,7 @@ function Address({ title, subTitle }) {
 	}));
 
 	return (
-		<section className='section-info'>
+		<section ref={sectionRef} className='section-info'>
 			<h2 className='section-info__heading mb-1'>{title}</h2>
 			<p className='section-info__text'>{subTitle}</p>
 			<div className='mt-3'>
@@ -105,10 +103,13 @@ function Address({ title, subTitle }) {
 						<TextField
 							placeholder='First name'
 							name='firstname'
-							focusedName={focused}
 							value={addressInfo?.firstname}
 							onChange={handleInputChange}
-							rules={{ required: true, msg: 'Enter a first name' }}
+							focus={
+								addressValidation.show &&
+								addressValidation.focus === 'firstname'
+							}
+							rules={[{ required: true, msg: 'Enter a first name' }]}
 						/>
 					</div>
 				</div>
@@ -117,10 +118,12 @@ function Address({ title, subTitle }) {
 						<TextField
 							placeholder='Last name'
 							name='lastname'
-							focusedName={focused}
 							value={addressInfo?.lastname}
 							onChange={handleInputChange}
-							rules={{ required: true, msg: 'Enter a last name' }}
+							focus={
+								addressValidation.show && addressValidation.focus === 'lastname'
+							}
+							rules={[{ required: true, msg: 'Enter a last name' }]}
 						/>
 					</div>
 				</div>
@@ -129,8 +132,10 @@ function Address({ title, subTitle }) {
 				<TextField
 					placeholder='Company (optional)'
 					name='company'
-					focusedName={focused}
 					value={addressInfo?.company}
+					focus={
+						addressValidation.show && addressValidation.focus === 'company'
+					}
 					onChange={handleInputChange}
 				/>
 			</div>
@@ -138,17 +143,18 @@ function Address({ title, subTitle }) {
 				<TextField
 					placeholder='Address'
 					name='address'
-					focusedName={focused}
 					value={addressInfo?.address}
 					onChange={handleInputChange}
-					rules={{ required: true, msg: 'Enter an address' }}
+					focus={
+						addressValidation.show && addressValidation.focus === 'address'
+					}
+					rules={[{ required: true, msg: 'Enter an address' }]}
 				/>
 			</div>
 			<div className='mt-3'>
 				<TextField
 					placeholder='Apartment, suite, etc. (optional)'
 					name='apartment'
-					focusedName={focused}
 					value={addressInfo?.apartment}
 					onChange={handleInputChange}
 				/>
@@ -157,10 +163,10 @@ function Address({ title, subTitle }) {
 				<TextField
 					placeholder='City'
 					name='city'
-					focusedName={focused}
 					value={addressInfo?.city}
 					onChange={handleInputChange}
-					rules={{ required: true, msg: 'Enter a city' }}
+					focus={addressValidation.show && addressValidation.focus === 'city'}
+					rules={[{ required: true, msg: 'Enter a city' }]}
 				/>
 			</div>
 			<div className='row'>
@@ -172,7 +178,10 @@ function Address({ title, subTitle }) {
 							options={countryOptions}
 							defaultValue={addressInfo?.country}
 							onChange={handleInputChange}
-							rules={{ required: true, msg: 'Enter a country' }}
+							focus={
+								addressValidation.show && addressValidation.focus === 'country'
+							}
+							rules={[{ required: true, msg: 'Enter a country' }]}
 						/>
 					</div>
 				</div>
@@ -181,10 +190,12 @@ function Address({ title, subTitle }) {
 						<TextField
 							placeholder='Postal code'
 							name='postal'
-							focusedName={focused}
 							value={addressInfo?.postal}
 							onChange={handleInputChange}
-							rules={{ required: true, msg: 'Enter a ZIP / postal code' }}
+							focus={
+								addressValidation.show && addressValidation.focus === 'postal'
+							}
+							rules={[{ required: true, msg: 'Enter a ZIP / postal code' }]}
 						/>
 					</div>
 				</div>
@@ -193,10 +204,10 @@ function Address({ title, subTitle }) {
 				<TextField
 					placeholder='Phone (optional)'
 					name='phone'
-					focusedName={focused}
 					value={addressInfo?.phone}
 					onChange={handleInputChange}
-					rules={{ required: true, msg: 'Enter a phone' }}
+					focus={addressValidation.show && addressValidation.focus === 'phone'}
+					rules={[{ required: true, msg: 'Enter a phone' }]}
 				/>
 			</div>
 		</section>

@@ -3,6 +3,15 @@ import PropTypes from 'prop-types';
 import './styles.scss';
 import { BiCaretDown } from 'react-icons/bi';
 
+const validationArray = [
+	{
+		key: 'required',
+		check: function (value) {
+			return value?.length > 0;
+		},
+	},
+];
+
 function SelectField({
 	placeholder,
 	name,
@@ -10,17 +19,44 @@ function SelectField({
 	defaultValue,
 	onChange,
 	rules,
+	error,
 }) {
 	const [value, setValue] = useState('');
+	const [errorMsg, setErrorMsg] = useState(error);
 
 	useEffect(() => {
 		setValue(defaultValue);
 	}, [defaultValue]);
 
+	//validation
+	useEffect(() => {
+		if (!rules ?? !Array.isArray(rules)) return;
+
+		let rule = rules?.find((rule) => {
+			let ruleKey = Object.keys(rule).find((k) => k !== 'msg');
+			if (typeof ruleKey !== undefined) {
+				let validate = validationArray.find((v) => v.key === ruleKey);
+
+				return !validate?.check(value);
+			}
+
+			// skip when no key be provided
+			return false;
+		});
+
+		setErrorMsg(rule?.msg ?? '');
+	}, [value, rules]);
+
+	const toggleErrorClass = () => {
+		if (errorMsg) {
+			return 'error';
+		}
+
+		return '';
+	};
+
 	return (
-		<div
-			className={`checkout-field ${rules?.required && !value ? 'error' : ''}`}
-		>
+		<div className={`checkout-field ${toggleErrorClass()}`}>
 			<select
 				className='checkout-select-field'
 				name={name}
@@ -41,7 +77,7 @@ function SelectField({
 			<div className='field__caret'>
 				<BiCaretDown style={{ verticalAlign: 'middle' }} color='#919191' />
 			</div>
-			<div className='checkout-field--error'>{rules?.msg}</div>
+			<div className='checkout-field--error'>{errorMsg}</div>
 		</div>
 	);
 }
@@ -52,7 +88,8 @@ SelectField.propTypes = {
 	options: PropTypes.array,
 	defaultValue: PropTypes.string,
 	onChange: PropTypes.func,
-	rules: PropTypes.object,
+	rules: PropTypes.array,
+	error: PropTypes.string,
 };
 
 export default SelectField;
