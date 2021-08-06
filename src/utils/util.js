@@ -55,3 +55,55 @@ export const uploadFileRequest = async (url, fileList) => {
 		return Promise.reject(error);
 	}
 };
+
+export const calcTotalPrice = (
+	total = 0,
+	shippingFee = 0,
+	discount = {
+		discountAmount: {
+			value: 0,
+			type: 'fixed_amount',
+		},
+		target: 'line_item',
+	}
+) => {
+	if (!discount) {
+		return total + shippingFee;
+	}
+
+	const { discountAmount } = discount;
+	if (discount.target === 'shipping_line') {
+		let calc_shippingFee =
+			shippingFee -
+			convertDiscount(discountAmount.value, discountAmount.type, shippingFee);
+
+		return total + (calc_shippingFee > 0 ? calc_shippingFee : 0);
+	}
+
+	return total + shippingFee - discountAmount.value;
+};
+
+export const calcDiscountValue = (shippingFee, discount) => {
+	const { discountAmount } = discount;
+
+	if (discount.target === 'shipping_line') {
+		let calc_shippingFee = convertDiscount(
+			discountAmount.value,
+			discountAmount.type,
+			shippingFee
+		);
+
+		return calc_shippingFee > shippingFee ? shippingFee : calc_shippingFee;
+	}
+
+	return discountAmount.value;
+};
+
+// convert discount type with value
+const convertDiscount = (value, type, targetValue) => {
+	if (type === 'percentage') {
+		return targetValue * value * 0.01;
+	}
+
+	return value;
+};

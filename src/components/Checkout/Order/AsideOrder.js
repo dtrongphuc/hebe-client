@@ -3,7 +3,7 @@ import OrderItem from './OrderItem';
 import DiscountField from './DiscountField';
 import './AsideOrderStyles.scss';
 import { useSelector } from 'react-redux';
-import { priceString } from 'utils/util';
+import { calcDiscountValue, calcTotalPrice, priceString } from 'utils/util';
 
 function AsideOrder() {
 	const { delivery, shippingPrice, discount } = useSelector(
@@ -13,6 +13,8 @@ function AsideOrder() {
 	const { products, totalPrice } = useSelector(
 		(state) => state.cart.shoppingCart
 	);
+
+	let discountValue = calcDiscountValue(shippingPrice?.price || 0, discount);
 
 	return (
 		<aside className='checkout__order'>
@@ -52,10 +54,9 @@ function AsideOrder() {
 								<div className='d-flex align-items-center justify-content-between mt-3'>
 									<span className='order__text'>Discount</span>
 									<span className='order__text order__text--bold'>
-										-
-										{discount?.discountAmount?.type === 'fixed_amount'
-											? priceString(discount.discountAmount.value)
-											: `${discount.discountAmount.value}%`}
+										{discountValue > 0
+											? `-${priceString(discountValue)}`
+											: priceString(discountValue)}
 									</span>
 								</div>
 								<div className='d-flex align-items-center justify-content-between'>
@@ -75,7 +76,13 @@ function AsideOrder() {
 									NZD
 								</span>
 								<span className='order__text order__text--bold order__text--lg ml-2'>
-									{priceString(totalPrice + (shippingPrice?.price || 0))}
+									{priceString(
+										calcTotalPrice(
+											totalPrice,
+											shippingPrice?.price || 0,
+											discount
+										)
+									)}
 								</span>
 							</span>
 						</div>

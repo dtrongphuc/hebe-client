@@ -61,6 +61,13 @@ const initialState = {
 	discount: {
 		loading: false,
 		applied: false,
+		code: '',
+		description: '',
+		target: '',
+		discountAmount: {
+			value: 0,
+			type: 'fixed_amount',
+		},
 	},
 	discountError: '',
 };
