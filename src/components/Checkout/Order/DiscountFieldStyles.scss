@@ -7,8 +7,16 @@
 	padding-top: 1.6em;
 	border-top: 1px solid #d8d8d8;
 
-	&-input {
+	& > .field-wrapper {
 		width: 100%;
+
+		.clear {
+			position: absolute;
+			top: 50%;
+			right: 0.9em;
+			transform: translateY(-50%);
+			cursor: pointer;
+		}
 	}
 
 	&-submit {
@@ -24,6 +32,7 @@
 
 		&--disabled {
 			background: #c6c6c6;
+			pointer-events: none;
 		}
 	}
 }

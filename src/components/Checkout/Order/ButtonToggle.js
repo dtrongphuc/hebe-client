@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './ButtonToggleStyles.scss';
 import { useSelector } from 'react-redux';
-import { priceString } from 'utils/util';
+import { calcTotalPrice, priceString } from 'utils/util';
 
 function ButtonToggle({ show, onClick }) {
-	const { total } = useSelector((state) => state.cart);
-	const { shippingPrice } = useSelector((state) => state.checkout);
+	const { shippingPrice, discount } = useSelector((state) => state.checkout);
+	const { totalPrice } = useSelector((state) => state.cart.shoppingCart);
 
 	return (
 		<div>
@@ -46,7 +46,9 @@ function ButtonToggle({ show, onClick }) {
 						)}
 
 						<span className='order-toggle__right'>
-							{priceString(total + (shippingPrice?.price || 0))}
+							{priceString(
+								calcTotalPrice(totalPrice, shippingPrice?.price || 0, discount)
+							)}
 						</span>
 					</span>
 				</span>

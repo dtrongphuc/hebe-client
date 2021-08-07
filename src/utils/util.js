@@ -67,11 +67,11 @@ export const calcTotalPrice = (
 		target: 'line_item',
 	}
 ) => {
-	if (!discount) {
+	const { discountAmount } = discount;
+	if (!discount || !discountAmount) {
 		return total + shippingFee;
 	}
 
-	const { discountAmount } = discount;
 	if (discount.target === 'shipping_line') {
 		let calc_shippingFee =
 			shippingFee -
@@ -80,11 +80,15 @@ export const calcTotalPrice = (
 		return total + (calc_shippingFee > 0 ? calc_shippingFee : 0);
 	}
 
-	return total + shippingFee - discountAmount.value;
+	return total + shippingFee - (discountAmount.value || 0);
 };
 
 export const calcDiscountValue = (shippingFee, discount) => {
 	const { discountAmount } = discount;
+
+	if (!discount || !discountAmount) {
+		return 0;
+	}
 
 	if (discount.target === 'shipping_line') {
 		let calc_shippingFee = convertDiscount(
@@ -96,7 +100,7 @@ export const calcDiscountValue = (shippingFee, discount) => {
 		return calc_shippingFee > shippingFee ? shippingFee : calc_shippingFee;
 	}
 
-	return discountAmount.value;
+	return discountAmount?.value || 0;
 };
 
 // convert discount type with value

@@ -62,7 +62,9 @@ function TextField({
 	};
 
 	return (
-		<div className={`checkout-field ${toggleErrorClass()}`}>
+		<div
+			className={`checkout-field ${value && 'floating'} ${toggleErrorClass()}`}
+		>
 			<input
 				ref={inputRef}
 				type={type}

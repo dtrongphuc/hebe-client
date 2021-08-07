@@ -11,7 +11,7 @@
 
 @mixin checkoutField($child) {
 	& > #{$child} {
-		padding: 1.3em 0.9em 0.4em;
+		padding: 0.85em 0.9em 0.85em;
 		font-size: 1em;
 		border-radius: 4px;
 		background-color: #fff;
@@ -25,10 +25,6 @@
 		&:focus {
 			border-color: #000;
 			box-shadow: 0 0 0 1px #000;
-
-			& ~ label {
-				transform: translate(0, 0.4em) scale(0.8);
-			}
 		}
 	}
 }

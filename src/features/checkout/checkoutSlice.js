@@ -112,6 +112,16 @@ const checkoutSlice = createSlice({
 		focusAddressValidation: (state, action) => {
 			state.addressValidation.focus = action.payload;
 		},
+		clearDiscount: (state, action) => {
+			return {
+				...state,
+				discount: {
+					loading: false,
+					applied: false,
+				},
+				discountError: '',
+			};
+		},
 		deliveryChange: (state, action) => {
 			const delivery = action.payload;
 			if (delivery === 'shipping') {
@@ -245,6 +255,7 @@ export const {
 	toggleShowAddressError,
 	focusAddressValidation,
 	setDiscountError,
+	clearDiscount,
 } = checkoutSlice.actions;
 
 export default checkoutSlice.reducer;

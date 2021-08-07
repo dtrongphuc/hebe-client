@@ -5,7 +5,6 @@ import ShippingMethod from 'components/Checkout/Shipping/ShippingMethod';
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import './ShippingPageStyles.scss';
 
 function ShippingPage() {
 	let history = useHistory();

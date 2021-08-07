@@ -2,16 +2,18 @@ import React, { useState } from 'react';
 // import PropTypes from 'prop-types';
 import TextField from '../TextField/TextField';
 import { IoArrowForwardOutline } from 'react-icons/io5';
+import { IoIosCloseCircle } from 'react-icons/io';
 import Button from 'components/FormControl/Button';
 import './DiscountFieldStyles.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import {
 	applyDiscountThunk,
+	clearDiscount,
 	setDiscountError,
 } from 'features/checkout/checkoutSlice';
 import { unwrapResult } from '@reduxjs/toolkit';
 
-function DiscountField(props) {
+function DiscountField() {
 	const [value, setValue] = useState('');
 	const { discount, discountError } = useSelector((state) => state.checkout);
 	const dispatch = useDispatch();
@@ -34,18 +36,32 @@ function DiscountField(props) {
 		}
 	};
 
+	const onClear = () => {
+		dispatch(clearDiscount());
+		setValue('');
+	};
+
 	return (
 		<div className='order__discount'>
-			<TextField
-				placeholder='Gift card or discount code'
-				value={value}
-				onChange={onChange}
-				error={discountError}
-			/>
+			<div className='position-relative field-wrapper'>
+				<TextField
+					placeholder='Gift card or discount code'
+					value={value}
+					onChange={onChange}
+					error={discountError}
+				/>
+				{discount?.applied && (
+					<span className='clear' onClick={onClear}>
+						<IoIosCloseCircle size='1.1em' />
+					</span>
+				)}
+			</div>
 			<Button
 				loading={discount.loading}
 				classNames={`order__discount-submit ${
-					value.length > 0 ? '' : 'order__discount-submit--disabled'
+					value.length > 0 && !discount?.applied
+						? ''
+						: 'order__discount-submit--disabled'
 				}`}
 				onClick={onClick}
 			>
