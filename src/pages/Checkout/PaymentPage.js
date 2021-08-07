@@ -6,6 +6,7 @@ import Payment from 'components/Checkout/Payment/Payment';
 import ShippingInfo from 'components/Checkout/Shipping/ShippingInfo';
 import ModalLoading from 'components/ModalLoading/ModalLoading';
 import { clearCart } from 'features/cart/cartSlice';
+import { clearDiscount } from 'features/checkout/checkoutSlice';
 import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
@@ -28,6 +29,7 @@ function PaymentPage(props) {
 		pickupLocationSelected,
 		paymentMethodSelected,
 		addressInfo,
+		discount,
 	} = useSelector((state) => state.checkout);
 
 	const selectAddressString = createSelector(
@@ -107,11 +109,13 @@ function PaymentPage(props) {
 				shippingMethod: delivery === 'shipment' ? shippingMethodSelected : null,
 				pickupLocation: delivery === 'pickup' ? pickupLocationSelected : null,
 				paymentMethod: paymentMethodSelected,
+				discountCode: discount?.applied ? discount.code : null,
 			};
 			const response = await createOrder(data);
 			if (response.success) {
 				setShowSuccess(true);
 				dispatch(clearCart());
+				dispatch(clearDiscount());
 			}
 		} catch (error) {
 			console.log(error);
