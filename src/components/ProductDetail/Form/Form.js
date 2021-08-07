@@ -170,7 +170,7 @@ function Form({ variants, price }) {
 				<Select
 					name='color'
 					options={colorOptions}
-					value={selected?.variant.color}
+					value={selected?.variant._id}
 					onChange={onColorChange}
 				/>
 				<InputQuantity
