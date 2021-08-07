@@ -11,16 +11,34 @@ export default function MobileBars({ isOpen, categories, brands }) {
 		if (categories && brands) {
 			setMenu([
 				{
-					name: 'SHOP BY',
-					items: [...categories],
-				},
-				{
-					name: 'BRANDS',
-					items: [...brands],
+					name: 'SHOP',
+					items: [
+						{
+							name: 'SHOP BY',
+							items: [...categories],
+						},
+						{
+							name: 'BRANDS',
+							items: [...brands],
+						},
+					],
 				},
 			]);
 		}
 	}, [categories, brands]);
+
+	const withExpanderMenu = (link) => {
+		let index = menu.findIndex(
+			(item) => item.name.toLowerCase() === link.name.toLowerCase()
+		);
+
+		if (index !== -1) {
+			let items = menu[index];
+			return <Expander items={items} />;
+		}
+
+		return <Link to={link.path}>{link.name}</Link>;
+	};
 
 	return (
 		<div className={`mobile-nav ${isOpen && 'open'}`}>
@@ -28,10 +46,7 @@ export default function MobileBars({ isOpen, categories, brands }) {
 				{getNavbarLinks()
 					.filter((link) => link.showOn.includes('mobile'))
 					.map((link) => (
-						<li key={link.name}>
-							<Link to={link.path}>{link.name}</Link>
-							{link.name === 'shop' && <Expander items={menu} />}
-						</li>
+						<li key={link.name}>{withExpanderMenu(link)}</li>
 					))}
 			</ul>
 		</div>
