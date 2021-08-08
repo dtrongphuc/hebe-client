@@ -6,66 +6,50 @@ import { getCollectionByPath } from 'services/CollectionAPI';
 import { useParams } from 'react-router';
 import './styles.scss';
 import { useHistory } from 'react-router-dom';
-
-const BEST_SELLING = 'best-selling';
-const PRICE_LOW_TO_HIGH = 'price-low-to-high';
-const PRICE_HIGH_TO_LOW = 'price-high-to-low';
+import Pagination from 'components/Pagination/Pagination';
 
 export default function CollectionPage() {
 	const [info, setInfo] = useState({});
 	const [products, setProducts] = useState([]);
+	const [sort, setSort] = useState('best-selling');
+	const [maxPage, setMaxPage] = useState(1);
+	const [currentPage, setCurrentPage] = useState(1);
 	const { path } = useParams();
 	let fromPage = path.replaceAll('-', ' ').toUpperCase();
 	let history = useHistory();
 
 	useEffect(() => {
-		(async function () {
+		const fetch = async () => {
 			try {
-				let response = await getCollectionByPath(path);
+				let response = await getCollectionByPath(path, {
+					page: currentPage,
+					limit: 21,
+					sort: sort,
+				});
 				if (response?.success) {
 					setInfo(response.info);
 					setProducts(response.products);
+					setMaxPage(response.pagination.max);
 				} else if (response.status === 404) {
 					history.push('/404');
 				}
 			} catch (error) {
 				console.log(error);
 			}
-		})();
-	}, [path, history]);
+		};
+
+		fetch();
+		console.log('fetch');
+	}, [path, history, sort, currentPage]);
 
 	const onSortChange = (e) => {
 		const selected = e.target.value;
-		switch (selected) {
-			case BEST_SELLING:
-				let sellingProducts = [].concat(products).sort((product1, product2) => {
-					let salePrice1 = product1.price - product1.salePrice;
-					let salePrice2 = product2.price - product2.salePrice;
+		setSort(selected);
+	};
 
-					return salePrice1 < salePrice2 ? -1 : salePrice1 > salePrice2 ? 1 : 0;
-				});
-				setProducts(sellingProducts);
-				break;
-			case PRICE_LOW_TO_HIGH:
-				let lthProducts = [].concat(products).sort((product1, product2) => {
-					let price1 = product1.price;
-					let price2 = product2.price;
-
-					return price1 < price2 ? -1 : price1 > price2 ? 1 : 0;
-				});
-				setProducts(lthProducts);
-				break;
-			case PRICE_HIGH_TO_LOW:
-				let htlProducts = [].concat(products).sort((product1, product2) => {
-					let price1 = product1.price;
-					let price2 = product2.price;
-
-					return price1 > price2 ? -1 : price1 < price2 ? 1 : 0;
-				});
-				setProducts(htlProducts);
-				break;
-			default:
-				break;
+	const onPageChange = (page) => () => {
+		if (page !== currentPage) {
+			setCurrentPage(page);
 		}
 	};
 
@@ -76,8 +60,17 @@ export default function CollectionPage() {
 				background={info?.image?.src}
 				heroText={info?.description}
 			/>
-			<Sort onSortChange={onSortChange} />
+			<Sort onSortChange={onSortChange} selected={sort} />
 			<ProductList products={products} fromPage={fromPage} />
+			{maxPage > 1 && (
+				<div className='container-lg'>
+					<Pagination
+						current={currentPage}
+						max={maxPage}
+						onChange={onPageChange}
+					/>
+				</div>
+			)}
 		</div>
 	);
 }
