@@ -35,6 +35,17 @@ export async function postRegister({ email, password, firstname, lastname }) {
 	}
 }
 
+export async function getLogout() {
+	try {
+		const response = await api.get('/account/logout');
+		if (response.status === 200) {
+			return response.data;
+		}
+	} catch (error) {
+		return Promise.reject(error);
+	}
+}
+
 export async function isAuth() {
 	try {
 		const response = await api.get('/account/auth');

@@ -1,5 +1,10 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { isAuth, postLogin, postRegister } from 'services/AccountApi';
+import {
+	isAuth,
+	postLogin,
+	postRegister,
+	getLogout,
+} from 'services/AccountApi';
 
 export const loginThunk = createAsyncThunk(
 	'user/login',
@@ -37,6 +42,11 @@ export const registerThunk = createAsyncThunk(
 	}
 );
 
+export const logoutThunk = createAsyncThunk('user/logout', async () => {
+	const response = await getLogout();
+	return response;
+});
+
 export const checkAuthThunk = createAsyncThunk('user/check', async () => {
 	const result = await isAuth();
 	return result;
@@ -65,9 +75,6 @@ export const userSlice = createSlice({
 		login: (state) => {
 			state.isLogged = true;
 		},
-		logout: (state) => {
-			state.isLogged = false;
-		},
 	},
 	extraReducers: {
 		[loginThunk.pending]: (state) => {
@@ -88,6 +95,18 @@ export const userSlice = createSlice({
 
 		[registerThunk.rejected]: (state) => {
 			state.isLoading = false;
+		},
+
+		[logoutThunk.fulfilled]: (state) => {
+			return {
+				...state,
+				isLogged: null,
+				isLoading: null,
+				email: '',
+				firstName: '',
+				lastName: '',
+				role: '',
+			};
 		},
 
 		[checkAuthThunk.pending]: (state) => {
@@ -112,6 +131,6 @@ export const userSlice = createSlice({
 	},
 });
 
-export const { login, logout } = userSlice.actions;
+export const { login } = userSlice.actions;
 
 export default userSlice.reducer;

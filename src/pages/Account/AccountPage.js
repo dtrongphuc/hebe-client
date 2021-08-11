@@ -45,17 +45,18 @@ function AccountPage() {
 				</div>
 				<div className='col-12 col-md-8 mt-2'>
 					<p className='account__col-title'>Order History</p>
-					{(!orderCount || orderCount === 0) && (
+					{!orderCount || orderCount === 0 ? (
 						<small className='account-text account-text--small'>
 							You haven't placed any orders yet.
 						</small>
+					) : (
+						<Link
+							className='account-text account-text--small account-link mt-1'
+							to='/account/orders'
+						>
+							View Orders ({orderCount})
+						</Link>
 					)}
-					<Link
-						className='account-text account-text--small account-link mt-1'
-						to='/account/orders'
-					>
-						View Orders ({orderCount})
-					</Link>
 				</div>
 				<div className='col-12 col-md-4 mt-2'>
 					<p className='account__col-title'>Account Details</p>

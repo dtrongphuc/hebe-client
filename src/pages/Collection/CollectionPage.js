@@ -39,7 +39,6 @@ export default function CollectionPage() {
 		};
 
 		fetch();
-		console.log('fetch');
 	}, [path, history, sort, currentPage]);
 
 	const onSortChange = (e) => {

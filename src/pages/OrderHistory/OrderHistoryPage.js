@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { BeatLoader } from 'react-spinners';
-import { getMaxPagination, getOrdersPagination } from 'services/OrderApi';
+import { getOrdersPagination } from 'services/OrderApi';
 import OrderHistoryItem from './OrderHistoryItem';
 import './OrderHistoryPageStyles.scss';
 
@@ -12,7 +12,7 @@ function OrderHistoryPage() {
 	//page state
 	const [currentPage, setCurrentPage] = useState(1);
 	const [maxPage, setMaxPage] = useState(1);
-	const [loading, setLoading] = useState(false);
+	const [loading, setLoading] = useState(true);
 	const loader = useRef(null);
 
 	useEffect(() => {
@@ -30,20 +30,20 @@ function OrderHistoryPage() {
 		}
 	});
 
-	useEffect(() => {
-		const maxPagination = async () => {
-			try {
-				const response = await getMaxPagination();
-				if (response.success) {
-					setMaxPage(response.maxPage);
-				}
-			} catch (error) {
-				console.log(error);
-			}
-		};
+	// useEffect(() => {
+	// 	const maxPagination = async () => {
+	// 		try {
+	// 			const response = await getMaxPagination();
+	// 			if (response.success) {
+	// 				setMaxPage(response.maxPage);
+	// 			}
+	// 		} catch (error) {
+	// 			console.log(error);
+	// 		}
+	// 	};
 
-		maxPagination();
-	}, []);
+	// 	maxPagination();
+	// }, []);
 
 	useEffect(() => {
 		// fetch orders by page
@@ -53,6 +53,7 @@ function OrderHistoryPage() {
 				const response = await getOrdersPagination(currentPage);
 				if (response.success) {
 					setOrderList((prevState) => [...prevState, ...response.orders]);
+					setMaxPage(response?.pagination?.max);
 				}
 			} catch (error) {
 				console.log(error);

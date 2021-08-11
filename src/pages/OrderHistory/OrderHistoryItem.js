@@ -68,8 +68,8 @@ function OrderHistoryItem({ order }) {
 									{item.product.name}
 								</Link>
 								<p className='account-text account-text--blur account-text--small mt-1 px-2'>
-									{item.variant.color}
-									{!item.variant.freeSize && ` / `}
+									{item.variant?.color}
+									{!item.variant?.freeSize && ` / ${item.sku?.size}`}
 								</p>
 								<p className='account-text account-text--blur account-text--small mt-1 px-2'>
 									x{item.quantity}
@@ -89,7 +89,13 @@ function OrderHistoryItem({ order }) {
 				<div className='item'>
 					<span className='account-text'>Shipping:</span>
 					<span className='account-text width-fixed'>
-						{order.shippingMethod?.displayPrice}
+						{order.shippingMethod?.displayPrice || priceString(0)}
+					</span>
+				</div>
+				<div className='item'>
+					<span className='account-text'>Discount:</span>
+					<span className='account-text width-fixed'>
+						-{priceString(order?.voucherPrice || 0)}
 					</span>
 				</div>
 				<div className='item'>
