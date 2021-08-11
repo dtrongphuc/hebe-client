@@ -47,6 +47,7 @@ export default function LoginPage() {
 			} else {
 				toast.error('login failed');
 			}
+			console.clear();
 		}
 	};
 

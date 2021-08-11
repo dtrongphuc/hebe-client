@@ -1,10 +1,45 @@
-import React from 'react';
-import { Form, Input, Button, Card } from 'antd';
+import React, { useState } from 'react';
+import { Form, Input, Button, Card, message } from 'antd';
 import './styles.scss';
+import { parseErrors } from 'utils/util';
+import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { login, loginThunk } from 'features/user/userSlice';
+import { unwrapResult } from '@reduxjs/toolkit';
 
-function LoginPage(props) {
-	const onFinish = (values) => {
-		console.log('Success:', values);
+function LoginPage() {
+	const [errors, setErrors] = useState({
+		email: '',
+		password: '',
+	});
+	const [loading, setLoading] = useState(false);
+	const dispatch = useDispatch();
+	let history = useHistory();
+
+	const onFinish = async (values) => {
+		try {
+			setLoading(true);
+			let { email, password } = values;
+			const response = await dispatch(loginThunk({ email, password }));
+			unwrapResult(response);
+			if (response?.success && response.role === 'admin') {
+				dispatch(login());
+				history.push('/admin');
+			}
+		} catch (error) {
+			if (error.status === 422) {
+				let { errors } = error;
+				let inputError = parseErrors(errors);
+				setErrors({
+					...inputError,
+				});
+			} else {
+				message.error('login failed');
+			}
+			console.clear();
+		} finally {
+			setLoading(false);
+		}
 	};
 
 	const onFinishFailed = (errorInfo) => {
@@ -25,21 +60,23 @@ function LoginPage(props) {
 				<Form
 					name='basic'
 					labelCol={{
-						span: 8,
+						span: 6,
 					}}
 					wrapperCol={{
-						span: 16,
+						span: 18,
 					}}
 					onFinish={onFinish}
 					onFinishFailed={onFinishFailed}
 				>
 					<Form.Item
-						label='Username'
-						name='username'
+						label='Email'
+						name='email'
+						validateStatus={!errors?.email ? 'success' : 'error'}
+						help={errors?.email}
 						rules={[
 							{
 								required: true,
-								message: 'Please input your username!',
+								message: 'Please input your email!',
 							},
 						]}
 					>
@@ -49,6 +86,8 @@ function LoginPage(props) {
 					<Form.Item
 						label='Password'
 						name='password'
+						validateStatus={!errors?.password ? 'success' : 'error'}
+						help={errors?.password}
 						rules={[
 							{
 								required: true,
@@ -61,11 +100,11 @@ function LoginPage(props) {
 
 					<Form.Item
 						wrapperCol={{
-							offset: 8,
-							span: 16,
+							offset: 6,
+							span: 18,
 						}}
 					>
-						<Button type='primary' htmlType='submit'>
+						<Button type='primary' htmlType='submit' loading={loading}>
 							Submit
 						</Button>
 					</Form.Item>

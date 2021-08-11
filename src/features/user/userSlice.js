@@ -43,11 +43,12 @@ export const checkAuthThunk = createAsyncThunk('user/check', async () => {
 });
 
 const authFulfilled = (state, action) => {
-	const { email, firstName, lastName } = action.payload;
+	const { email, firstName, lastName, role } = action.payload;
 	state.isLoading = false;
 	state.email = email;
 	state.firstName = firstName;
 	state.lastName = lastName;
+	state.role = role;
 };
 
 export const userSlice = createSlice({
@@ -58,6 +59,7 @@ export const userSlice = createSlice({
 		email: '',
 		firstName: '',
 		lastName: '',
+		role: '',
 	},
 	reducers: {
 		login: (state) => {
