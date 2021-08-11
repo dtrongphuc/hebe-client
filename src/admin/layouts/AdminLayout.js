@@ -1,12 +1,29 @@
 import LeftMenu from 'admin/components/LeftMenu/LeftMenu';
-import { Layout, Menu } from 'antd';
+import { Button, Layout, message, Space, Tooltip, Typography } from 'antd';
+import Avatar from 'antd/lib/avatar/avatar';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import './styles.scss';
-
+import { UserOutlined, LogoutOutlined } from '@ant-design/icons';
+import { logoutThunk } from 'features/user/userSlice';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 const { Header, Content, Sider } = Layout;
+const { Text } = Typography;
 
 function AdminLayout({ children }) {
+	const dispatch = useDispatch();
+	let history = useHistory();
+
+	const handleLogout = async (e) => {
+		try {
+			await dispatch(logoutThunk());
+			history.push('/admin/login');
+		} catch (error) {
+			message.error('error');
+		}
+	};
+
 	return (
 		<Layout>
 			<Helmet>
@@ -17,7 +34,17 @@ function AdminLayout({ children }) {
 				className='admin-header'
 			>
 				<div className='logo' />
-				<Menu theme='dark' mode='horizontal'></Menu>
+				<Space align='center'>
+					<Text className='text'>dtrongphuc</Text>
+					<Avatar size={32} icon={<UserOutlined />} />
+					<Tooltip title='Logout' color='geekblue'>
+						<Button
+							icon={<LogoutOutlined />}
+							type='link'
+							onClick={handleLogout}
+						/>
+					</Tooltip>
+				</Space>
 			</Header>
 			<Layout style={{ minHeight: 'calc(100vh - 64px)', marginTop: 64 }}>
 				<Sider

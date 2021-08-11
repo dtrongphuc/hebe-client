@@ -230,6 +230,7 @@ function OrderListPage() {
 				dataSource={data}
 				rowKey='_id'
 				loading={loading}
+				scroll={{ x: true }}
 			/>
 		</Card>
 	);

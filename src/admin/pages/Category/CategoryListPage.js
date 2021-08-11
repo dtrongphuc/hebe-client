@@ -185,7 +185,12 @@ function CategoryListPage() {
 
 	return (
 		<Card title='Categories' bordered={false}>
-			<Table columns={columns} dataSource={data} loading={loading} />
+			<Table
+				columns={columns}
+				dataSource={data}
+				loading={loading}
+				scroll={{ x: true }}
+			/>
 		</Card>
 	);
 }

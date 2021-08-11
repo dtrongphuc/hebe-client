@@ -6,6 +6,7 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { login, loginThunk } from 'features/user/userSlice';
 import { unwrapResult } from '@reduxjs/toolkit';
+import { Helmet } from 'react-helmet';
 
 function LoginPage() {
 	const [errors, setErrors] = useState({
@@ -21,11 +22,13 @@ function LoginPage() {
 			setLoading(true);
 			let { email, password } = values;
 			const response = await dispatch(loginThunk({ email, password }));
-			unwrapResult(response);
-			if (response?.success && response.role === 'admin') {
+			let responseData = unwrapResult(response);
+			if (responseData?.success && responseData.role === 'admin') {
 				dispatch(login());
 				history.push('/admin');
+				return;
 			}
+			setLoading(false);
 		} catch (error) {
 			if (error.status === 422) {
 				let { errors } = error;
@@ -37,7 +40,6 @@ function LoginPage() {
 				message.error('login failed');
 			}
 			console.clear();
-		} finally {
 			setLoading(false);
 		}
 	};
@@ -56,6 +58,9 @@ function LoginPage() {
 				overflow: 'hidden',
 			}}
 		>
+			<Helmet>
+				<title>Login - Hebe Boutique</title>
+			</Helmet>
 			<Card className='card'>
 				<Form
 					name='basic'

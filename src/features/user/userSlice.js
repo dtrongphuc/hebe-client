@@ -114,12 +114,13 @@ export const userSlice = createSlice({
 			state.isLogged = false;
 		},
 		[checkAuthThunk.fulfilled]: (state, action) => {
-			const { loggedIn, email, firstName, lastName } = action.payload;
+			const { loggedIn, email, firstName, lastName, role } = action.payload;
 			state.isLoading = false;
 			state.isLogged = loggedIn;
 			state.email = email;
 			state.firstName = firstName;
 			state.lastName = lastName;
+			state.role = role;
 		},
 		[checkAuthThunk.rejected]: (state, action) => {
 			state.isLoading = false;
@@ -127,6 +128,7 @@ export const userSlice = createSlice({
 			state.email = '';
 			state.firstName = '';
 			state.lastName = '';
+			state.role = '';
 		},
 	},
 });

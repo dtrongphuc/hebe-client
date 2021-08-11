@@ -223,6 +223,7 @@ function ProductListPage() {
 				dataSource={data}
 				rowKey='_id'
 				loading={loading}
+				scroll={{ x: true }}
 			/>
 		</Card>
 	);

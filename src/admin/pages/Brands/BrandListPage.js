@@ -185,7 +185,12 @@ function BrandListPage() {
 
 	return (
 		<Card title='Brands' bordered={false}>
-			<Table columns={columns} dataSource={data} loading={loading} />
+			<Table
+				columns={columns}
+				dataSource={data}
+				loading={loading}
+				scroll={{ x: true }}
+			/>
 		</Card>
 	);
 }

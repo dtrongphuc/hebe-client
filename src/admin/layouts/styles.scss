@@ -12,5 +12,16 @@
 }
 
 .site-layout-background {
-	background: #fff;
+	background: #fff !important;
+}
+
+.admin-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+
+	.text {
+		color: #fff;
+		font-size: 14px;
+	}
 }

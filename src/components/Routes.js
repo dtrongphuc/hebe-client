@@ -28,11 +28,10 @@ import ShippingPage from 'pages/Checkout/ShippingPage';
 import PaymentPage from 'pages/Checkout/PaymentPage';
 import OrderHistoryPage from 'pages/OrderHistory/OrderHistoryPage';
 import ErrorPage from 'pages/404/ErrorPage';
-import Logout from './Logout';
 
 function Routes() {
 	const dispatch = useDispatch();
-	const { isLogged } = useSelector((state) => state.user);
+	const { isLogged, role } = useSelector((state) => state.user);
 
 	useEffect(() => {
 		(async () => {
@@ -47,7 +46,7 @@ function Routes() {
 	useEffect(() => {
 		(async () => {
 			try {
-				if (isLogged) {
+				if (isLogged && role === 'user') {
 					const cartResponse = await dispatch(fetchCartThunk());
 					unwrapResult(cartResponse);
 				}
@@ -55,7 +54,7 @@ function Routes() {
 				console.log(error);
 			}
 		})();
-	}, [dispatch, isLogged]);
+	}, [dispatch, isLogged, role]);
 
 	return (
 		<Router>
@@ -94,7 +93,6 @@ function Routes() {
 						<Switch>
 							<Route exact path='/' component={HomePage} />
 							<Route exact path='/404' component={ErrorPage} />
-							<Route exact path='/account/logout' component={Logout} />
 							<Route
 								exact
 								path='/:path/products/:productPath'

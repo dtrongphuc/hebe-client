@@ -31,7 +31,6 @@ function RegisterPage() {
 	let history = useHistory();
 
 	const handleSubmit = async (e) => {
-		console.log('submit');
 		e.preventDefault();
 		try {
 			const response = await dispatch(registerThunk(formState));
