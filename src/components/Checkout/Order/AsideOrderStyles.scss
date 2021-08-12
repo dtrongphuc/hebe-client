@@ -30,6 +30,12 @@
 	position: relative;
 }
 
+.order__list {
+	max-height: 400px;
+	overflow-y: auto;
+	padding: 12px 0;
+}
+
 .order__text {
 	line-height: normal;
 	font-size: 14px;

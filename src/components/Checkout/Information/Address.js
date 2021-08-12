@@ -93,7 +93,7 @@ function Address({ title, subTitle, sectionRef }) {
 					name='saved-address'
 					placeholder='Saved addresses'
 					options={addressOptions}
-					defaultValue={defaultAddress?._id}
+					defaultValue={defaultAddress?._id || 'new-address'}
 					onChange={onSavedAddressChange}
 				/>
 			</div>

@@ -54,6 +54,8 @@ export const checkAuthThunk = createAsyncThunk('user/check', async () => {
 
 const authFulfilled = (state, action) => {
 	const { email, firstName, lastName, role } = action.payload;
+	localStorage.removeItem('persist:checkout');
+
 	state.isLoading = false;
 	state.email = email;
 	state.firstName = firstName;
@@ -64,8 +66,8 @@ const authFulfilled = (state, action) => {
 export const userSlice = createSlice({
 	name: 'user',
 	initialState: {
-		isLogged: null,
-		isLoading: null,
+		isLogged: false,
+		isLoading: false,
 		email: '',
 		firstName: '',
 		lastName: '',
@@ -100,8 +102,8 @@ export const userSlice = createSlice({
 		[logoutThunk.fulfilled]: (state) => {
 			return {
 				...state,
-				isLogged: null,
-				isLoading: null,
+				isLogged: false,
+				isLoading: false,
 				email: '',
 				firstName: '',
 				lastName: '',

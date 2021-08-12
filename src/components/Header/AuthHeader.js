@@ -1,4 +1,5 @@
 import { message } from 'antd';
+import { clearCart } from 'features/cart/cartSlice';
 import { logoutThunk } from 'features/user/userSlice';
 import React from 'react';
 import { Container } from 'react-bootstrap';
@@ -13,7 +14,8 @@ export default function AuthHeader() {
 	const handleLogout = async (e) => {
 		e.preventDefault();
 		try {
-			dispatch(await logoutThunk());
+			await dispatch(logoutThunk());
+			dispatch(clearCart());
 			history.push('/');
 		} catch (error) {
 			message.error('error');

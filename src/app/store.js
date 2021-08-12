@@ -26,7 +26,7 @@ const checkoutPersistConfig = {
 	blacklist: ['errors', 'focused', 'discountError', 'discount'],
 };
 
-const reducer = combineReducers({
+const combinedReducer = combineReducers({
 	user: userReducer,
 	address: addressReducer,
 	cart: cartReducer,
@@ -35,7 +35,18 @@ const reducer = combineReducers({
 	discount: discountReducer,
 });
 
-const persistedReducer = persistReducer(persistConfig, reducer);
+const rootReducer = (state, action) => {
+	if (action.type === 'user/login') {
+		// check for action type
+		state = {
+      ...state,
+      checkout: null
+    };
+	}
+	return combinedReducer(state, action);
+};
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export default configureStore({
 	reducer: persistedReducer,

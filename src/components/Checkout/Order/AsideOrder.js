@@ -22,9 +22,7 @@ function AsideOrder() {
 				<div className='wrap'>
 					<div className='order__list'>
 						{products?.map((item) => (
-							<div key={item._id}>
-								<OrderItem item={item} />
-							</div>
+							<OrderItem item={item} key={item._id} />
 						))}
 					</div>
 					<DiscountField />

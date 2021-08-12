@@ -124,14 +124,14 @@ function Form({ variants, price }) {
 			if (response?.success) {
 				await dispatch(fetchCartThunk());
 				message.success({
-					content: 'Thêm vào giỏ hàng thành công!',
+					content: 'Added to cart!',
 					duration: 2,
 				});
 			}
 		} catch (error) {
 			console.log(error);
 			message.error({
-				content: 'Có lỗi xảy ra, vui lòng thử lại!',
+				content: 'Error, try again later!',
 				duration: 2,
 			});
 		} finally {

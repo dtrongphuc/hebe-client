@@ -7,7 +7,7 @@ import './styles.scss';
 export default function ProductList({ products, fromPage }) {
 	return (
 		<Container fluid='lg'>
-			<Row className='justify-content-lg-center justify-content-xs-center'>
+			<Row className='justify-content-sm-start justify-content-center'>
 				{!!products &&
 					Array.isArray(products) &&
 					products.map((product) => (
