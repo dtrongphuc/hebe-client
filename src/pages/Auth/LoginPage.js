@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Alert } from 'react-bootstrap';
 import { Link, useHistory } from 'react-router-dom';
 import Input from 'components/FormControl/Input';
 import Button from 'components/FormControl/Button';
 import { login, loginThunk } from 'features/user/userSlice';
-import { toast } from 'react-toastify';
 import { parseErrors } from 'utils/util';
 import ModalLoading from 'components/ModalLoading/ModalLoading';
 import { unwrapResult } from '@reduxjs/toolkit';
 
 import './styles.scss';
+import { Alert, message } from 'antd';
 
 const initFormState = {
 	email: '',
@@ -22,10 +21,11 @@ const initFormState = {
 };
 
 export default function LoginPage() {
-	const { isLoading, error } = useSelector((state) => state.user);
+	const { isLoading } = useSelector((state) => state.user);
 	const [formState, setFormState] = useState(initFormState);
 	const dispatch = useDispatch();
 	let history = useHistory();
+	let location = history.location;
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -45,7 +45,7 @@ export default function LoginPage() {
 					errors: inputError,
 				}));
 			} else {
-				toast.error('login failed');
+				message.error('error');
 			}
 			console.clear();
 		}
@@ -67,14 +67,12 @@ export default function LoginPage() {
 	return (
 		<div className='container-lg'>
 			<div className='row'>
-				<div className='col-0 col-lg-3'></div>
-				<div className='col-12 col-lg-6'>
+				<div className='col-0 col-lg-4'></div>
+				<div className='col-12 col-lg-4'>
 					<section className='auth-container'>
 						<h3 className='auth-title'>Login</h3>
-						{error && (
-							<Alert variant='danger' className='w-100 text-center'>
-								{error}
-							</Alert>
+						{location.state?.message && (
+							<Alert message={location.state?.message} type='info' />
 						)}
 						<form
 							action='#'
@@ -109,7 +107,7 @@ export default function LoginPage() {
 						</div>
 					</section>
 				</div>
-				<div className='col-0 col-lg-3'></div>
+				<div className='col-0 col-lg-4'></div>
 			</div>
 			<ModalLoading loading={isLoading} />
 		</div>

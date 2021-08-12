@@ -17,6 +17,7 @@ import CollectionPage from 'pages/Collection/CollectionPage';
 import ContactPage from 'pages/Contact/ContactPage';
 import LoginPage from 'pages/Auth/LoginPage';
 import RegisterPage from 'pages/Auth/RegisterPage';
+import ForgotPassword from 'pages/Auth/ForgotPassword';
 import AccountPage from 'pages/Account/AccountPage';
 import PrivateRoute from 'components/PrivateRoute/PrivateRoute';
 import AddressesPage from 'pages/Addresses/AddressesPage';
@@ -28,6 +29,7 @@ import ShippingPage from 'pages/Checkout/ShippingPage';
 import PaymentPage from 'pages/Checkout/PaymentPage';
 import OrderHistoryPage from 'pages/OrderHistory/OrderHistoryPage';
 import ErrorPage from 'pages/404/ErrorPage';
+import ResetPassword from 'pages/Auth/ResetPassword';
 
 function Routes() {
 	const dispatch = useDispatch();
@@ -123,6 +125,12 @@ function Routes() {
 
 							<Route exact path='/account/login' component={LoginPage} />
 							<Route exact path='/account/register' component={RegisterPage} />
+							<Route exact path='/account/recover' component={ForgotPassword} />
+							<Route
+								exact
+								path='/account/reset/:token'
+								component={ResetPassword}
+							/>
 							<PrivateRoute exact path='/cart' component={CartPage} />
 							<Redirect to='/404' />
 						</Switch>

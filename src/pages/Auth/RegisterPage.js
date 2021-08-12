@@ -5,11 +5,10 @@ import Button from 'components/FormControl/Button';
 import './styles.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import ModalLoading from 'components/ModalLoading/ModalLoading';
-import { toast } from 'react-toastify';
 import { unwrapResult } from '@reduxjs/toolkit';
-import { Alert } from 'react-bootstrap';
 import { login, registerThunk } from 'features/user/userSlice';
 import { parseErrors } from 'utils/util';
+import { message } from 'antd';
 
 const initFormState = {
 	firstname: '',
@@ -25,7 +24,7 @@ const initFormState = {
 };
 
 function RegisterPage() {
-	const { isLoading, error } = useSelector((state) => state.user);
+	const { isLoading } = useSelector((state) => state.user);
 	const [formState, setFormState] = useState(initFormState);
 	const dispatch = useDispatch();
 	let history = useHistory();
@@ -46,7 +45,7 @@ function RegisterPage() {
 					errors: inputError,
 				}));
 			} else {
-				toast.error('register failed');
+				message.error('error');
 			}
 		}
 	};
@@ -67,15 +66,10 @@ function RegisterPage() {
 	return (
 		<div className='container-lg'>
 			<div className='row'>
-				<div className='col-0 col-lg-3'></div>
-				<div className='col-12 col-lg-6'>
+				<div className='col-0 col-lg-4'></div>
+				<div className='col-12 col-lg-4'>
 					<section className='auth-container'>
 						<h3 className='auth-title'>Create Account</h3>
-						{error && (
-							<Alert variant='danger' className='w-100 text-center'>
-								{error}
-							</Alert>
-						)}
 						<form
 							onSubmit={handleSubmit}
 							className='auth-form'
@@ -126,7 +120,7 @@ function RegisterPage() {
 						</div>
 					</section>
 				</div>
-				<div className='col-0 col-lg-3'></div>
+				<div className='col-0 col-lg-4'></div>
 			</div>
 			<ModalLoading loading={isLoading} />
 		</div>

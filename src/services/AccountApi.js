@@ -100,3 +100,41 @@ export async function submitEditAccount(data) {
 		return Promise.reject(error);
 	}
 }
+
+export async function forgotPassword(email) {
+	try {
+		const response = await api.post('/account/password/reset', { email });
+		if (response.status === 200) {
+			return response.data;
+		}
+	} catch (error) {
+		return Promise.reject(error);
+	}
+}
+
+// {token, password, confirmPw}
+export async function resetPassword(data) {
+	try {
+		const response = await api.post('/account/password/update', data);
+		if (response.status === 200) {
+			return response.data;
+		}
+	} catch (error) {
+		return Promise.reject(error);
+	}
+}
+
+export async function getEmailByToken(token) {
+	try {
+		const response = await api.get('/account/email', {
+			params: {
+				token,
+			},
+		});
+		if (response.status === 200) {
+			return response.data;
+		}
+	} catch (error) {
+		return Promise.reject(error);
+	}
+}
