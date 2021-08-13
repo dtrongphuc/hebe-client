@@ -25,7 +25,7 @@ function CardColor({ color, data, icon, loading }) {
 			</Row>
 			<Row gutter={[16, 0]} style={{ marginTop: 16 }}>
 				<Col>
-					<span className='des'>{data.percentage}</span>
+					<span className='des'>{data.percentage || 0}</span>
 				</Col>
 				<Col flex='auto'>
 					<span className='des'>From Previous Month</span>

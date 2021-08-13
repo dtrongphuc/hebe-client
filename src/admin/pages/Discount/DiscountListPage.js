@@ -224,7 +224,7 @@ function DiscountListPage() {
 	];
 
 	return (
-		<Card title='Orders' bordered={false}>
+		<Card title='Discounts' bordered={false}>
 			<Table
 				columns={columns}
 				dataSource={data}
