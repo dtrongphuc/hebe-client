@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { countAddresses, getDefaultAddress } from 'services/AddressApi';
 import AddressItem from 'components/AddressList/AddressItem';
 import { countOrder } from 'services/OrderApi';
+import ModalLoading from 'components/ModalLoading/ModalLoading';
 // import PropTypes from 'prop-types'
 
 function AccountPage() {
@@ -13,6 +14,7 @@ function AccountPage() {
 	const [defaultAddress, setDefaultAddress] = useState(null);
 	const [addressCount, setAddressCount] = useState(0);
 	const [orderCount, setOrderCount] = useState(0);
+	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
 		const promiseAll = async () => {
@@ -28,6 +30,8 @@ function AccountPage() {
 				setOrderCount(rpOrderCount?.count);
 			} catch (error) {
 				console.log(error);
+			} finally {
+				setLoading(false);
 			}
 		};
 
@@ -71,6 +75,7 @@ function AccountPage() {
 					</Link>
 				</div>
 			</div>
+			<ModalLoading loading={loading} />
 		</div>
 	);
 }

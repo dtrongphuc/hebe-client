@@ -21,7 +21,8 @@ export default function ProductList({ products, fromPage, loading }) {
 						<p>Sorry, there are no products in this collection</p>
 					</Col>
 				)}
-				{!!products &&
+				{!loading &&
+					!!products &&
 					Array.isArray(products) &&
 					products.map((product) => (
 						<Col xs={6} sm={4} key={product._id}>

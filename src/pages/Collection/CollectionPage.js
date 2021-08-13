@@ -22,6 +22,7 @@ export default function CollectionPage() {
 	useEffect(() => {
 		const fetch = async () => {
 			try {
+				setLoading(true);
 				let response = await getCollectionByPath(path, {
 					page: currentPage,
 					limit: 21,
