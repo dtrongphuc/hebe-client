@@ -21,11 +21,11 @@ function AddProductPage() {
 			const images = await uploadFileRequest(url, values.images);
 			const response = await postNewProduct({ ...values, images: [...images] });
 			if (response?.success) {
-				message.success({ content: 'Thành công!', key, duration: 3 });
+				message.success({ content: 'Successful!', key, duration: 3 });
 				history.push('/admin/product/all');
 			}
 		} catch (error) {
-			message.error({ content: 'Có lỗi xảy ra!', key, duration: 3 });
+			message.error({ content: 'Error!', key, duration: 3 });
 		}
 	};
 

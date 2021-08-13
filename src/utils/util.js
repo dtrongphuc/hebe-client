@@ -33,7 +33,7 @@ export const uploadFileRequest = async (url, fileList) => {
 	try {
 		let files = await Promise.all(
 			[].concat(fileList).map((file) => {
-				if (file?.publicId && file?.publicId === file?.uid) {
+				if (file?.publicId && file?.publicId === file?.name) {
 					return Promise.resolve(file);
 				}
 
