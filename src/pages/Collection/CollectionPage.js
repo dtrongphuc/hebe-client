@@ -14,6 +14,7 @@ export default function CollectionPage() {
 	const [sort, setSort] = useState('best-selling');
 	const [maxPage, setMaxPage] = useState(1);
 	const [currentPage, setCurrentPage] = useState(1);
+	const [loading, setLoading] = useState(true);
 	const { path } = useParams();
 	let fromPage = path.replaceAll('-', ' ').toUpperCase();
 	let history = useHistory();
@@ -30,6 +31,7 @@ export default function CollectionPage() {
 					setInfo(response.info);
 					setProducts(response.products);
 					setMaxPage(response.pagination.max);
+					setLoading(false);
 				} else if (response.status === 404) {
 					history.push('/404');
 				}
@@ -60,7 +62,7 @@ export default function CollectionPage() {
 				heroText={info?.description}
 			/>
 			<Sort onSortChange={onSortChange} selected={sort} />
-			<ProductList products={products} fromPage={fromPage} />
+			<ProductList products={products} fromPage={fromPage} loading={loading} />
 			{maxPage > 1 && (
 				<div className='container-lg'>
 					<Pagination
