@@ -17,6 +17,7 @@ export default function HomePage() {
 	});
 
 	const [products, setProducts] = useState([]);
+	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
 		(async function () {
@@ -33,6 +34,8 @@ export default function HomePage() {
 						},
 					};
 				});
+			} finally {
+				setLoading(false);
 			}
 		})();
 	}, []);
@@ -43,7 +46,11 @@ export default function HomePage() {
 			<section className='home__products'>
 				<h2 className='home__products-title'>Featured Products</h2>
 				{!pageState.isLoading && (
-					<ProductList products={products} fromPage='HOME PAGE' />
+					<ProductList
+						products={products}
+						fromPage='HOME PAGE'
+						loading={loading}
+					/>
 				)}
 			</section>
 			<HeroBottom />
