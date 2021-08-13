@@ -8,6 +8,11 @@ export default function ProductList({ products, fromPage }) {
 	return (
 		<Container fluid='lg'>
 			<Row className='justify-content-sm-start justify-content-center'>
+				{(!products || products.length === 0) && (
+					<Col>
+						<p>Sorry, there are no products in this collection</p>
+					</Col>
+				)}
 				{!!products &&
 					Array.isArray(products) &&
 					products.map((product) => (
