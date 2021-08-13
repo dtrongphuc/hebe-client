@@ -162,6 +162,8 @@
 	min-width: 100%;
 	transform: translate3d(100%, 0, 0);
 	transition: all 0.15s ease;
+	overflow-y: auto;
+	max-height: 67vh;
 
 	&__list {
 		& > li {
