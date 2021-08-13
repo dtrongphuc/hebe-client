@@ -8,12 +8,14 @@ import { getUploadSignature } from 'services/CloudinaryApi';
 import { uploadFileRequest } from 'utils/util';
 import { getAllBrands } from 'services/BrandApi';
 import SubmitControl from 'admin/components/SubmitControl/SubmitControl';
+import { useHistory } from 'react-router-dom';
 
 const BannerPage = () => {
 	const [form] = Form.useForm();
 	const [loading, setLoading] = useState(false);
 	const [fileList, setFileList] = useState([]);
 	const [brandList, setBrandList] = useState([]);
+	let history = useHistory();
 
 	useEffect(() => {
 		const getBannerInfo = async () => {
@@ -99,7 +101,7 @@ const BannerPage = () => {
 	};
 
 	const onCancelClick = () => {
-		console.log('cancel');
+		history.push('/admin');
 	};
 
 	return (

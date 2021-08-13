@@ -109,7 +109,7 @@ function EditDiscountPage() {
 	};
 
 	const onCancelClick = () => {
-		console.log('cancel');
+		history.push('/admin/discount/all');
 	};
 
 	return (

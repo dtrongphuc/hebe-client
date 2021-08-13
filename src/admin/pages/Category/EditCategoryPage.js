@@ -75,7 +75,7 @@ function EditCategoryPage() {
 	};
 
 	const onCancelClick = () => {
-		console.log('cancel');
+		history.push('/admin/category/all');
 	};
 
 	return (

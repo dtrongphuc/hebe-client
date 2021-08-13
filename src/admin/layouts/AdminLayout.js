@@ -50,7 +50,12 @@ function AdminLayout({ children }) {
 				<Sider
 					width={200}
 					className='site-layout-background'
-					style={{ position: 'fixed', minHeight: 'calc(100vh - 64px)' }}
+					style={{
+						overflow: 'auto',
+						height: '100vh',
+						position: 'fixed',
+						left: 0,
+					}}
 				>
 					<LeftMenu />
 				</Sider>

@@ -6,6 +6,7 @@ import SubmitControl from 'admin/components/SubmitControl/SubmitControl';
 import { createDiscount } from 'services/DiscountApi';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetDiscount } from 'admin/reducers/discountSlice';
+import { useHistory } from 'react-router-dom';
 
 const initialFormValues = {
 	code: '',
@@ -24,6 +25,7 @@ function AddDiscountPage() {
 	const [form] = Form.useForm();
 	const { selectedProducts } = useSelector((state) => state.discount);
 	const dispatch = useDispatch();
+	let history = useHistory();
 
 	const onFinish = async (values) => {
 		const key = 'submit';
@@ -49,7 +51,7 @@ function AddDiscountPage() {
 	};
 
 	const onCancelClick = () => {
-		console.log('cancel');
+		history.push('/admin/discount/all');
 	};
 
 	return (

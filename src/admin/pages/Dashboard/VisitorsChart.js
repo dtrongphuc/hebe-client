@@ -5,6 +5,7 @@ import {
 	Line,
 	LineChart,
 	ResponsiveContainer,
+	Tooltip,
 	XAxis,
 	YAxis,
 } from 'recharts';
@@ -58,6 +59,7 @@ function VisitorsChart({ data }) {
 				<CartesianGrid strokeDasharray='1' vertical={false} />
 				<XAxis dataKey='name' />
 				<YAxis />
+				<Tooltip />
 				<Line
 					type='monotone'
 					dataKey='this_week'

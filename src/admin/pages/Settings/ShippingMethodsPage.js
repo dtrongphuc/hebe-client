@@ -4,6 +4,7 @@ import ShippingMethodList from 'admin/components/ShippingMethod/ShippingMethodLi
 import { getShippingMethods, putShippingMethods } from 'services/SettingApi';
 import { useEffect } from 'react';
 import SubmitControl from 'admin/components/SubmitControl/SubmitControl';
+import { useHistory } from 'react-router-dom';
 
 // import PropTypes from 'prop-types'
 
@@ -23,6 +24,7 @@ const mapShippingMethodsToFields = (methods) => {
 function ShippingMethodsPage() {
 	const [form] = Form.useForm();
 	const [loading, setLoading] = useState(false);
+	let history = useHistory();
 
 	useEffect(() => {
 		(async () => {
@@ -61,7 +63,7 @@ function ShippingMethodsPage() {
 	};
 
 	const onCancelClick = () => {
-		console.log('cancel');
+		history.push('/admin');
 	};
 
 	return (

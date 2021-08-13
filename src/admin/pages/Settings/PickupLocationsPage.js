@@ -4,6 +4,7 @@ import PickupLocationList from 'admin/components/PickupLocation/PickupLocationLi
 import { getPickupLocations, putPickupLocations } from 'services/SettingApi';
 import { useState } from 'react';
 import SubmitControl from 'admin/components/SubmitControl/SubmitControl';
+import { useHistory } from 'react-router-dom';
 
 const mapLocationsToFields = (locations) => {
 	let result = locations?.map((location) => {
@@ -23,6 +24,7 @@ const mapLocationsToFields = (locations) => {
 function PickupLocationsPage() {
 	const [form] = Form.useForm();
 	const [loading, setLoading] = useState(false);
+	let history = useHistory();
 
 	useEffect(() => {
 		(async () => {
@@ -65,7 +67,7 @@ function PickupLocationsPage() {
 	};
 
 	const onCancelClick = () => {
-		console.log('cancel');
+		history.push('/admin');
 	};
 
 	return (

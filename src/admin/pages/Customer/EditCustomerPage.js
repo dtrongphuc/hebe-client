@@ -55,7 +55,7 @@ function EditCustomerPage() {
 	};
 
 	const onCancelClick = () => {
-		console.log('cancel');
+		history.push('/admin/customer/all');
 	};
 
 	return (

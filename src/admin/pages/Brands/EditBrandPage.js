@@ -73,7 +73,7 @@ function EditBrandPage() {
 	};
 
 	const onCancelClick = () => {
-		console.log('cancel');
+		history.push('/admin/brand/all');
 	};
 
 	return (

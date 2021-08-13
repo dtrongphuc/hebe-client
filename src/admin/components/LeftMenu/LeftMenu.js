@@ -48,6 +48,7 @@ function LeftMenu() {
 			openKeys={openKeys}
 			onClick={onSelectedKeysChange}
 			onOpenChange={onOpenChange}
+			style={{ paddingBottom: 100 }}
 		>
 			<Menu.Item key='/admin' icon={<DashboardOutlined />}>
 				Dashboard

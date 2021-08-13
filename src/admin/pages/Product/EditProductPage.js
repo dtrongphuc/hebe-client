@@ -91,7 +91,7 @@ function EditProductPage() {
 	};
 
 	const onCancelClick = () => {
-		console.log('cancel');
+		history.push('/admin/product/all');
 	};
 
 	return (

@@ -52,9 +52,9 @@ function DashBoardPage() {
 						title: 'Total Orders',
 						amount: summary?.totalOrders?.value,
 						percentage:
-							summary?.totalOrders?.comparison > 0
+							summary && summary?.totalOrders?.comparison > 0
 								? `+${summary?.totalOrders?.comparison}%`
-								: `${summary?.totalOrders?.comparison}%`,
+								: `${summary?.totalOrders?.comparison || 0}%`,
 					}}
 					icon={<FaDatabase />}
 					loading={loading}
@@ -71,7 +71,7 @@ function DashBoardPage() {
 						percentage:
 							summary?.averagePrice?.comparison > 0
 								? `+${summary?.averagePrice?.comparison}%`
-								: `${summary?.averagePrice?.comparison}%`,
+								: `${summary?.averagePrice?.comparison || 0}%`,
 					}}
 					icon={<FaDollarSign />}
 					loading={loading}
@@ -86,7 +86,7 @@ function DashBoardPage() {
 						percentage:
 							summary?.productSold?.comparison > 0
 								? `+${summary?.productSold?.comparison}%`
-								: `${summary?.productSold?.comparison}%`,
+								: `${summary?.productSold?.comparison || 0}%`,
 					}}
 					icon={<FaTags />}
 					loading={loading}
