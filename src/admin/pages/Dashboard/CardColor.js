@@ -13,8 +13,8 @@ function CardColor({ color, data, icon, loading }) {
 			<Row justify='space-between'>
 				<Col>
 					<div>
-						<h6 className='title'>{data.title}</h6>
-						<p className='number'>{data.amount}</p>
+						<h6 className='title'>{data?.title}</h6>
+						<p className='number'>{data?.amount || 0}</p>
 					</div>
 				</Col>
 				<Col>
@@ -25,7 +25,7 @@ function CardColor({ color, data, icon, loading }) {
 			</Row>
 			<Row gutter={[16, 0]} style={{ marginTop: 16 }}>
 				<Col>
-					<span className='des'>{data.percentage || 0}</span>
+					<span className='des'>{data?.percentage || 0}</span>
 				</Col>
 				<Col flex='auto'>
 					<span className='des'>From Previous Month</span>
