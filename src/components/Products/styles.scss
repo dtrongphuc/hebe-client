@@ -9,26 +9,29 @@
 .product {
 	&-item {
 		text-align: center;
-		margin-left: 15px;
-		margin-right: 15px;
 		margin-bottom: 30px;
 
 		& > a {
 			display: block;
-			@media only screen and (min-width: 992px) {
-				height: 290px;
-			}
-
-			@media only screen and (max-width: 992px) and (min-width: 768px) {
-				height: 226px;
-			}
-
-			@media only screen and (max-width: 768px) and (min-width: 576px) {
-				height: 130px;
-			}
 
 			@media (max-width: 576px) {
 				height: 210px;
+			}
+
+			@media (min-width: 576px) {
+				height: 210px;
+			}
+
+			@media (min-width: 768px) {
+				height: 226px;
+			}
+
+			@media (min-width: 992px) {
+				height: 290px;
+			}
+
+			@media (min-width: 1120px) {
+				height: 343.33px;
 			}
 
 			& > img {
@@ -37,7 +40,7 @@
 		}
 
 		&__description {
-			padding: 8px 0;
+			padding: 12px 0 8px;
 			text-align: center;
 		}
 
@@ -46,8 +49,9 @@
 			text-transform: uppercase;
 			font-weight: 700;
 			color: #000;
-			font-size: 0.78rem;
+			font-size: 0.7rem;
 			text-align: center;
+			margin-bottom: 4px;
 
 			&:hover {
 				text-decoration: none;
@@ -61,13 +65,13 @@
 			font-weight: 400;
 			color: #000;
 			line-height: 1.3rem;
+			margin-bottom: 16px;
 		}
 
 		&__price {
 			font-size: 0.9rem;
 			color: #000;
 			font-weight: 400;
-			margin-top: 8px;
 		}
 	}
 }

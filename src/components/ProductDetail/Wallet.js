@@ -29,7 +29,7 @@ function Wallet({ price, salePrice }) {
 
 	return (
 		<div className='product-detail__wallet'>
-			<p className='higher-text'>{priceString(salePrice)}</p>
+			<p className='higher-text'>{priceString(salePrice || price)}</p>
 			<div className='higher-text'>
 				<span>or make 4 interest-free payments of </span>
 				<strong>{priceString(walletType?.afterpay)} NZD</strong>

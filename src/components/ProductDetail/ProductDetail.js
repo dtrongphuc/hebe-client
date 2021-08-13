@@ -5,6 +5,7 @@ import Form from './Form/Form';
 import SlideShow from './SlideShow';
 import Wallet from './Wallet';
 import './styles.scss';
+import { Link } from 'react-router-dom';
 
 export default function ProductDetail({ product }) {
 	return (
@@ -25,13 +26,16 @@ export default function ProductDetail({ product }) {
 									}
 								/>
 								<div className='product-page__content'>
-									<p className='product-page__content__brand'>
-										{product?.brand?.name}
-									</p>
+									<Link
+										to={`/collections/${product.brand.path}`}
+										className='product-page__content__brand'
+									>
+										{product.brand.name}
+									</Link>
 									<h2 className='product-page__content__name'>
 										{product?.name}
 									</h2>
-									{product?.description.length <= 400 && (
+									{product?.description.length <= 500 && (
 										<div className='pt-3'>
 											<div
 												className='product-page__content__description text-center'
@@ -55,7 +59,7 @@ export default function ProductDetail({ product }) {
 					</Row>
 				</Container>
 			</div>
-			{product?.description.length > 400 && (
+			{product?.description.length > 500 && (
 				<div className='background-white'>
 					<Container fluid='lg'>
 						<Row>

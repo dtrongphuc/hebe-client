@@ -28,13 +28,32 @@ export default function ProductItem({ product, fromPage }) {
 				<img src={`${avatar}`} alt='' className='product-item__image' />
 			</Link>
 			<div className='product-item__description'>
-				<Link to='#' className='product-item__category'>
+				<Link
+					to={`/collections/${product.brand.path}`}
+					className='product-item__category'
+				>
 					{product.brand.name}
 				</Link>
 				<p className='product-item__name'>{product.name}</p>
-				<p className='price product-item__price'>
-					{priceString(product?.price)}
-				</p>
+
+				{product?.salePrice > 0 ? (
+					<div>
+						<span className='price product-item__price'>
+							{priceString(product.salePrice)}
+						</span>
+						<span className='mx-1'></span>
+						<span
+							className='price product-item__price font-stroke'
+							style={{ color: 'rgba(0,0,0,.5)' }}
+						>
+							{priceString(product.price)}
+						</span>
+					</div>
+				) : (
+					<p className='price product-item__price'>
+						{priceString(product?.price)}
+					</p>
+				)}
 				{product.quantity === 0 && <i className='sold-out'>Sold Out</i>}
 			</div>
 		</div>
@@ -43,5 +62,5 @@ export default function ProductItem({ product, fromPage }) {
 
 ProductItem.propTypes = {
 	product: PropTypes.object,
-	wrappedBy: PropTypes.string,
+	fromPage: PropTypes.string,
 };

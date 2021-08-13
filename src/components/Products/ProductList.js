@@ -11,7 +11,7 @@ export default function ProductList({ products, fromPage }) {
 				{!!products &&
 					Array.isArray(products) &&
 					products.map((product) => (
-						<Col xs={12} sm={4} key={product._id}>
+						<Col xs={6} sm={4} key={product._id}>
 							<ProductItem product={product} fromPage={fromPage} />
 						</Col>
 					))}
