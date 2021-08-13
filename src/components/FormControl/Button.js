@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import CircleLoading from 'components/CircleLoading/CircleLoading';
+import './ButtonStyles.scss';
 
 function Button({ type = 'button', onClick, children, classNames, loading }) {
 	return (

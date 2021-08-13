@@ -57,8 +57,8 @@ export default function ForgotPassword() {
 	return (
 		<div className='container-lg'>
 			<div className='row'>
-				<div className='col-0 col-lg-4'></div>
-				<div className='col-12 col-lg-4'>
+				<div className='col-0 col-lg-3'></div>
+				<div className='col-12 col-lg-6'>
 					<section className='auth-container'>
 						<h3 className='auth-title'>Reset your password</h3>
 						<p className='sub-title'>
@@ -92,7 +92,7 @@ export default function ForgotPassword() {
 						</div>
 					</section>
 				</div>
-				<div className='col-0 col-lg-4'></div>
+				<div className='col-0 col-lg-3'></div>
 			</div>
 		</div>
 	);

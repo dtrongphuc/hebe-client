@@ -1,7 +1,6 @@
 // INPUT
 .input-group {
-	& > input,
-	& > select {
+	& > input {
 		border: 1px solid #000;
 		border-radius: 2px;
 		width: 100%;
@@ -19,17 +18,4 @@
 			border-color: #dc3545;
 		}
 	}
-}
-
-.btn-submit {
-	position: relative;
-	margin: 0;
-	width: 100%;
-	color: #fff;
-	background-color: #000;
-	border: 1px solid transparent;
-	border-radius: 2px;
-	font-size: 1.2rem;
-	line-height: 1.2rem;
-	padding: 0.5em;
 }

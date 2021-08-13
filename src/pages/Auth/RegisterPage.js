@@ -66,8 +66,8 @@ function RegisterPage() {
 	return (
 		<div className='container-lg'>
 			<div className='row'>
-				<div className='col-0 col-lg-4'></div>
-				<div className='col-12 col-lg-4'>
+				<div className='col-0 col-lg-3'></div>
+				<div className='col-12 col-lg-6'>
 					<section className='auth-container'>
 						<h3 className='auth-title'>Create Account</h3>
 						<form
@@ -120,7 +120,7 @@ function RegisterPage() {
 						</div>
 					</section>
 				</div>
-				<div className='col-0 col-lg-4'></div>
+				<div className='col-0 col-lg-3'></div>
 			</div>
 			<ModalLoading loading={isLoading} />
 		</div>

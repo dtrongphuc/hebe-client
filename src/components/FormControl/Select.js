@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './styles.scss';
+import './SelectStyles.scss';
 
 function Select({ name, children, onChange, value }) {
 	return (

@@ -6,15 +6,18 @@ import ButtonAddToCart from './ButtonAddToCart';
 import { addToCart } from 'services/CartApi';
 import ModalLoading from 'components/ModalLoading/ModalLoading';
 import { message } from 'antd';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { fetchCartThunk } from 'features/cart/cartSlice';
+import { useHistory } from 'react-router-dom';
 
 function Form({ variants, price }) {
 	const [selected, setSelected] = useState(null);
 	const [currentInputQuantity, setCurrentInputQuantity] = useState(null);
 	const [cartPrice, setCartPrice] = useState(null);
 	const [loading, setLoading] = useState(false);
+	const { isLogged } = useSelector((state) => state.user);
 	const dispatch = useDispatch();
+	let history = useHistory();
 
 	useEffect(() => {
 		// find first variant available (stock > 0)
@@ -113,6 +116,10 @@ function Form({ variants, price }) {
 
 	const handleAddToCart = async (e) => {
 		e.preventDefault();
+		if (!isLogged) {
+			history.push('/account/login');
+			return;
+		}
 		setLoading(true);
 		try {
 			let cart = {
