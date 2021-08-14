@@ -12,7 +12,7 @@ function CheckoutLayout({ children }) {
 	const asideOrderRef = useRef(null);
 	const [showOrder, setShowOrder] = useState(false);
 	const [width, setWidth] = React.useState(window.innerWidth);
-	const { numberCart } = useSelector((state) => state.cart);
+	const { numberCart, loading } = useSelector((state) => state.cart);
 	let history = useHistory();
 
 	const handleResize = () => {
@@ -21,10 +21,10 @@ function CheckoutLayout({ children }) {
 
 	// check cart empty
 	useEffect(() => {
-		if (numberCart === 0) {
+		if (!loading && numberCart === 0) {
 			history.push('/404');
 		}
-	}, [numberCart, history]);
+	}, [loading, numberCart, history]);
 
 	const collapseOrder = useCallback(() => {
 		let sectionHeight = asideOrderRef.current?.scrollHeight;

@@ -21,7 +21,7 @@ const initialState = {
 	showPopup: false,
 	numberCart: 0,
 	warning: '',
-	loading: false,
+	loading: true,
 };
 
 const cartSlice = createSlice({
