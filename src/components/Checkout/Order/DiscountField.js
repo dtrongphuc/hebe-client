@@ -9,19 +9,19 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
 	applyDiscountThunk,
 	clearDiscount,
-	setDiscountError,
 } from 'features/checkout/checkoutSlice';
 import { unwrapResult } from '@reduxjs/toolkit';
 
 function DiscountField() {
 	const [value, setValue] = useState('');
-	const { discount, discountError } = useSelector((state) => state.checkout);
+	const [error, setError] = useState('');
+	const { discount } = useSelector((state) => state.checkout);
 	const dispatch = useDispatch();
 
 	const onChange = (e) => {
 		setValue(e.target.value);
-		if (discountError) {
-			dispatch(setDiscountError(''));
+		if (error) {
+			setError('');
 		}
 	};
 
@@ -32,7 +32,7 @@ function DiscountField() {
 			const resultAction = await dispatch(applyDiscountThunk(value));
 			unwrapResult(resultAction);
 		} catch (error) {
-			console.log(error);
+			setError(Array.isArray(error) ? error[0]?.msg : error?.message);
 		}
 	};
 
@@ -48,7 +48,7 @@ function DiscountField() {
 					placeholder='Gift card or discount code'
 					value={value}
 					onChange={onChange}
-					error={discountError}
+					error={error}
 				/>
 				{discount?.applied && (
 					<span className='clear' onClick={onClear}>

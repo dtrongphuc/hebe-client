@@ -7,9 +7,10 @@ import { unwrapResult } from '@reduxjs/toolkit';
 import { message } from 'antd';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { priceString } from 'utils/util';
+import ModalLoading from 'components/ModalLoading/ModalLoading';
 function CartItem({ item, invalidIndex }) {
 	const cartId = useSelector((state) => state.cart.shoppingCart?._id);
-	const warning = useSelector((state) => state.cart.warning);
+	const { warning, loading } = useSelector((state) => state.cart);
 	const { product, variant, sku, quantity, total } = item;
 
 	// quantity before input lose focus
@@ -46,6 +47,7 @@ function CartItem({ item, invalidIndex }) {
 			unwrapResult(response);
 		} catch (error) {
 			console.log(error);
+		} finally {
 		}
 	};
 
@@ -68,6 +70,7 @@ function CartItem({ item, invalidIndex }) {
 			unwrapResult(response);
 		} catch (error) {
 			console.log(error);
+		} finally {
 		}
 	};
 
@@ -104,11 +107,11 @@ function CartItem({ item, invalidIndex }) {
 			unwrapResult(response);
 		} catch (error) {
 			console.log(error);
+		} finally {
 		}
 	};
 
 	const handleRemove = async () => {
-		console.log('remove');
 		let state = {
 			action_type: 2,
 			info: {
@@ -125,6 +128,7 @@ function CartItem({ item, invalidIndex }) {
 			unwrapResult(response);
 		} catch (error) {
 			console.log(error);
+		} finally {
 		}
 	};
 
@@ -216,6 +220,7 @@ function CartItem({ item, invalidIndex }) {
 					<IoClose size='1.6rem' color='#666666' />
 				</button>
 			</OverlayTrigger>
+			<ModalLoading loading={loading} />
 		</div>
 	);
 }

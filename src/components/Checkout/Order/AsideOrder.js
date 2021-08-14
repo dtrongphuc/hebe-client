@@ -30,7 +30,7 @@ function AsideOrder() {
 						<div className='d-flex align-items-center justify-content-between'>
 							<span className='order__text'>Subtotal</span>
 							<span className='order__text order__text--bold'>
-								{priceString(totalPrice)}
+								{priceString(totalPrice || 0)}
 							</span>
 						</div>
 						<div className='d-flex align-items-center justify-content-between mt-3'>

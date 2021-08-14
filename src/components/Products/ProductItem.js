@@ -63,5 +63,5 @@ export default function ProductItem({ product, fromPage }) {
 
 ProductItem.propTypes = {
 	product: PropTypes.object,
-	fromPage: PropTypes.string,
+	fromPage: PropTypes.object,
 };

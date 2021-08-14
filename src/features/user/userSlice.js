@@ -67,7 +67,7 @@ export const userSlice = createSlice({
 	name: 'user',
 	initialState: {
 		isLogged: false,
-		isLoading: false,
+		isLoading: true,
 		email: '',
 		firstName: '',
 		lastName: '',

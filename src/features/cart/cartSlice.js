@@ -54,12 +54,12 @@ const cartSlice = createSlice({
 		},
 		[updateThunk.fulfilled]: (state, action) => {
 			const { cart, updated, msg } = action.payload;
-			state.loading = true;
+			state.loading = false;
 			state.warning = msg;
 
 			if (updated) {
 				state.shoppingCart = cart;
-				state.total = cart?.totalPrice;
+				state.total = cart?.totalPrice || 0;
 				state.numberCart = cart?.products?.length;
 			}
 		},

@@ -5,15 +5,26 @@ import AsideOrder from 'components/Checkout/Order/AsideOrder';
 import PropTypes from 'prop-types';
 import './CheckoutLayoutStyles.scss';
 import Breadcrumb from 'components/Checkout/Breadcrumb/Breadcrumb';
+import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 function CheckoutLayout({ children }) {
 	const asideOrderRef = useRef(null);
 	const [showOrder, setShowOrder] = useState(false);
 	const [width, setWidth] = React.useState(window.innerWidth);
+	const { numberCart } = useSelector((state) => state.cart);
+	let history = useHistory();
 
 	const handleResize = () => {
 		setWidth(window.innerWidth);
 	};
+
+	// check cart empty
+	useEffect(() => {
+		if (numberCart === 0) {
+			history.push('/404');
+		}
+	}, [numberCart, history]);
 
 	const collapseOrder = useCallback(() => {
 		let sectionHeight = asideOrderRef.current?.scrollHeight;

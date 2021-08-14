@@ -119,7 +119,6 @@ const checkoutSlice = createSlice({
 					loading: false,
 					applied: false,
 				},
-				discountError: '',
 			};
 		},
 		deliveryChange: (state, action) => {
@@ -216,7 +215,6 @@ const checkoutSlice = createSlice({
 		[applyDiscountThunk.pending]: (state) => {
 			state.discount.loading = true;
 			state.discount.applied = false;
-			state.discountError = '';
 		},
 
 		[applyDiscountThunk.fulfilled]: (state, action) => {
@@ -227,7 +225,6 @@ const checkoutSlice = createSlice({
 					applied: true,
 					...action.payload,
 				},
-				discountError: '',
 			};
 		},
 
@@ -238,7 +235,6 @@ const checkoutSlice = createSlice({
 					loading: false,
 					applied: false,
 				},
-				discountError: action.payload[0]?.msg ?? action.payload?.message ?? '',
 			};
 		},
 	},

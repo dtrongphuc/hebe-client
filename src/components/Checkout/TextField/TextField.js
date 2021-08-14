@@ -34,6 +34,10 @@ function TextField({
 		}
 	}, [focus]);
 
+	useEffect(() => {
+		setErrorMsg(error);
+	}, [error]);
+
 	//validation
 	useEffect(() => {
 		if (!rules ?? !Array.isArray(rules)) return;
@@ -53,17 +57,9 @@ function TextField({
 		setErrorMsg(rule?.msg ?? '');
 	}, [value, rules]);
 
-	const toggleErrorClass = () => {
-		if (errorMsg) {
-			return 'error';
-		}
-
-		return '';
-	};
-
 	return (
 		<div
-			className={`checkout-field ${value && 'floating'} ${toggleErrorClass()}`}
+			className={`checkout-field ${value && 'floating'} ${errorMsg && 'error'}`}
 		>
 			<input
 				ref={inputRef}
