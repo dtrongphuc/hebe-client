@@ -39,9 +39,47 @@ const rootReducer = (state, action) => {
 	if (action.type === 'user/login') {
 		// check for action type
 		state = {
-      ...state,
-      checkout: null
-    };
+			...state,
+			checkout: {
+				addressInfo: {
+					firstname: '',
+					lastname: '',
+					company: '',
+					address: '',
+					apartment: '',
+					city: '',
+					country: 'Afghanistan',
+					postal: '',
+					phone: '',
+				},
+				addressValidation: {
+					show: false,
+					focus: '',
+				},
+				delivery: 'shipment',
+				shippingPrice: {
+					display: 'Calculated at next step',
+					price: null,
+				},
+				pickupLocations: [],
+				pickupLocationSelected: '',
+				shippingMethods: [],
+				shippingMethodSelected: '',
+				paymentMethodSelected: 'credit-card',
+				discount: {
+					loading: false,
+					applied: false,
+					code: '',
+					description: '',
+					target: '',
+					discountAmount: {
+						value: 0,
+						type: 'fixed_amount',
+					},
+				},
+				discountError: '',
+			},
+		};
 	}
 	return combinedReducer(state, action);
 };
