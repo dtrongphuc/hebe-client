@@ -15,6 +15,7 @@
 **2.Adminstrator**
 
 Path: /admin
+
 Account: admin@gmail.com/123
 
 - Sign in, Sign out
