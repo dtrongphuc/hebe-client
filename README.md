@@ -7,8 +7,8 @@
 # What I do:
 **1.User**
 - Sign in, Sign up, Forgot password
-- View orders history, view addresses, add/edit/delete/set default address
-- View products, detail product, add to cart
+- View orders history with infinite scroll, view addresses, add/edit/delete/set default address
+- View products, collection products with pagination/sort, detail product, add to cart
 - View cart, increase/decrease/remove (check valid quantity from server)
 - Order 3 steps, apply discount
 
