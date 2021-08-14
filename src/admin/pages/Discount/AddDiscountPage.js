@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Form, message } from 'antd';
 // import { useHistory } from 'react-router-dom';
 import DiscountForm from 'admin/components/DiscountForm/DiscountForm';
@@ -24,6 +24,7 @@ const initialFormValues = {
 function AddDiscountPage() {
 	const [form] = Form.useForm();
 	const { selectedProducts } = useSelector((state) => state.discount);
+	const [loading, setLoading] = useState(false);
 	const dispatch = useDispatch();
 	let history = useHistory();
 
@@ -31,6 +32,8 @@ function AddDiscountPage() {
 		const key = 'submit';
 		message.loading({ content: 'Loading...', key });
 		try {
+			setLoading(true);
+
 			const response = await createDiscount({
 				...values,
 				target_products: [...selectedProducts],
@@ -43,6 +46,8 @@ function AddDiscountPage() {
 			}
 		} catch (error) {
 			message.error({ content: 'Error!', key, duration: 3 });
+		} finally {
+			setLoading(false);
 		}
 	};
 
@@ -60,6 +65,7 @@ function AddDiscountPage() {
 				title='Add discount'
 				onSubmit={onSubmitClick}
 				onCancel={onCancelClick}
+				loading={loading}
 			/>
 			<DiscountForm
 				form={form}

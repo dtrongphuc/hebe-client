@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import CategoryForm from 'admin/components/CategoryForm/CategoryForm';
 import { Card, Form, message } from 'antd';
 import { addNewCategory } from 'services/CategoryApi';
@@ -10,12 +10,14 @@ import SubmitControl from 'admin/components/SubmitControl/SubmitControl';
 function AddCategoryPage() {
 	const [form] = Form.useForm();
 	let history = useHistory();
+  const [loading, setLoading] = useState(false);
 	const uploadFolder = 'categories';
 
 	const onFinish = async (values) => {
 		const key = 'submit';
 		message.loading({ content: 'Loading...', key });
 		try {
+      setLoading(true);
 			const { url } = await getUploadSignature(uploadFolder);
 			const images = await uploadFileRequest(url, values.image);
 			const response = await addNewCategory({ ...values, image: images[0] });
@@ -25,6 +27,7 @@ function AddCategoryPage() {
 			}
 		} catch (error) {
 			message.error({ content: 'Error!', key, duration: 3 });
+      setLoading(false);
 		}
 	};
 
@@ -42,6 +45,7 @@ function AddCategoryPage() {
 				title='Add new category'
 				onSubmit={onSubmitClick}
 				onCancel={onCancelClick}
+        loading={loading}
 			/>
 			<Card title='Add new category' bordered={false}>
 				<CategoryForm form={form} onFinish={onFinish} />

@@ -100,6 +100,7 @@ function EditProductPage() {
 				title='Edit product'
 				onSubmit={onSubmitClick}
 				onCancel={onCancelClick}
+				loading={loading}
 			/>
 			<Card title='Edit product' bordered={false} loading={loading}>
 				<ProductForm

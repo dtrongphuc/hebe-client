@@ -64,6 +64,7 @@ function EditCustomerPage() {
 				title='Edit customer'
 				onSubmit={onSubmitClick}
 				onCancel={onCancelClick}
+				loading={loading}
 			/>
 			<Card title='Edit customer' bordered={false} loading={loading}>
 				<CustomerForm form={form} onFinish={onFinish} />

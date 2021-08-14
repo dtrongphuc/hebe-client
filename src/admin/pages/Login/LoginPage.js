@@ -28,10 +28,15 @@ function LoginPage() {
 				history.push('/admin');
 				return;
 			}
+			setErrors((prevState) => ({
+				...prevState,
+				email: 'Email does not exist',
+			}));
 			setLoading(false);
 		} catch (error) {
 			if (error.status === 422) {
 				let { errors } = error;
+				console.log(errors);
 				let inputError = parseErrors(errors);
 				setErrors({
 					...inputError,

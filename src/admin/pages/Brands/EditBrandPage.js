@@ -82,6 +82,7 @@ function EditBrandPage() {
 				title='Edit brand'
 				onSubmit={onSubmitClick}
 				onCancel={onCancelClick}
+				loading={loading}
 			/>
 			<Card title='Edit brand' bordered={false} loading={loading}>
 				<BrandForm

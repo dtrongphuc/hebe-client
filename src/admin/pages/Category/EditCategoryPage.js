@@ -84,6 +84,7 @@ function EditCategoryPage() {
 				title='Edit category'
 				onSubmit={onSubmitClick}
 				onCancel={onCancelClick}
+				loading={loading}
 			/>
 			<Card title='Edit category' bordered={false} loading={loading}>
 				<CategoryForm

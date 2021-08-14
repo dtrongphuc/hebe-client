@@ -4,7 +4,7 @@ import { Button, Card, Space, Typography } from 'antd';
 
 const { Text } = Typography;
 
-function SubmitControl({ title, onSubmit, onCancel }) {
+function SubmitControl({ title, onSubmit, onCancel, loading }) {
 	return (
 		<Card
 			className='shadow-sm'
@@ -20,7 +20,12 @@ function SubmitControl({ title, onSubmit, onCancel }) {
 					<Button danger htmlType='button' onClick={onCancel}>
 						Cancel
 					</Button>
-					<Button type='primary' htmlType='button' onClick={onSubmit}>
+					<Button
+						type='primary'
+						htmlType='button'
+						onClick={onSubmit}
+						loading={loading}
+					>
 						Submit
 					</Button>
 				</Space>
@@ -33,6 +38,7 @@ SubmitControl.propTypes = {
 	title: PropTypes.string,
 	onSubmit: PropTypes.func,
 	onCancel: PropTypes.func,
+	loading: PropTypes.bool,
 };
 
 export default SubmitControl;

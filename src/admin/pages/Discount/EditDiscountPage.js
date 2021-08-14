@@ -118,6 +118,7 @@ function EditDiscountPage() {
 				title='Edit discount'
 				onSubmit={onSubmitClick}
 				onCancel={onCancelClick}
+				loading={loading}
 			/>
 			<DiscountForm
 				form={form}
