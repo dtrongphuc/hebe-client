@@ -63,7 +63,14 @@ export default function CollectionPage() {
 				heroText={info?.description}
 			/>
 			<Sort onSortChange={onSortChange} selected={sort} />
-			<ProductList products={products} fromPage={fromPage} loading={loading} />
+			<ProductList
+				products={products}
+				fromPage={{
+					link: `/collections/${path}`,
+					title: fromPage,
+				}}
+				loading={loading}
+			/>
 			{maxPage > 1 && (
 				<div className='container-lg'>
 					<Pagination

@@ -337,4 +337,9 @@
 	color: #000;
 	font-size: 0.84rem;
 	text-decoration: underline;
+
+	&:hover {
+		color: currentColor;
+		text-decoration: underline;
+	}
 }

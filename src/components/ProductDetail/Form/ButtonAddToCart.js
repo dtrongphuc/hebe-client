@@ -10,7 +10,11 @@ export default function ButtonAddToCart({
 }) {
 	return (
 		<div className='atc__wrapper'>
-			<button type='submit' className='btn__atc' disabled={isSoldOut || active}>
+			<button
+				type='submit'
+				className='btn__atc'
+				disabled={isSoldOut || !active}
+			>
 				<span className='text'>{isSoldOut ? 'Sold Out' : 'Add to Cart'}</span>
 				{priceString(price)}
 				{quantity > 1 ? ` (${quantity})` : ''}

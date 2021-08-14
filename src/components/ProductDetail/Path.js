@@ -14,7 +14,7 @@ function Path({ productName }) {
 			</li>
 			{location?.state?.from && (
 				<li>
-					<Link to='#' className='site-path__link'>
+					<Link to={location?.state?.link} className='site-path__link'>
 						{location.state.from}
 					</Link>
 				</li>

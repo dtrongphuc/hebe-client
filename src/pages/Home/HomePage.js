@@ -48,7 +48,10 @@ export default function HomePage() {
 				{!pageState.isLoading && (
 					<ProductList
 						products={products}
-						fromPage='HOME PAGE'
+						fromPage={{
+							link: '/',
+							title: 'HOME PAGE',
+						}}
 						loading={loading}
 					/>
 				)}

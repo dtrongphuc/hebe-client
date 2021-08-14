@@ -15,7 +15,8 @@ export default function ProductItem({ product, fromPage }) {
 
 	const productClicked = () => {
 		history.push(`/products/${product.path}`, {
-			from: fromPage,
+			from: fromPage?.title,
+			link: fromPage?.link,
 		});
 	};
 
