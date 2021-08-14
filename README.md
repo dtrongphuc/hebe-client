@@ -2,7 +2,7 @@
 # Tech
 - Reactjs
 - Redux-toolkit
-- Ant
+- Antd
 
 # What I do:
 **1.User**
