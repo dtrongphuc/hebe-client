@@ -5,7 +5,7 @@ import Carat from './Carat';
 import Expander from './Expander';
 import { useState } from 'react';
 
-function Item({ item }) {
+function Item({ item, onClick }) {
 	const [open, setOpen] = useState(false);
 	let history = useHistory();
 	const path = item?.path;
@@ -15,7 +15,8 @@ function Item({ item }) {
 			e.preventDefault();
 			return;
 		}
-
+		setOpen(false);
+		onClick();
 		history.push(`/collections/${path}`);
 	};
 
@@ -27,7 +28,7 @@ function Item({ item }) {
 			{item?.items && item.items.length > 0 && (
 				<>
 					<Carat open={open} onClick={() => setOpen((prev) => !prev)} />
-					{open && <Expander items={item.items} />}
+					{open && <Expander items={item.items} onClick={onClick} />}
 				</>
 			)}
 		</li>

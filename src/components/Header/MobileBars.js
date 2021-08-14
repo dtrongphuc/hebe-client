@@ -34,7 +34,7 @@ export default function MobileBars({ isOpen, categories, brands, onClick }) {
 
 		if (index !== -1) {
 			let items = menu[index];
-			return <Expander items={items} />;
+			return <Expander items={items} onClick={onClick} />;
 		}
 
 		return (
