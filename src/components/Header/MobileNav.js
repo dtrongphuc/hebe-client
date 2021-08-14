@@ -15,7 +15,6 @@ export default function MobileNav({ categories, brands }) {
 	};
 
 	const onClick = () => {
-		console.log('onclick');
 		setIsNavOpen(false);
 	};
 
