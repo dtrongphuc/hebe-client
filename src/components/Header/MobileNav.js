@@ -14,6 +14,10 @@ export default function MobileNav({ categories, brands }) {
 		setIsNavOpen(!isNavOpen);
 	};
 
+	const onClick = () => {
+		setIsNavOpen(false);
+	};
+
 	return (
 		<div className='main__header mobile-header'>
 			<Container fluid='lg'>
@@ -34,6 +38,7 @@ export default function MobileNav({ categories, brands }) {
 						isOpen={isNavOpen}
 						categories={categories}
 						brands={brands}
+						onClick={onClick}
 					/>
 				</nav>
 			</Container>

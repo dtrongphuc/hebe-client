@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import Expander from './DropDown/Expander';
 import getNavbarLinks from './Links';
 
-export default function MobileBars({ isOpen, categories, brands }) {
+export default function MobileBars({ isOpen, categories, brands, onClick }) {
 	const [menu, setMenu] = useState([]);
 
 	useEffect(() => {
@@ -37,7 +37,11 @@ export default function MobileBars({ isOpen, categories, brands }) {
 			return <Expander items={items} />;
 		}
 
-		return <Link to={link.path}>{link.name}</Link>;
+		return (
+			<Link to={link.path} onClick={onClick}>
+				{link.name}
+			</Link>
+		);
 	};
 
 	return (
