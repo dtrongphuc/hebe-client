@@ -13,6 +13,7 @@
 - Order 3 steps, apply discount
 
 **2.Adminstrator**
+
 Path: /admin
 Account: admin@gmail.com/123
 
