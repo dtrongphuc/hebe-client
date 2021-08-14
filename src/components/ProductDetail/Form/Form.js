@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchCartThunk } from 'features/cart/cartSlice';
 import { useHistory } from 'react-router-dom';
 
-function Form({ variants, price }) {
+function Form({ variants, price, active }) {
 	const [selected, setSelected] = useState(null);
 	const [currentInputQuantity, setCurrentInputQuantity] = useState(null);
 	const [cartPrice, setCartPrice] = useState(null);
@@ -191,6 +191,7 @@ function Form({ variants, price }) {
 					price={cartPrice}
 					quantity={currentInputQuantity}
 					isSoldOut={selected?.stock === 0}
+					active={active}
 				/>
 			</form>
 			<ModalLoading loading={loading} />
@@ -201,6 +202,7 @@ function Form({ variants, price }) {
 Form.propTypes = {
 	variants: PropTypes.array,
 	price: PropTypes.number,
+	active: PropTypes.bool,
 };
 
 export default Form;

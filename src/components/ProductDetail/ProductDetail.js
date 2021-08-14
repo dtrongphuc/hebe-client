@@ -52,6 +52,7 @@ export default function ProductDetail({ product }) {
 												? product.salePrice
 												: product?.price
 										}
+										active={product.showing}
 									/>
 								</div>
 							</div>
