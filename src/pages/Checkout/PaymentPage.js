@@ -6,7 +6,7 @@ import Payment from 'components/Checkout/Payment/Payment';
 import ShippingInfo from 'components/Checkout/Shipping/ShippingInfo';
 import ModalLoading from 'components/ModalLoading/ModalLoading';
 import { clearCart } from 'features/cart/cartSlice';
-import { clearDiscount } from 'features/checkout/checkoutSlice';
+import { clearDiscount, focusAddressValidation, toggleShowAddressError } from 'features/checkout/checkoutSlice';
 import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
@@ -99,6 +99,12 @@ function PaymentPage(props) {
 	// when [pay now] clicked
 	const onSubmit = async (e) => {
 		e.preventDefault();
+
+    // validation false
+    if(!validation()) {
+      return;
+    }
+
 		try {
 			setLoading(true);
 			let data = {
@@ -123,6 +129,19 @@ function PaymentPage(props) {
 			setLoading(false);
 		}
 	};
+
+  const validation = () => {
+    let errors = document.querySelectorAll('.checkout-field.error');
+		if (errors.length > 0) {
+			let inputName = errors[0].querySelector('input')?.name;
+			dispatch(toggleShowAddressError(true));
+			dispatch(focusAddressValidation(inputName));
+			return false;
+		}
+		dispatch(toggleShowAddressError(false));
+
+    return true;
+  }
 
 	return (
 		<>
